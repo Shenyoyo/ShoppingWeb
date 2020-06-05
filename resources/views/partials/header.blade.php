@@ -29,6 +29,7 @@
                         <li><a href="{{ route('user.signup')}}"">註冊</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="{{ route('user.signin')}}">登入</a></li>
+                        <li><a href="{{ route('user.logout')}}">登出</a></li>
                     </ul>
                 </li>
             </ul>

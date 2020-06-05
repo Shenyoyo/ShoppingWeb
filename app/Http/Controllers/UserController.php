@@ -26,7 +26,7 @@ class UserController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => bcrypt(($request->input('password'))),
-            'active' => 1 
+            'active' => 1
         ]);
         $user->save();
 
@@ -53,5 +53,11 @@ class UserController extends Controller
     public function getProfile()
     {
         return view('user.profile');
+    }
+
+    public function getLogout()
+    {
+        Auth::logout();
+        return redirect()->back();
     }
 }
