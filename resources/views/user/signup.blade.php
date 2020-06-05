@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-4 col-md-offset-4"></div>
-    <h1>註冊</h1>
+    <div class="col-md-4 col-md-offset-4">
+    <h1>註 冊</h1>
     @if (count($errors) > 0)
     <div class="alert alert-dange">
         @foreach ($errors->all() as $errors)
@@ -28,6 +28,6 @@
         <button type="submit" class="btn btn-primary">註 冊</button>
         {{csrf_field()}}
     </form>
-
+    </div>
 </div>
 @endsection

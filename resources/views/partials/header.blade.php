@@ -28,7 +28,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('user.signup')}}"">註冊</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">登入</a></li>
+                        <li><a href="{{ route('user.signin')}}">登入</a></li>
                     </ul>
                 </li>
             </ul>
