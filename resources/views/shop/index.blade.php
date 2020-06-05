@@ -5,5 +5,5 @@
 @endsection
 
 @section('content')
-    <h1> 嗨嗨有運行</h1>
+    <h1> 嗨嗨這裡是商品區</h1>
 @endsection

@@ -13,6 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[
+    'uses' => 'ProductController@getIndex',
+    'as'    => 'shop.index'
+]);
+
+Route::get('/signup',[
+    'uses' => 'UserController@getSignup',
+    'as'    => 'user.signup'
+]);
+
+Route::post('/signup',[
+    'uses' => 'UserController@postSignup',
+    'as'    => 'user.signup'
+]);
