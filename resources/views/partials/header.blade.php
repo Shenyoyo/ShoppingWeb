@@ -26,10 +26,17 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> 使用者 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ route('user.signup')}}"">註冊</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{{ route('user.signin')}}">登入</a></li>
-                        <li><a href="{{ route('user.logout')}}">登出</a></li>
+                        @if (Auth::check())
+                            <li><a href="{{ route('user.profile')}}">會員資料</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ route('user.logout')}}">登出</a></li>
+                        @else
+                            <li><a href="{{ route('user.signup')}}">註冊</a></li>
+                            <li><a href="{{ route('user.signin')}}">登入</a></li>
+                        @endif
+                        
+                       
+                      
                     </ul>
                 </li>
             </ul>
