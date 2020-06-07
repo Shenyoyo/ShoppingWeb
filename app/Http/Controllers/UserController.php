@@ -16,9 +16,9 @@ class UserController extends Controller
     public function postSignup(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|max:255',
             'email' => 'email|required|unique:users',
-            'password' => 'required|min:4'
+            'password' => 'required|min:4|confirmed'
 
         ]);
 

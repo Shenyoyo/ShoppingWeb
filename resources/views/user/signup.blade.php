@@ -25,6 +25,10 @@
             <label for="password">密 碼</label>
             <input type="password" id="password" name="password" class="form-control">
         </div>
+        <div class="form-group">
+            <label for="password">確認密碼</label>
+            <input type="password" id="password" name="password_confirmation" class="form-control">
+        </div>
         <button type="submit" class="btn btn-primary">註 冊</button>
         {{csrf_field()}}
     </form>
