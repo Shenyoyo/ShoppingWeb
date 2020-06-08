@@ -15,8 +15,8 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-           <table class="table table-striped">
-           <thead>
+           <table class="table table-striped ">
+           <thead class="bg-info">
            <td>名稱</td>
            <td>價格</td>
            <td>文件</td>
