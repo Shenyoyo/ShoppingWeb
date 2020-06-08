@@ -23,8 +23,8 @@
         </div>
         <button type="submit" class="btn btn-primary">登 入</button>
 
-        <a class="btn btn-link" href="{{ route('password.request') }}">
-            忘記密碼?
+        <a class="btn btn-link pull-right" href="{{ route('password.request') }}">
+           忘記密碼?
         </a>
         {{csrf_field()}}
     </form>
