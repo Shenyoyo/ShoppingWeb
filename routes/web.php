@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [
-    'uses' => 'ProductController@getIndex',
+    'uses' => 'MainController@getIndex',
     'as'    => 'shop.index'
 ]);
 
@@ -56,6 +56,27 @@ Route::group(['prefix' => 'user'], function () {
     });
 
     
+
+    
+});
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/new',[ 
+        'uses' => 'ProductController@newProduct',
+        'as'   => 'admin.new'
+    ]);
+    Route::get('/products',[ 
+        'uses' => 'ProductController@getIndex',
+        'as'   => 'admin.products'
+    ]);
+    Route::get('/destroy/{id}',[ 
+        'uses' => 'ProductController@destroy',
+        'as'   => 'admin.destroy'
+    ]);
+    Route::post('/save',[ 
+        'uses' => 'ProductController@add',
+        'as'   => 'admin.save'
+    ]);
 });
 
 Auth::routes();
