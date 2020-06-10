@@ -16,7 +16,7 @@
             @foreach ($products as $product)
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail" >
-                        <img src="{{$product->image}}" class="img-thumbnail">
+                        <img src="{{$product->imageurl}}" class="img-thumbnail">
                         <div class="caption">
                             <div class="row">
                                 <div class="col-md-6 col-xs-6">
