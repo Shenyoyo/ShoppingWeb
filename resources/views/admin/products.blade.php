@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.admin')
 
 @section('title')
     後台
@@ -12,6 +12,12 @@
     <div class="col-md-6">
         <a href="{{route('admin.new')}}"><button class="btn btn-success">新增商品</button></a>
     </div>
+</div>
+<div style="margin-top:20px;">
+    <form action="{{route('admin.search')}}" method="GET" class="search-form">
+        <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box" placeholder="Search for product">
+        <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
+    </form>
 </div>
 <div class="row">
     <div class="col-md-12">
@@ -28,7 +34,10 @@
                        <td>{{$product->name}}</td>
                        <td>￥{{$product->price}}</td>
                        <td>{{$product->file->original_filename}}</td>
-                       <td><a href="{{route('admin.destroy',['id' => $product->id ])}}"><button class="btn btn-danger">删除</button></a> </td>
+                       <td>
+                       <a href="{{route('admin.edit',['id' => $product->id ])}}"><button class="btn btn-primary">修改</button></a> 
+                       <a href="{{route('admin.destroy',['id' => $product->id ])}}"><button class="btn btn-danger">删除</button></a>
+                       </td>
                    </tr>
                @endforeach
            </tbody>

@@ -69,6 +69,10 @@ Route::group(['prefix' => 'admin'], function () {
         'uses' => 'ProductController@getIndex',
         'as'   => 'admin.products'
     ]);
+    Route::get('/search',[
+        'uses' => 'ProductController@search',
+        'as'   => 'admin.search'
+    ]);
     Route::get('/destroy/{id}',[ 
         'uses' => 'ProductController@destroy',
         'as'   => 'admin.destroy'
@@ -76,6 +80,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/save',[ 
         'uses' => 'ProductController@add',
         'as'   => 'admin.save'
+    ]);
+    Route::get('/edit/{id}', [
+        'uses' => 'ProductController@edit',
+        'as'   => 'admin.edit'
+    ]);
+    Route::post('/update', [
+        'uses' => 'ProductController@update',
+        'as'   => 'admin.update'
     ]);
 });
 
