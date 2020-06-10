@@ -1,13 +1,14 @@
 @extends('layouts.admin')
 
 @section('title')
-    後台
+    庫存管理
 @endsection
 
 @section('styles')
 <link rel="stylesheet" href="/css/products.css">
 @endsection
 @section('content')
+<h1>庫存管理</h1>
 <div class="row">
     <div class="col-md-6">
         <a href="{{route('admin.new')}}"><button class="btn btn-success">新增商品</button></a>
@@ -20,11 +21,15 @@
     </form>
 </div>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 text-center" >
            <table class="table table-striped ">
            <thead class="bg-info">
            <td>名稱</td>
            <td>價格</td>
+           <td>庫存數量</td>
+           <td>分類</td>
+           <td>商品是否要顯示</td>
+           <td>商品是否可購買</td>
            <td>文件</td>
            <td>操作</td>
            </thead>
@@ -33,6 +38,10 @@
                    <tr>
                        <td>{{$product->name}}</td>
                        <td>￥{{$product->price}}</td>
+                       <td>{{$product->amount}}</td>
+                       <td>{{$product->category->name}}</td>
+                       <td>{{$product->display_yn}}</td>
+                       <td>{{$product->buy_yn}}</td>
                        <td>{{$product->file->original_filename}}</td>
                        <td>
                        <a href="{{route('admin.edit',['id' => $product->id ])}}"><button class="btn btn-primary">修改</button></a> 

@@ -14,7 +14,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#"></i> 庫存管理</a></li>
+                <li><a href="{{route('admin.products')}}"></i> 庫存管理</a></li>
+                <li><a href="{{route('category.index')}}"></i> 分類管理</a></li>
                 <li><a href="#"></i> 優惠管理</a></li>
                 <li><a href="#"></i> 會員等級管理</a></li>
                 <li><a href="#"></i> 訂單管理</a></li>

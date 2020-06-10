@@ -10,7 +10,7 @@
             <div class="panel-title">新增商品</div>
         </div>
         <div class="panel-body" >
-            <form method="POST" action="{{route('admin.save')}}" class="form-horizontal" enctype="multipart/form-data" role="form">
+            <form method="POST" action="{{route('admin.add')}}" class="form-horizontal" enctype="multipart/form-data" role="form">
                 {!! csrf_field() !!}
                 <fieldset>
                     <!-- Text input-->
@@ -31,18 +31,44 @@
                         <label class="col-md-3 control-label" for="price">價格</label>
                         <div class="col-md-9">
                             <input id="price" name="price" type="text" placeholder="商品價格" class="form-control input-md" required="">
-
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="image">圖片URL</label>
+                        <label class="col-md-3 control-label" for="imageurl">圖片URL</label>
                         <div class="col-md-9">
-                            <input id="image" name="image" type="text" placeholder="商品圖片URL" class="form-control input-md" >
-
+                            <input id="imageurl" name="imageurl" type="text" placeholder="商品圖片URL" class="form-control input-md" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="file">文件</label>
+                        <label class="col-md-3 control-label" for="amount">庫存數量</label>
+                        <div class="col-md-9">
+                            <input id="amount" name="amount" type="number" class="form-control input-md" value="1" min="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="category">分類</label>
+                        <div class="col-md-9" style="margin-top: 7px;">
+                            <select name="category_id" id="category_id">
+                                @foreach($categories as $category)
+                                    <option  value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="display" >商品上架到首頁</label>
+                        <div class="col-md-9" style="margin-top: 7px;">
+                            <input id="display_yn" name="display_yn" class="form-check-input" type="checkbox" value="Y" checked >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="buy_yn">商品用戶可購買</label>
+                        <div class="col-md-9" style="margin-top: 7px;">
+                            <input id="buy_yn" name="buy_yn" class="form-check-input" type="checkbox" value="Y"  checked >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="file">上傳圖片</label>
                         <div class="col-md-9">
                             <input id="file" name="file" class="input-file" type="file">
                         </div>

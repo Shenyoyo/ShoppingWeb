@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Category;
 use Illuminate\Http\Request;
 use Storage;
 use File;
@@ -22,23 +23,47 @@ class ProductController extends Controller
     }
     public function newProduct()
     {
-        return view('admin.new');
+        $categories = Category::all();
+        return view('admin.new', ['categories' => $categories]);
     }
 
     public function edit($id)
     {
         $product = Product::find($id);
-        return view('admin.edit')->with('product', $product);
-        ;
+        $categories = Category::all();
+        return view('admin.edit',['product' => $product ,'categories' => $categories]);
     }
 
     public function update(Request $request)
     {
+        // $file =  $request->file('file');
+        // $extension = $file->getClientOriginalExtension(); //取得副檔名
+        // Storage::disk('local')->put($file->getFilename().'.'.$extension, File::get($file));
+
+        // $entry = new \App\File();
+        // $entry->mime = $file->getClientMimeType();
+        // $entry->original_filename = $file->getClientOriginalName();
+        // $entry->filename = $file->getFilename().'.'.$extension;
+
+        // $entry->save();
+
         $product = Product::find($request->input('id'));
         $product->name =$request->input('name');
         $product->description =$request->input('description');
         $product->price =$request->input('price');
-        $product->image =$request->input('image');
+        $product->imageurl =$request->input('imageurl');
+        $product->amount = $request->input('amount');
+        if (!empty($request->input('display_yn'))) {
+            $product->display_yn =$request->input('display_yn');
+        } else { 
+            $product->display_yn = "N";
+        }
+        if (!empty($request->input('buy_yn'))) {
+            $product->buy_yn = $request->input('buy_yn');
+        } else {
+            $product->buy_yn = "N";
+        }
+        // $product->file_id = $entry->id;
 
         $product->save();
 
@@ -63,7 +88,19 @@ class ProductController extends Controller
         $product->name = $request->input('name');
         $product->description = $request->input('description');
         $product->price = $request->input('price');
-        $product->image = $request->input('image');
+        $product->amount = $request->input('amount');
+        $product->imageurl = $request->input('imageurl');
+        if (!empty($request->input('buy_yn'))) {
+            $product->buy_yn = $request->input('buy_yn');
+        } else {
+            $product->buy_yn = 'N';
+        }
+        if (!empty($request->input('display_yn'))) {
+            $product->display_yn = $request->input('display_yn');
+        } else {
+            $product->display_yn = 'N';
+        }
+        $product->category_id = $request->input('category_id');
 
         $product->save();
 
@@ -76,6 +113,6 @@ class ProductController extends Controller
 
         $products = Product::where('name', 'LIKE', '%'.$query.'%')->get();
 
-        return view('admin.products')->with('products', $products);
+        return view('admin.products',['products' => $products]);
     }
 }
