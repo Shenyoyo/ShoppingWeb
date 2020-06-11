@@ -30,7 +30,7 @@
                     <ul class="dropdown-menu">
                             <li><a href="#">管理者資料</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">登出</a></li>
+                            <li><a href="{{route('admin.logout')}}">登出</a></li>
                     </ul>
                 </li>
             </ul>

@@ -26,7 +26,8 @@ class UserController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => bcrypt(($request->input('password'))),
-            'active' => 1
+            'active' => 1,
+            'user_status' => 1
         ]);
         $user->save();
 
