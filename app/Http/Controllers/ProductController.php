@@ -12,13 +12,15 @@ class ProductController extends Controller
 {
     public function getIndex()
     {
-        $products = Product::all();
+        $products = Product::where('enable', '!=','0')->get();
         return view('admin.products', ['products' => $products]);
     }
 
     public function destroy($id)
     {
-        Product::destroy($id);
+        $product = Product::find($id);
+        $product->enable = '0';
+        $product->save();
         return redirect()->route('admin.products');
     }
     public function newProduct()
@@ -101,6 +103,7 @@ class ProductController extends Controller
             $product->display_yn = 'N';
         }
         $product->category_id = $request->input('category_id');
+        $product->enable = '1'; //紀錄商品狀態 不在使用:0 正在使用:1
 
         $product->save();
 

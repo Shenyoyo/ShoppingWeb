@@ -67,7 +67,7 @@ Route::group(['prefix' => 'admin'], function () {
         'as'   => 'admin.login'
     ]);
 
-    Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['adminVerify']], function () {
         Route::get('/logout', [
             'uses' => 'AdminController@getLogout',
             'as'   => 'admin.logout'
