@@ -39,7 +39,11 @@
                        <td>{{$product->name}}</td>
                        <td>￥{{$product->price}}</td>
                        <td>{{$product->amount}}</td>
-                       <td>{{$product->category->name}}</td>
+                       <td>
+                       @foreach ($product->category as $category)
+                       {{$category->name}} 
+                       @endforeach
+                       </td>
                        <td>{{$product->display_yn}}</td>
                        <td>{{$product->buy_yn}}</td>
                        <td>{{$product->file->original_filename}}</td>

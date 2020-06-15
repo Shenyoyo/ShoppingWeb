@@ -45,7 +45,7 @@
                             <input id="amount" name="amount" type="number" class="form-control input-md" value="{{$product->amount}}" min="1">
                         </div>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label class="col-md-3 control-label" for="category">分類</label>
                         <div class="col-md-9" style="margin-top: 7px;">
                             <select name="category_id" id="category_id">
@@ -59,7 +59,7 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="display" >商品上架到首頁</label>
                         <div class="col-md-9" style="margin-top: 7px;">

@@ -18,7 +18,7 @@ class AdminController extends Controller
             'password' => 'required|min:4'
         ]);
 
-        if (Auth::attempt(['name' => $request->input('name'), 'password' => $request->input('password'), 'active' => 1,'user_status' => 2])) {
+        if (Auth::attempt(['name' => $request->input('name'), 'password' => $request->input('password'), 'active' => 1,'role_id' => 2])) {
             return redirect()->route('admin.products');
         }
         return redirect()->back();

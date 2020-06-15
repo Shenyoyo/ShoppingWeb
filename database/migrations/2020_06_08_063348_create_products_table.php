@@ -23,7 +23,6 @@ class CreateProductsTable extends Migration
             $table->string('buy_yn')->nullable();
             $table->string('display_yn')->nullable();
             $table->string('file_id');
-            $table->string('category_id');
             $table->timestamps();
         });
     }

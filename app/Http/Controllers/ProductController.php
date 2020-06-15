@@ -41,12 +41,10 @@ class ProductController extends Controller
         // $file =  $request->file('file');
         // $extension = $file->getClientOriginalExtension(); //取得副檔名
         // Storage::disk('local')->put($file->getFilename().'.'.$extension, File::get($file));
-
         // $entry = new \App\File();
         // $entry->mime = $file->getClientMimeType();
         // $entry->original_filename = $file->getClientOriginalName();
         // $entry->filename = $file->getFilename().'.'.$extension;
-
         // $entry->save();
 
         $product = Product::find($request->input('id'));
@@ -65,6 +63,7 @@ class ProductController extends Controller
         } else {
             $product->buy_yn = "N";
         }
+
         // $product->file_id = $entry->id;
 
         $product->save();
@@ -102,10 +101,21 @@ class ProductController extends Controller
         } else {
             $product->display_yn = 'N';
         }
-        $product->category_id = $request->input('category_id');
         $product->enable = '1'; //紀錄商品狀態 不在使用:0 正在使用:1
-
         $product->save();
+        $categories = Category::all();
+        foreach ($categories as $category) {
+            $product->category()->attach($request->input($category->name));
+        }
+
+
+
+        // $product->category_id = $request->input('category_id');
+        
+        
+        
+
+        
 
         return redirect()->route('admin.products');
     }

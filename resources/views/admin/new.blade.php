@@ -45,14 +45,14 @@
                             <input id="amount" name="amount" type="number" class="form-control input-md" value="1" min="1">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group ">
                         <label class="col-md-3 control-label" for="category">分類</label>
-                        <div class="col-md-9" style="margin-top: 7px;">
-                            <select name="category_id" id="category_id">
-                                @foreach($categories as $category)
-                                    <option  value="{{$category->id}}">{{$category->name}}</option>
-                                @endforeach
-                            </select>
+                        <div class="col-md-9" ">
+                        @foreach($categories as $category)
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="{{$category->name}}" id="inlineCheckbox{{$category->id}}" value="{{$category->id}}">{{$category->name}}
+                        </label>
+                        @endforeach
                         </div>
                     </div>
                     <div class="form-group">

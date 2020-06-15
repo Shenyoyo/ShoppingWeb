@@ -25,9 +25,12 @@ class UserController extends Controller
         $user = new User([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+            'adress' => $request->input('adress'),
             'password' => bcrypt(($request->input('password'))),
-            'active' => 1,
-            'user_status' => 1
+            'active' => 1,//預設啟用
+            'role_id' => 1,//角色使用者
+            'level' => 0,//預設等級0級
         ]);
         $user->save();
 

@@ -17,8 +17,8 @@ class AddPaidToUsers extends Migration
             $table->string('phone')->nullable();
             $table->string('adress')->nullable();
             $table->float('total_cost')->nullable();
-            $table->string('user_status')->nullable();
             $table->string('role_id')->nullable();
+            $table->string('level')->nullable();
         });
     }
 
@@ -33,8 +33,8 @@ class AddPaidToUsers extends Migration
             $table->dropColumn('phone');
             $table->dropColumn('adress');
             $table->dropColumn('total_cost');
-            $table->dropColumn('user_status');
             $table->dropColumn('role_id');
+            $table->dropColumn('level');
         });
     }
 }
