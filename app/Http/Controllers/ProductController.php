@@ -13,7 +13,7 @@ class ProductController extends Controller
     public function getIndex()
     {
         $products = Product::where('enable', '!=', '0')->get();
-        return view('admin.products', ['products' => $products]);
+        return view('admin/stock.products', ['products' => $products]);
     }
 
     public function destroy($id)
@@ -26,7 +26,7 @@ class ProductController extends Controller
     public function newProduct()
     {
         $categories = Category::all();
-        return view('admin.new', ['categories' => $categories]);
+        return view('admin/stock.new', ['categories' => $categories]);
     }
 
     public function edit($id)
@@ -42,7 +42,7 @@ class ProductController extends Controller
         
         
         $categories = Category::all();
-        return view('admin.edit', ['product' => $product ,'categories' => $categories,'category_id'=> $category_id]);
+        return view('admin/stock.edit', ['product' => $product ,'categories' => $categories,'category_id'=> $category_id]);
     }
 
     public function update(Request $request)
@@ -141,6 +141,6 @@ class ProductController extends Controller
 
         $products = Product::where('name', 'LIKE', '%'.$query.'%')->get();
 
-        return view('admin.products', ['products' => $products]);
+        return view('admin/stock.products', ['products' => $products]);
     }
 }

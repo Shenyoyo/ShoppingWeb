@@ -37,7 +37,7 @@
                        <td>{{$category->display_yn}}</td>
                        <td>
                        <a href="{{route('category.edit',['id' => $category->id ])}}"><button class="btn btn-primary">修改</button></a> 
-                       <a href="{{route('category.destroy',['id' => $category->id ])}}"><button class="btn btn-danger">删除</button></a>
+                       <a href="{{route('category.destroy',['id' => $category->id ])}}" onclick="javascript:return del()"><button class="btn btn-danger">删除</button></a>
                        </td>
                    </tr>
                @endforeach
@@ -45,4 +45,7 @@
            </table>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script  src="{{ asset('js/category.js') }}"></script>
 @endsection
