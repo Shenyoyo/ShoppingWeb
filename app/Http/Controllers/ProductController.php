@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function getIndex()
     {
-        $products = Product::where('enable', '!=','0')->get();
+        $products = Product::where('enable', '!=', '0')->get();
         return view('admin.products', ['products' => $products]);
     }
 
@@ -31,13 +31,18 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-         
         $product = Product::find($id);
-        foreach($product->category as $categorys){
-            $category_id[] = $categorys->id;
+        if (count($product->category) != 0) {
+            foreach ($product->category as $categorys) {
+                $category_id[] = $categorys->id;
+            }
+        } else {
+            $category_id[] ='0';
         }
+        
+        
         $categories = Category::all();
-        return view('admin.edit',['product' => $product ,'categories' => $categories,'category_id'=> $category_id]);
+        return view('admin.edit', ['product' => $product ,'categories' => $categories,'category_id'=> $category_id]);
     }
 
     public function update(Request $request)
@@ -59,7 +64,7 @@ class ProductController extends Controller
         $product->amount = $request->input('amount');
         if (!empty($request->input('display_yn'))) {
             $product->display_yn =$request->input('display_yn');
-        } else { 
+        } else {
             $product->display_yn = "N";
         }
         if (!empty($request->input('buy_yn'))) {
@@ -71,6 +76,12 @@ class ProductController extends Controller
         // $product->file_id = $entry->id;
 
         $product->save();
+
+        $categories = Category::all();
+        $product->category()->detach();//清除相關後在新增
+        foreach ($categories as $category) {
+            $product->category()->attach($request->input($category->name));
+        }
 
         return redirect()->route('admin.products');
     }
@@ -130,6 +141,6 @@ class ProductController extends Controller
 
         $products = Product::where('name', 'LIKE', '%'.$query.'%')->get();
 
-        return view('admin.products',['products' => $products]);
+        return view('admin.products', ['products' => $products]);
     }
 }

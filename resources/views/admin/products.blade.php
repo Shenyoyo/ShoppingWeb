@@ -49,7 +49,8 @@
                        <td>{{$product->file->original_filename}}</td>
                        <td>
                        <a href="{{route('admin.edit',['id' => $product->id ])}}"><button class="btn btn-primary">修改</button></a> 
-                       <a href="{{route('admin.destroy',['id' => $product->id ])}}"><button class="btn btn-danger">删除</button></a>
+                       <a href="{{route('admin.destroy',['id' => $product->id ])}}" onclick="javascript:return del()"><button class="btn btn-danger">删除</button></a>
+                       
                        </td>
                    </tr>
                @endforeach
@@ -57,4 +58,8 @@
            </table>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script  src="{{ asset('js/product.js') }}"></script>
 @endsection
