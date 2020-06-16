@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [
-    'uses' => 'MainController@getIndex',
-    'as'    => 'shop.index'
-]);
-
-Route::group(['prefix' => 'user'], function () {
+//客端網址(購物網前台) 
+Route::group(['domain' => 'shoppingweb.user.com'], function () {
+    Route::get('/', [
+        'uses' => 'MainController@getIndex',
+        'as'    => 'shop.index'
+    ]);
     Route::group(['middleware' => ['guest']], function () {
         Route::get('/signup', [
             'uses' => 'UserController@getSignup',
@@ -56,17 +56,18 @@ Route::group(['prefix' => 'user'], function () {
     });
 });
 
-Route::group(['prefix' => 'admin'], function () {
 
-    Route::get('/login', [
+
+//管端網址(購物網後台)  
+Route::group(['domain' => 'shoppingweb.admin.com'], function () {
+    Route::get('/', [
         'uses' => 'AdminController@getIndex',
         'as'   => 'admin.login'
     ]);
-    Route::post('/login', [
+    Route::post('/', [
         'uses' => 'AdminController@postLogin',
         'as'   => 'admin.login'
     ]);
-
     Route::group(['middleware' => ['adminVerify']], function () {
         Route::get('/logout', [
             'uses' => 'AdminController@getLogout',
@@ -135,11 +136,12 @@ Route::group(['prefix' => 'admin'], function () {
                 'as'   => 'category.search'
             ]);
         });
-        
     });
+});
 
     
-});
+
+    
 
 Auth::routes();
 
