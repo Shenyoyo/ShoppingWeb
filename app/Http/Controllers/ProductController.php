@@ -31,9 +31,13 @@ class ProductController extends Controller
 
     public function edit($id)
     {
+         
         $product = Product::find($id);
+        foreach($product->category as $categorys){
+            $category_id[] = $categorys->id;
+        }
         $categories = Category::all();
-        return view('admin.edit',['product' => $product ,'categories' => $categories]);
+        return view('admin.edit',['product' => $product ,'categories' => $categories,'category_id'=> $category_id]);
     }
 
     public function update(Request $request)

@@ -60,6 +60,20 @@
                             </select>
                         </div>
                     </div> --}}
+                    <div class="form-group ">
+                        <label class="col-md-3 control-label" for="category">分類</label>
+                        <div class="col-md-9" ">
+                     
+                            {{-- @foreach($product->category as $category)
+                            {{ $category->id }}
+                            @endforeach  --}}
+                             {{-- <label class="checkbox-inline">
+                                <input type="checkbox" name="{{$category->name}}" id="inlineCheckbox{{$category->id}}" value="{{$category->id}}">{{$category->name}}
+                            </label> --}}
+                        
+                        
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="display" >商品上架到首頁</label>
                         <div class="col-md-9" style="margin-top: 7px;">
