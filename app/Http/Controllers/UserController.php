@@ -47,7 +47,11 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'email' => 'email|required',
-            'password' => 'required|min:4'
+            'password' => 'required|min:4',
+            'captcha'  => 'required|captcha'
+        ],[
+            'captcha.required' => '驗證碼，不能為空',
+            'captcha.captcha' => '請輸入正确的驗證碼',
         ]);
 
         if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'active' => 1])) {

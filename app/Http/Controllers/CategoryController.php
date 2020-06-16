@@ -24,7 +24,7 @@ class CategoryController extends Controller
         return view('admin/category.edit', ['category' => $category]);
     }
 
-    public function add(Request $request)
+    public function addCategory(Request $request)
     {
         $category = new Category();
         $category->name = $request->input('name');
@@ -38,7 +38,7 @@ class CategoryController extends Controller
         return redirect()->route('category.index');
     }
 
-    public function update(Request $request)
+    public function updateCategory(Request $request)
     {
         $category = Category::find($request->input('id'));
         $category->name = $request->input('name');
@@ -51,12 +51,12 @@ class CategoryController extends Controller
 
         return redirect()->route('category.index');
     }
-    public function destroy($id)
+    public function destroyCategory($id)
     {
         Category::destroy($id);
         return redirect()->route('category.index');
     }
-    public function search(Request $request)
+    public function searchCategory(Request $request)
     {
         $query = $request->input('query');
 

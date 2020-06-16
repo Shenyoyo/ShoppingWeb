@@ -120,22 +120,46 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'as'   => 'category.edit'
             ]);
             Route::post('/add', [
-                'uses' => 'CategoryController@add',
+                'uses' => 'CategoryController@addCategory',
                 'as'   => 'category.add'
             ]);
             Route::post('/update', [
-                'uses' => 'CategoryController@update',
+                'uses' => 'CategoryController@updateCategory',
                 'as'   => 'category.update'
             ]);
             Route::get('/destroy/{id}', [
-                'uses' => 'CategoryController@destroy',
+                'uses' => 'CategoryController@destroyCategory',
                 'as'   => 'category.destroy'
             ]);
             Route::get('/search', [
-                'uses' => 'CategoryController@search',
+                'uses' => 'CategoryController@searchCategory',
                 'as'   => 'category.search'
             ]);
         });
+
+        Route::group(['prefix' => 'level'], function () {
+            Route::get('/', [
+                'uses' => 'LevelController@getIndex',
+                'as'   => 'level.index'
+            ]);
+            Route::get('/new', [
+                'uses' => 'LevelController@newlevel',
+                'as'   => 'level.new'
+            ]);
+            Route::get('/edit/{id}', [
+                'uses' => 'LevelController@editlevel',
+                'as'   => 'level.edit'
+            ]);
+            Route::post('/add', [
+                'uses' => 'LevelController@addlevel',
+                'as'   => 'level.add'
+            ]);
+            Route::post('/update', [
+                'uses' => 'LevelController@updatelevel',
+                'as'   => 'level.update'
+            ]);
+            
+        });    
     });
 });
 
