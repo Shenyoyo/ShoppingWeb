@@ -19,6 +19,12 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
         'uses' => 'MainController@getIndex',
         'as'    => 'shop.index'
     ]);
+    //忘記密碼
+    Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+    Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+    Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+    Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+
     Route::group(['middleware' => ['guest']], function () {
         Route::get('/signup', [
             'uses' => 'UserController@getSignup',
@@ -171,10 +177,4 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
     });
 });
 
-    
 
-    
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
