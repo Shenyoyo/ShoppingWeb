@@ -143,20 +143,28 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'as'   => 'level.index'
             ]);
             Route::get('/new', [
-                'uses' => 'LevelController@newlevel',
+                'uses' => 'LevelController@newLevel',
                 'as'   => 'level.new'
             ]);
             Route::get('/edit/{id}', [
-                'uses' => 'LevelController@editlevel',
+                'uses' => 'LevelController@editLevel',
                 'as'   => 'level.edit'
             ]);
             Route::post('/add', [
-                'uses' => 'LevelController@addlevel',
+                'uses' => 'LevelController@addLevel',
                 'as'   => 'level.add'
             ]);
             Route::post('/update', [
-                'uses' => 'LevelController@updatelevel',
+                'uses' => 'LevelController@updateLevel',
                 'as'   => 'level.update'
+            ]);
+            Route::get('/destroy/{id}', [
+                'uses' => 'LevelController@destroyLevel',
+                'as'   => 'level.destroy'
+            ]);
+            Route::get('/search', [
+                'uses' => 'LevelController@searchLevel',
+                'as'   => 'level.search'
             ]);
             
         });    

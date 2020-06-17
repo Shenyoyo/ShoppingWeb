@@ -16,7 +16,7 @@
 </div>
 <div style="margin-top:20px;">
     <form action="{{route('category.search')}}" method="GET" class="search-form">
-        <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box" placeholder="Search for product">
+        <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box" placeholder="名稱"">
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
 </div>
