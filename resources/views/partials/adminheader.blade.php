@@ -17,7 +17,7 @@
                 <li><a href="{{route('admin.products')}}"></i> 庫存管理</a></li>
                 <li><a href="{{route('category.index')}}"></i> 分類管理</a></li>
                 <li><a href="{{route('level.index')}}"></i> 會員等級管理 </a></li>
-                <li><a href="#"></i> 優惠管理</a></li>
+                <li><a href="{{route('offer.index')}}"></i> 優惠管理</a></li>
                 <li><a href="#"></i> 訂單管理</a></li>
                 <li><a href="#"></i> 會員帳號管理</a></li>
                 

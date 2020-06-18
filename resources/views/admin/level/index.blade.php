@@ -47,11 +47,11 @@
                     <td>
                     {{-- 預設0級不能修改 --}}
                     @if ($level->level != 0)
-                    <a href="{{route('level.edit',['id' => $level->id ])}}"><button class="btn btn-primary">修改</button></a> 
+                    <a href="{{route('level.edit',['id' => $level->level ])}}"><button class="btn btn-primary">修改</button></a> 
                     @endif
                     {{-- 只能從最高等級開始刪，預設0級不能刪 --}}
                     @if ($highestLevel->level == $level->level && $highestLevel->level != 0)
-                       <a href="{{route('level.destroy',['id' => $level->id ])}}" onclick="javascript:return del()"><button class="btn btn-danger">删除</button></a>
+                       <a href="{{route('level.destroy',['id' => $level->level ])}}" onclick="javascript:return del()"><button class="btn btn-danger">删除</button></a>
                     @endif
                     </td>
                 </tr>

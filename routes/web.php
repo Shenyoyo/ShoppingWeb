@@ -29,32 +29,25 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
         Route::get('/signup', [
             'uses' => 'UserController@getSignup',
             'as'    => 'user.signup'
-            
             ]);
-        
         Route::post('/signup', [
             'uses' => 'UserController@postSignup',
             'as'    => 'user.signup',
-            
             ]);
         Route::get('/signin', [
             'uses' => 'UserController@getSignin',
             'as'    => 'user.signin'
-            
             ]);
-        
         Route::post('/signin', [
             'uses' => 'UserController@postSignin',
             'as'    => 'user.signin'
              ]);
     });
-    
     Route::group(['middleware' => ['auth']], function () {
         Route::get('/profile', [
             'uses'  => 'UserController@getProfile' ,
             'as'   => 'user.profile'
             ]);
-        
         Route::get('/logout', [
             'uses' => 'UserController@getLogout',
             'as' => 'user.logout'
@@ -79,8 +72,6 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
             'uses' => 'AdminController@getLogout',
             'as'   => 'admin.logout'
         ]);
-    
-    
         Route::group(['prefix' => 'stock'], function () {
             Route::get('/new', [
                 'uses' => 'ProductController@newProduct',
@@ -173,7 +164,38 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'as'   => 'level.search'
             ]);
             
-        });    
+        });
+        Route::group(['prefix' => 'offer'], function () {
+            Route::get('/', [
+                'uses' => 'OfferController@getIndex',
+                'as'   => 'offer.index'
+            ]);
+            Route::get('/new', [
+                'uses' => 'OfferController@newOffer',
+                'as'   => 'offer.new'
+            ]);
+            Route::get('/edit/{id}', [
+                'uses' => 'OfferController@editOffer',
+                'as'   => 'offer.edit'
+            ]);
+            Route::post('/add', [
+                'uses' => 'OfferController@addOffer',
+                'as'   => 'offer.add'
+            ]);
+            Route::post('/update', [
+                'uses' => 'OfferController@updateOffer',
+                'as'   => 'offer.update'
+            ]);
+            Route::get('/destroy/{id}', [
+                'uses' => 'OfferController@destroyOffer',
+                'as'   => 'offer.destroy'
+            ]);
+            Route::get('/search', [
+                'uses' => 'OfferController@searchOffer',
+                'as'   => 'offer.search'
+            ]);
+            
+        });        
     });
 });
 

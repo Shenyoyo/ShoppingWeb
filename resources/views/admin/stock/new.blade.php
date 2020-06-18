@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    
+新增商品    
 @endsection
 
 @section('content')
