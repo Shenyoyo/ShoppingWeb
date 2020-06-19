@@ -16,8 +16,8 @@ class CreateCashbacksTable extends Migration
         Schema::create('cashbacks', function (Blueprint $table) {
             $table->id();
             $table->integer('offer_id');
-            $table->integer('above');
-            $table->float('percent');
+            $table->integer('above')->nullable();
+            $table->float('percent')->nullable();
             $table->timestamps();
         });
     }

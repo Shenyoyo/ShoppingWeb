@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Offer extends Model
 {
+    public function level()
+    {
+        return $this->belongsTo('App\Level');
+    }
     public function cashback()
     {
         return $this->hasOne('App\Cashback');

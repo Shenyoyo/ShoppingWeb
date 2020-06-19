@@ -4,61 +4,121 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Level;
+use App\Offer;
+use App\Discount;
+use App\Cashback;
+
 class OfferController extends Controller
 {
     public function getIndex()
-    {   
-        return view('admin/offer.index');
+    {
+        $offers = Offer::all();
+        return view('admin/offer.index', ['offers' => $offers]);
     }
     public function newOffer()
     {
-        $levels = Level::all();
+        $offers = Offer::all();
+        if (count($offers) > 0 ) {
+            foreach ($offers as $offer) {
+                $offerLevel[]= $offer->level_level;
+            }
+            //過濾已經建立的VIP等級
+            $levels = Level::whereNotIn('level', $offerLevel)->get();
+        } else {
+            $levels = Level::all();
+        }
+        
+        
         return view('admin/offer.new', ['levels' => $levels]);
     }
     public function editOffer($id)
     {
-        $level = Level::find($id);
-        return view('admin/level.edit', ['level' => $level]);
+        $offer = Offer::find($id);
+        return view('admin/offer.edit', ['offer' => $offer]);
     }
     public function updateOffer(Request $request)
     {
-        $this->validate($request, [
-            'upgrade' => ['required',new UpgradeEditRule($request->input('level'))],
-        ]);
-        $level = Level::find($request->input('id'));
-        $level->description = $request->input('description');
-        $level->upgrade = $request->input('upgrade');
-        $level->save();
-
-        return redirect()->route('level.index');
+        $offer = Offer::find($request->input('id'));
+        if (!empty($request->input('discount_yn'))) {
+            $offer->discount_yn = $request->input('discount_yn');
+            $offer->discount->above = $request->input('discount_above');
+            $offer->discount->percent = $request->input('discount_percent')/100;
+            $offer->discount->save();
+        } else {
+            $offer->discount_yn = 'N';
+        }
+        if (!empty($request->input('cashback_yn'))) {
+            $offer->cashback_yn = $request->input('cashback_yn');
+            $offer->cashback->above = $request->input('cashback_above');
+            $offer->cashback->percent = $request->input('cashback_percent')/100;
+            $offer->cashback->save();
+        } else {
+            $offer->cashback_yn = 'N';
+        }
+        $offer->save();
+        return redirect()->route('offer.index');
     }
 
     public function addOffer(Request $request)
     {
-        $this->validate($request, [
-            'upgrade' => ['required',new UpgradeRule],
-        ]);
-    
-        $levels = new Level();
-        $levels->name = $request->input('name');
-        $levels->description = $request->input('description');
-        $levels->level = $request->input('level');
-        $levels->upgrade = $request->input('upgrade');
-        $levels->save();
+        $offer = new Offer();
+        $offer->level_level = $request->input('level');
+        if (!empty($request->input('discount_yn'))) {
+            $offer->discount_yn = $request->input('discount_yn');
+        } else {
+            $offer->discount_yn = 'N';
+        }
+        if (!empty($request->input('cashback_yn'))) {
+            $offer->cashback_yn = $request->input('cashback_yn');
+        } else {
+            $offer->cashback_yn = 'N';
+        }
 
-        return redirect()->route('level.index');
+        $offer->save();
+
+        if ($offer->discount_yn == 'Y') {
+            $discount = new Discount();
+            $discount->offer_id = $offer->id;
+            $discount->above = $request->input('discount_above');
+            $discount->percent = $request->input('discount_percent')/100;
+            $discount->save();
+        } else {
+            $discount = new Discount();
+            $discount->offer_id = $offer->id;
+            $discount->above = $request->input('discount_above');
+            $discount->percent = $request->input('discount_percent');
+            $discount->save();
+        }
+
+        if ($offer->cashback_yn == 'Y') {
+            $cashback = new Cashback();
+            $cashback->offer_id = $offer->id;
+            $cashback->above = $request->input('cashback_above');
+            $cashback->percent = $request->input('cashback_percent')/100;
+            $cashback->save();
+        } else {
+            $cashback = new Cashback();
+            $cashback->offer_id = $offer->id;
+            $cashback->above = $request->input('cashback_above');
+            $cashback->percent = $request->input('cashback_percent');
+            $cashback->save();
+        }
+
+        return redirect()->route('offer.index');
     }
     public function destroyOffer($id)
     {
-        Level::destroy($id);
-        return redirect()->route('level.index');
+        
+        Offer::find($id)->discount->delete();
+        Offer::find($id)->cashback->delete();
+        Offer::destroy($id);
+
+        return redirect()->route('offer.index');
     }
     public function searchOffer(Request $request)
     {
         $query = $request->input('query');
-        $levels = Level::where('name', 'LIKE', '%'.$query.'%')->get();
-        $highestLevel = Level::orderBy('level', 'desc')->first();
-
-        return view('admin/level.index',['levels' => $levels,'highestLevel' =>$highestLevel]);
+        $offers = Offer::where('name', 'LIKE', '%'.$query.'%')->get();
+        return view('admin/offer.index', ['offers' => $offers]);
     }
 }

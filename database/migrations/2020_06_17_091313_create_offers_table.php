@@ -15,7 +15,7 @@ class CreateOffersTable extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
-            $table->integer('level_id');
+            $table->integer('level_level');
             $table->string('cashback_yn');
             $table->string('discount_yn');
             $table->timestamps();

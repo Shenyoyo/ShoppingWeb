@@ -31,18 +31,18 @@
            <td>操作</td>
            </thead>
            <tbody>
-    {{--            @foreach ($products as $product) --}}
+               @foreach ($offers as $offer)
                    <tr>
-                       <td></td>
-                       <td></td>
-                       <td></td>
-                       <td></td>           
+                       <td>{{$offer->id}}</td>
+                       <td>{{$offer->level->name}}</td>
+                       <td>{{$offer->discount_yn}}</td>
+                       <td>{{$offer->cashback_yn}}</td>           
                        <td>
-                       <a href="#"><button class="btn btn-primary">修改</button></a> 
-                       <a href="#" onclick="javascript:return del()"><button class="btn btn-danger">删除</button></a>
+                       <a href="{{route('offer.edit',['id' => $offer->id ])}}"><button class="btn btn-primary">修改</button></a> 
+                       <a href="{{route('offer.destroy',['id' => $offer->id ])}}" onclick="javascript:return del()"><button class="btn btn-danger">删除</button></a>
                        </td>
                    </tr>
-    {{--            @endforeach --}}
+               @endforeach
            </tbody>
            </table>
     </div>
