@@ -16,9 +16,24 @@
                 {{ session()->get('error_message') }}
             </div>
     @endif
-    <div class="jumbotron text-center clearfix">
-        <h2>嗨嗨這裡是商品區</h2>
-    </div> <!-- end jumbotron -->
+    {{-- 搜尋 篩選 --}}
+    <div class="row">
+        <div class="col-md-3">
+            <form action="{{route('shop.search')}}" method="GET" class="search-form">
+                <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box" placeholder="搜尋">
+                <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
+            </form>
+        </div>
+        <div class="col-md-2 pull-right">
+            <select class="form-control form-control-sm" name="orderby" >
+                <option value="">排序方式</option>
+                <option value="price_asc">價格由低到高</option>
+                <option value="price_desc">價格由高到低</option>
+              </select>
+        </div>
+        
+    </div>
+    <hr>
 
     @foreach ($products->chunk(4) as $items)
         <div class="row">
@@ -28,7 +43,7 @@
                         <div class="caption text-center">
                             <a href="{{ route('shop.show', [$product->id]) }}"><img src="{{$product->imageurl}}" alt="product" class="img-responsive"></a>
                             <a href="{{ route('shop.show', [$product->id]) }}"><h3>{{ $product->name }}</h3>
-                            <p>{{ $product->price }}</p>
+                            <p>${{ $product->price }}</p>
                             </a>
                         </div> <!-- end caption -->
                     </div> <!-- end thumbnail -->

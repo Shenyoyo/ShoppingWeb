@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function getIndex()
     {
-        $products = Product::where('enable', '!=', '0')->get();
+        $products = Product::productEnable()->get();
         return view('admin/stock.products', ['products' => $products]);
     }
 

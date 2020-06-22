@@ -19,8 +19,13 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
         return redirect('shop');
         
     });
-    
+    //商品頁面
     Route::resource('shop', 'MainController', ['only' => ['index', 'show']]);
+    Route::get('/search', [
+        'uses' => 'MainController@search',
+        'as'   => 'shop.search'
+    ]);
+
     //忘記密碼
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
     Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');

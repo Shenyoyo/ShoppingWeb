@@ -27,7 +27,8 @@
             </div>
 
             <div class="col-md-8">
-                <h3>${{ $product->price }}</h3>
+                <h3>價錢：${{ $product->price }}</h3> 
+                <h4>庫存：{{ $product->amount }}</h4>
                 <form action="#" method="POST" class="side-by-side">
                     {!! csrf_field() !!}
                     <input type="hidden" name="id" value="{{ $product->id }}">
@@ -52,10 +53,9 @@
                         <div class="caption text-center">
                             <a href="{{ route('shop.show', [$product->id]) }}"><img src="{{ $product->imageurl}}" alt="product" class="img-responsive"></a>
                             <a href="{{ route('shop.show', [$product->id]) }}"><h3>{{ $product->name }}</h3>
-                            <p>{{ $product->price }}</p>
+                            <p>${{ $product->price }}</p>
                             </a>
                         </div> <!-- end caption -->
-
                     </div> <!-- end thumbnail -->
                 </div> <!-- end col-md-3 -->
             @endforeach
