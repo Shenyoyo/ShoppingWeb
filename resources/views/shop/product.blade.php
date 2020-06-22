@@ -29,7 +29,7 @@
             <div class="col-md-8">
                 <h3>價錢：${{ $product->price }}</h3> 
                 <h4>庫存：{{ $product->amount }}</h4>
-                <form action="#" method="POST" class="side-by-side">
+                <form action="{{ url('/cart') }}" method="POST" class="side-by-side">
                     {!! csrf_field() !!}
                     <input type="hidden" name="id" value="{{ $product->id }}">
                     <input type="hidden" name="name" value="{{ $product->name }}">

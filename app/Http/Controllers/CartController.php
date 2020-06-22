@@ -12,7 +12,7 @@ class CartController extends Controller
 
     public function index()
     {
-        return view('cart');
+        return view('shop/cart');
     }
 
     public function store(Request $request)

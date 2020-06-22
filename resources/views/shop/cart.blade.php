@@ -5,16 +5,20 @@
 @endsection
 
 @section('content')
-    @if (session('status'))
-    <div class="alert alert-success" role="alert">
-        {{ session('status') }}
+    <p><a href="{{ url('shop') }}">Home</a> / Cart</p>
+    <h1>Your Cart</h1>
+    
+    <hr>
+    @if (session()->has('success_message'))
+    <div class="alert alert-success">
+        {{ session()->get('success_message') }}
     </div>
     @endif
 
     @if (session()->has('error_message'))
-            <div class="alert alert-danger">
-                {{ session()->get('error_message') }}
-            </div>
+    <div class="alert alert-danger">
+        {{ session()->get('error_message') }}
+    </div>
     @endif
     @if (sizeof(Cart::content()) > 0)
 

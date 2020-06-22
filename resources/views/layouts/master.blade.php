@@ -5,7 +5,29 @@
     <!-- CSS only -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    
+    <style>
+
+        .spacer {
+            margin-bottom: 100px;
+        }
+
+        .cart-image {
+            width: 100px;
+        }
+
+        footer {
+            background-color: #f5f5f5;
+            padding: 20px 0;
+        }
+
+        .table>tbody>tr>td {
+            vertical-align: middle;
+        }
+
+        .side-by-side {
+            display: inline-block;
+        }
+    </style>
     <title>@yield('title')</title>
     @yield('styles')
 </head>
