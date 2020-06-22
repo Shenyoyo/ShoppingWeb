@@ -25,6 +25,9 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
         'uses' => 'MainController@search',
         'as'   => 'shop.search'
     ]);
+    Route::resource('cart', 'CartController');
+    Route::delete('emptyCart', 'CartController@emptyCart');
+    Route::post('switchToWishlist/{id}', 'CartController@switchToWishlist');
 
     //忘記密碼
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -205,5 +208,6 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
         });        
     });
 });
+
 
 

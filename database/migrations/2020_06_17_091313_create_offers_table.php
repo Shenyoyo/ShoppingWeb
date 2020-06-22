@@ -14,7 +14,7 @@ class CreateOffersTable extends Migration
     public function up()
     {
         Schema::create('offers', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->integer('level_level');
             $table->string('cashback_yn');
             $table->string('discount_yn');
