@@ -15,10 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 //客端網址(購物網前台) 
 Route::group(['domain' => 'shoppingweb.user.com'], function () {
-    Route::get('/', [
-        'uses' => 'MainController@getIndex',
-        'as'    => 'shop.index'
-    ]);
+    Route::get('/', function () {
+        return redirect('shop');
+        
+    });
+    
+    Route::resource('shop', 'MainController', ['only' => ['index', 'show']]);
     //忘記密碼
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
     Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
