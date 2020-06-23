@@ -5,8 +5,8 @@
 @endsection
 
 @section('content')
-    <p><a href="{{ url('shop') }}">Home</a> / Cart</p>
-    <h1>Your Cart</h1>
+    <p><a href="{{ url('shop') }}">首頁</a> / 購物車</p>
+    <h1>購物車</h1>
     
     <hr>
     @if (session()->has('success_message'))
@@ -26,9 +26,9 @@
                 <thead>
                     <tr>
                         <th class="table-image"></th>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
+                        <th>商品</th>
+                        <th>數量</th>
+                        <th>價錢</th>
                         <th class="column-spacer"></th>
                         <th></th>
                     </tr>
@@ -38,8 +38,8 @@
                     @foreach (Cart::content() as $item)
 
                     <tr>
-                        <td class="table-image"><a href="{{ url('shop', [$item->model->slug]) }}"><img src="{{ asset('img/' . $item->model->image) }}" alt="product" class="img-responsive cart-image"></a></td>
-                        <td><a href="{{ url('shop', [$item->model->slug]) }}">{{ $item->name }}</a></td>
+                        <td class="table-image"><a href="{{ url('shop', [$item->model->id]) }}"><img src="{{  $item->model->imageurl }}" alt="product" class="img-responsive cart-image"></a></td>
+                        <td><a href="{{ url('shop', [$item->model->id]) }}">{{ $item->name }}</a></td>
                         <td>
                             <select class="quantity" data-id="{{ $item->rowId }}">
                                 <option {{ $item->qty == 1 ? 'selected' : '' }}>1</option>
@@ -69,7 +69,7 @@
                     <tr>
                         <td class="table-image"></td>
                         <td></td>
-                        <td class="small-caps table-bg" style="text-align: right">Subtotal</td>
+                        <td class="small-caps table-bg" style="text-align: right">小計</td>
                         <td>${{ Cart::instance('default')->subtotal() }}</td>
                         <td></td>
                         <td></td>
@@ -77,7 +77,7 @@
                     <tr>
                         <td class="table-image"></td>
                         <td></td>
-                        <td class="small-caps table-bg" style="text-align: right">Tax</td>
+                        <td class="small-caps table-bg" style="text-align: right">稅</td>
                         <td>${{ Cart::instance('default')->tax() }}</td>
                         <td></td>
                         <td></td>
@@ -86,7 +86,7 @@
                     <tr class="border-bottom">
                         <td class="table-image"></td>
                         <td style="padding: 40px;"></td>
-                        <td class="small-caps table-bg" style="text-align: right">Your Total</td>
+                        <td class="small-caps table-bg" style="text-align: right">總額</td>
                         <td class="table-bg">${{ Cart::total() }}</td>
                         <td class="column-spacer"></td>
                         <td></td>

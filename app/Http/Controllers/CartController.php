@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Product;
 use Illuminate\Http\Request;
 use Boolfalse\LaravelShoppingCart\Facades\Cart;
 use Illuminate\Support\Facades\Validator;
@@ -17,16 +17,17 @@ class CartController extends Controller
 
     public function store(Request $request)
     {
+        //檢查重複商品
         $duplicates = Cart::search(function ($cartItem, $rowId) use ($request) {
             return $cartItem->id === $request->id;
         });
 
         if (!$duplicates->isEmpty()) {
-            return redirect('cart')->withSuccessMessage('Item is already in your cart!');
+            return redirect('cart')->withSuccessMessage('商品已經在購物車了!');
         }
 
-        Cart::add($request->id, $request->name, 1, $request->price)->associate(Product::class);
-        return redirect('cart')->withSuccessMessage('Item was added to your cart!');
+        Cart::add($request->id, $request->name, $request->quantity, $request->price)->associate(Product::class);
+        return redirect('cart')->withSuccessMessage('成功新增到你的購物車了!');
     }
 
     public function update(Request $request, $id)
@@ -60,23 +61,4 @@ class CartController extends Controller
         return redirect('cart')->withSuccessMessage('Your cart has been cleared!');
     }
 
-    public function switchToWishlist($id)
-    {
-        $item = Cart::get($id);
-
-        Cart::remove($id);
-
-        $duplicates = Cart::instance('wishlist')->search(function ($cartItem, $rowId) use ($id) {
-            return $cartItem->id === $id;
-        });
-
-        if (!$duplicates->isEmpty()) {
-            return redirect('cart')->withSuccessMessage('Item is already in your Wishlist!');
-        }
-
-        Cart::instance('wishlist')->add($item->id, $item->name, 1, $item->price)
-                                  ->associate(Product::class);
-
-        return redirect('cart')->withSuccessMessage('Item has been moved to your Wishlist!');
-    }
 }

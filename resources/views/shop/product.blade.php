@@ -34,6 +34,15 @@
                     <input type="hidden" name="id" value="{{ $product->id }}">
                     <input type="hidden" name="name" value="{{ $product->name }}">
                     <input type="hidden" name="price" value="{{ $product->price }}">
+                    <label class="mr-sm-2" >數量:</label>
+                    <select  name="quantity" >
+                    @for ($i = 1; $i <= $product->amount; $i++)
+                    <option value="{{$i}}">{{$i}}</option>    
+                    @endfor    
+                    </select>
+                    <br>
+                    <br>
+                    
                     <input type="submit" class="btn btn-success btn-lg" value="新增至購物車">
                 </form>
                 <br><br>
