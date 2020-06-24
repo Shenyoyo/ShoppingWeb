@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Product;
 use Illuminate\Http\Request;
 use Boolfalse\LaravelShoppingCart\Facades\Cart;
@@ -12,6 +13,7 @@ class CartController extends Controller
 
     public function index()
     {
+        
         return view('shop/cart');
     }
 
@@ -25,8 +27,8 @@ class CartController extends Controller
         if (!$duplicates->isEmpty()) {
             return redirect('cart')->withSuccessMessage('商品已經在購物車了!');
         }
-
         Cart::add($request->id, $request->name, $request->quantity, $request->price)->associate(Product::class);
+        
         return redirect('cart')->withSuccessMessage('成功新增到你的購物車了!');
     }
 
@@ -38,12 +40,12 @@ class CartController extends Controller
         ]);
 
          if ($validator->fails()) {
-            session()->flash('error_message', 'Quantity must be between 1 and 5.');
+            session()->flash('error_message', '請輸入1~5');
             return response()->json(['success' => false]);
          }
 
         Cart::update($id, $request->quantity);
-        session()->flash('success_message', 'Quantity was updated successfully!');
+        session()->flash('success_message', '數量更改成功');
 
         return response()->json(['success' => true]);
 

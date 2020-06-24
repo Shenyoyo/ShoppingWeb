@@ -22,7 +22,7 @@
                         <li><a href="#">英文</a></li>
                     </ul>
                 </li>
-                <li><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> 購物車</a></li>
+                <li><a href="{{ url('/cart') }}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> 購物車 ({{ Cart::instance('default')->count(false) }})</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         @if (Auth::check())   

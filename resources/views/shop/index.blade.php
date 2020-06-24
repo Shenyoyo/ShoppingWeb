@@ -25,10 +25,10 @@
             </form>
         </div>
         <div class="col-md-2 pull-right">
-            <select class="form-control form-control-sm" name="orderby" >
+            <select class="form-control form-control-sm orderby" name="orderby" >
                 <option value="">排序方式</option>
-                <option value="price_asc">價格由低到高</option>
-                <option value="price_desc">價格由高到低</option>
+                <option value="asc">價格由低到高</option>
+                <option value="desc">價格由高到低</option>
               </select>
         </div>
         

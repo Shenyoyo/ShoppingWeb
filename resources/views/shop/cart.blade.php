@@ -41,12 +41,10 @@
                         <td class="table-image"><a href="{{ url('shop', [$item->model->id]) }}"><img src="{{  $item->model->imageurl }}" alt="product" class="img-responsive cart-image"></a></td>
                         <td><a href="{{ url('shop', [$item->model->id]) }}">{{ $item->name }}</a></td>
                         <td>
-                            <select class="quantity" data-id="{{ $item->rowId }}">
-                                <option {{ $item->qty == 1 ? 'selected' : '' }}>1</option>
-                                <option {{ $item->qty == 2 ? 'selected' : '' }}>2</option>
-                                <option {{ $item->qty == 3 ? 'selected' : '' }}>3</option>
-                                <option {{ $item->qty == 4 ? 'selected' : '' }}>4</option>
-                                <option {{ $item->qty == 5 ? 'selected' : '' }}>5</option>
+                            <select class="quantity" data-id="{{ $item->rowId }}" >
+                                @for ($i = 1; $i < 5 + 1 ; $i++)
+                                <option {{ $item->qty == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                @endfor
                             </select>
                         </td>
                         <td>${{ $item->subtotal }}</td>
@@ -55,12 +53,7 @@
                             <form action="{{ url('cart', [$item->rowId]) }}" method="POST" class="side-by-side">
                                 {!! csrf_field() !!}
                                 <input type="hidden" name="_method" value="DELETE">
-                                <input type="submit" class="btn btn-danger btn-sm" value="Remove">
-                            </form>
-
-                            <form action="{{ url('switchToWishlist', [$item->rowId]) }}" method="POST" class="side-by-side">
-                                {!! csrf_field() !!}
-                                <input type="submit" class="btn btn-success btn-sm" value="To Wishlist">
+                                <input type="submit" class="btn btn-danger btn-sm" value="刪除"">
                             </form>
                         </td>
                     </tr>
@@ -77,7 +70,7 @@
                     <tr>
                         <td class="table-image"></td>
                         <td></td>
-                        <td class="small-caps table-bg" style="text-align: right">稅</td>
+                        <td class="small-caps table-bg" style="text-align: right">折</td>
                         <td>${{ Cart::instance('default')->tax() }}</td>
                         <td></td>
                         <td></td>
@@ -95,23 +88,53 @@
                 </tbody>
             </table>
 
-            <a href="{{ url('/shop') }}" class="btn btn-primary btn-lg">Continue Shopping</a> &nbsp;
-            <a href="#" class="btn btn-success btn-lg">Proceed to Checkout</a>
+            <a href="{{ url('/shop') }}" class="btn btn-primary btn-lg">繼 續 購 物</a> &nbsp;
+            <a href="#" class="btn btn-success btn-lg">結 帳</a>
 
             <div style="float:right">
                 <form action="{{ url('/emptyCart') }}" method="POST">
                     {!! csrf_field() !!}
                     <input type="hidden" name="_method" value="DELETE">
-                    <input type="submit" class="btn btn-danger btn-lg" value="Empty Cart">
+                    <input type="submit" class="btn btn-danger btn-lg" value="清空購物車">
                 </form>
             </div>
 
         @else
 
-            <h3>You have no items in your shopping cart</h3>
-            <a href="{{ url('/shop') }}" class="btn btn-primary btn-lg">Continue Shopping</a>
+            <h3>Oops!看來購物車內沒有商品</h3>
+            <br>
+            <a href="{{ url('/shop') }}" class="btn btn-primary btn-lg">去商城逛逛吧～</a>
 
         @endif
 
         <div class="spacer"></div>
+@endsection
+
+@section('scripts')
+<script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        (function(){
+            const classname = document.querySelectorAll('.quantity')
+
+            Array.from(classname).forEach(function(element) {
+                element.addEventListener('change', function() {
+                    const id = element.getAttribute('data-id')
+                    const productQuantity = element.getAttribute('data-productQuantity')
+
+                    axios.patch(`/cart/${id}`, {
+                        quantity: this.value,
+                    })
+                    .then(function (response) {
+                        //  console.log(response);
+                        window.location.href = '{{ route('cart.index') }}'
+                    })
+                    .catch(function (error) {
+                        //  console.log(error);
+                        window.location.href = '{{ route('cart.index') }}'
+                    });
+                })
+            })
+        })();
+    </script>
+    
 @endsection

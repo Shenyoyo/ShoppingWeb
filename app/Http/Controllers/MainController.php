@@ -27,4 +27,8 @@ class MainController extends Controller
         $products = Product::productDisplay()->where('name', 'LIKE', '%'.$query.'%')->get();
         return view('shop.index', ['products' => $products]);
     }
+    public function oderby(Request $request){
+        $products = Product::productDisplay()->orderBy('price', $request->oderby)->get();
+        return view('shop.index', ['products' => $products]);
+    }
 }
