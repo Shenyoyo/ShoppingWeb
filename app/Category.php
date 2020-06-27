@@ -10,4 +10,8 @@ class Category extends Model
     {
         return $this->belongsToMany('App\Product');
     }
+    public function scopeCategoryDisplay($query)
+    {
+        return $query->where('display_yn','=','Y');
+    }
 }

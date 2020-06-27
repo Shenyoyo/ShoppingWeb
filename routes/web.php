@@ -25,9 +25,13 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
         'uses' => 'MainController@search',
         'as'   => 'shop.search'
     ]);
-    Route::patch('/orderby', [
-        'uses' => 'MainController@orderby',
+    Route::get('/orderby/{sort}', [
+        'uses' => 'MainController@orderbyPorduct',
         'as'   => 'shop.orderby'
+    ]);
+    Route::get('/category/{id}', [
+        'uses' => 'MainController@categoryProduct',
+        'as'   => 'shop.category'
     ]);
     Route::resource('cart', 'CartController');
     Route::delete('emptyCart', 'CartController@emptyCart');

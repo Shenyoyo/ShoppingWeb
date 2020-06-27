@@ -24,17 +24,25 @@
                 <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
             </form>
         </div>
-        <div class="col-md-2 pull-right">
-            <select class="form-control form-control-sm orderby" name="orderby" >
-                <option value="">排序方式</option>
-                <option value="asc">價格由低到高</option>
-                <option value="desc">價格由高到低</option>
-              </select>
+        <div class="col-md-3 pull-right">
+                <strong>Price: </strong>
+                <a href="{{ route('shop.orderby', ['sort'=> 'asc'])}}">價錢由低到高</a> 
+                <a href="{{ route('shop.orderby', ['sort'=> 'desc']) }}">價錢由高到低</a>
         </div>
         
     </div>
     <hr>
-
+    <ul class="nav nav-pills">
+        @foreach ($categories as $category)
+        @if ($id == $category->id)
+        <li class="active" ><a href="{{ route('shop.category', ['id' => $category->id]) }}">{{ $category->name }}</a></li>
+        @else
+        <li class="#" ><a href="{{ route('shop.category', ['id' => $category->id]) }}">{{ $category->name }}</a></li>    
+        @endif
+        @endforeach
+        
+    </ul>
+    <br>
     @foreach ($products->chunk(4) as $items)
         <div class="row">
             @foreach ($items as $product)
