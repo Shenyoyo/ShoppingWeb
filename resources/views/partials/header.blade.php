@@ -26,7 +26,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         @if (Auth::check())   
-                        <i class="fa fa-user" aria-hidden="true"></i> {{ Auth::user()->name }} <span class="caret"></span>
+                        $:{{ Auth::user()->dollor->dollor }} <i class="fa fa-user" aria-hidden="true"></i> {{ Auth::user()->name }} <span class="caret"></span>
                         @else
                         <i class="fa fa-user" aria-hidden="true"></i> 使用者 <span class="caret"></span>
                         @endif
