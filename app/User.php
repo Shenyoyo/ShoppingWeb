@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-         'name','email', 'password','active','role_id','phone','adress','level_id','total_cost'
+         'name','email', 'password','active','role_id','phone','adress','level_level','total_cost'
     ];
 
     /**
@@ -36,4 +36,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function level()
+    {
+        return $this->belongsTo('App\Level');
+    }
+    public function dollor()
+    {
+        return $this->hasone('App\Dollor');
+    }
+
 }

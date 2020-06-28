@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Dollor;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -30,10 +31,16 @@ class UserController extends Controller
             'password' => bcrypt(($request->input('password'))),
             'active' => 1,//預設啟用
             'role_id' => 1,//角色使用者
-            'level_id' => 0,//預設等級0級
+            'level_level' => 0,//預設等級0級
             'total_cost' => 0,//預設總消費0
         ]);
         $user->save();
+
+        $dollor = new Dollor();
+        $dollor->user_id = $user->id;
+        $dollor->dollor = 0;
+        $dollor->save();
+
 
         Auth::login($user);
 

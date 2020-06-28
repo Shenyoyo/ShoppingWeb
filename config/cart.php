@@ -2,7 +2,7 @@
 
 return [
 
-    'product_model' => 'App\Models\Product', //ss
+    'product_model' => 'App\Models\Product', //
 
     /*
     |--------------------------------------------------------------------------
@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'tax' => 21,
+    'tax' => 0,
 
     /*
     |--------------------------------------------------------------------------
@@ -62,7 +62,7 @@ return [
 
         'decimal_point' => '.',
 
-        'thousand_seperator' => ','
+        'thousand_seperator' => ''
 
     ],
 

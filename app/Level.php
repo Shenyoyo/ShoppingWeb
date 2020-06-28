@@ -14,6 +14,6 @@ class Level extends Model
     }
     public function offer()
     {
-        return $this->hasOne('APP\Offer');
+        return $this->hasOne('App\Offer');
     }
 }

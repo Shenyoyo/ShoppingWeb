@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\User;
+use App\Level;
 use App\Product;
 use Illuminate\Http\Request;
 use Boolfalse\LaravelShoppingCart\Facades\Cart;
@@ -10,11 +12,32 @@ use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
-
     public function index()
     {
-        
-        return view('shop/cart');
+        $dollor_yn =  '';
+        $offer = Auth::user()->level->offer;
+        $discount_yn = $offer->discount_yn;
+        $above = $offer->discount->above;
+        $discount = $offer->discount->percent;
+        $dollor = Auth::user()->dollor;
+        $newSubtotal = Cart::subtotal();
+        if ($newSubtotal < 0) {
+            $newSubtotal = 0;
+        }
+        if ($newSubtotal < $above || $discount_yn !='Y') {
+            $newTotal = $newSubtotal;
+        } else {
+            $newTotal = $newSubtotal * $discount;
+        }
+        $discountMoney = $newSubtotal -$newTotal;
+        return view('shop/cart')->with([
+            'dollor_yn' => $dollor_yn,
+            'dollor' => $dollor,
+            'discount' => $discount,
+            'newSubtotal' => $newSubtotal,
+            'discountMoney' => $discountMoney,
+            'newTotal' => $newTotal,
+        ]);
     }
 
     public function store(Request $request)
@@ -39,28 +62,65 @@ class CartController extends Controller
             'quantity' => 'required|numeric|between:1,5'
         ]);
 
-         if ($validator->fails()) {
+        if ($validator->fails()) {
             session()->flash('error_message', '請輸入1~5');
             return response()->json(['success' => false]);
-         }
+        }
 
         Cart::update($id, $request->quantity);
         session()->flash('success_message', '數量更改成功');
 
         return response()->json(['success' => true]);
-
     }
 
     public function destroy($id)
     {
         Cart::remove($id);
-        return redirect('cart')->withSuccessMessage('Item has been removed!');
+        return redirect('cart')->withSuccessMessage('商品已經刪除');
     }
 
     public function emptyCart()
     {
         Cart::destroy();
-        return redirect('cart')->withSuccessMessage('Your cart has been cleared!');
+        return redirect('cart')->withSuccessMessage('購物車已清空');
     }
 
+    public function dollor(Request $request)
+    {
+        $dollor_yn =  $request->dollor_yn;
+        $offer = Auth::user()->level->offer;
+        $discount_yn = $offer->discount_yn;
+        $above = $offer->discount->above;
+        $discount = $offer->discount->percent;
+        $dollor = Auth::user()->dollor;
+        $newSubtotal = Cart::subtotal();
+        if ($newSubtotal < 0) {
+            $newSubtotal = 0;
+        }
+        if ($newSubtotal < $above || $discount_yn !='Y') {
+            $newTotal = $newSubtotal;
+        } else {
+            $newTotal = $newSubtotal * $discount;
+        }
+        $discountMoney = $newSubtotal -$newTotal;
+
+        if ($dollor_yn == 'Y') {
+            $newTotal =  $newTotal-$dollor->dollor;
+            if ($newTotal < 0) {
+                $dollor->dollor = abs($newTotal);
+                $newTotal = 0;
+            } else {
+                $dollor->dollor=0;
+            }
+        }
+
+        return view('shop/cart')->with([
+            'dollor_yn' => $dollor_yn,
+            'dollor' =>  $dollor,
+            'discount' => $discount,
+            'newSubtotal' => $newSubtotal,
+            'discountMoney' => $discountMoney,
+            'newTotal' => $newTotal,
+        ]);
+    }
 }

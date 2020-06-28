@@ -7,7 +7,7 @@
     <div class="col-md-4 col-md-offset-4">
     <h1>註 冊</h1>
     @if (count($errors) > 0)
-    <div class="alert alert-dange">
+    <div class="alert alert-danger">
         @foreach ($errors->all() as $errors)
             <p>{{ $errors }}</p>    
         @endforeach

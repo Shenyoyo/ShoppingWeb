@@ -30,7 +30,7 @@
                         <th>數量</th>
                         <th>價錢</th>
                         <th class="column-spacer"></th>
-                        <th></th>
+                        <th>操作</th>
                     </tr>
                 </thead>
 
@@ -47,7 +47,7 @@
                                 @endfor
                             </select>
                         </td>
-                        <td>${{ $item->subtotal }}</td>
+                        <td>${{ presentPrice($item->subtotal) }}</td>
                         <td class=""></td>
                         <td>
                             <form action="{{ url('cart', [$item->rowId]) }}" method="POST" class="side-by-side">
@@ -63,15 +63,33 @@
                         <td class="table-image"></td>
                         <td></td>
                         <td class="small-caps table-bg" style="text-align: right">小計</td>
-                        <td>${{ Cart::instance('default')->subtotal() }}</td>
+                        <td>${{ $newSubtotal }}</td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td class="table-image"></td>
                         <td></td>
-                        <td class="small-caps table-bg" style="text-align: right">折</td>
-                        <td>${{ Cart::instance('default')->tax() }}</td>
+                        <td class="small-caps table-bg" style="text-align: right">{{$discount*100 }}折</td>
+                        <td>-${{ $discountMoney }}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="table-image"></td>
+                        <td></td>
+                        <td class="small-caps table-bg" style="text-align: right">
+                            <form action="{{ route('cart.dollor') }}" method="POST" class="side-by-side">
+                                {!! csrf_field() !!}
+                                @if ($dollor_yn == 'Y')
+                                <p><input type="checkbox" name="dollor_yn" value="Y" onchange="this.form.submit()" checked>是否使用虛擬幣<p>    
+                                @else
+                                <p><input type="checkbox" name="dollor_yn" value="Y" onchange="this.form.submit()">是否使用虛擬幣<p>
+                                @endif
+                                
+                            </form>
+                        </td>
+                        <td>${{ $dollor->dollor }}</td>
                         <td></td>
                         <td></td>
                     </tr>
@@ -80,7 +98,7 @@
                         <td class="table-image"></td>
                         <td style="padding: 40px;"></td>
                         <td class="small-caps table-bg" style="text-align: right">總額</td>
-                        <td class="table-bg">${{ Cart::total() }}</td>
+                        <td class="table-bg">${{ $newTotal }}</td>
                         <td class="column-spacer"></td>
                         <td></td>
                     </tr>
