@@ -27,7 +27,7 @@ class UserController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'phone' => $request->input('phone'),
-            'adress' => $request->input('adress'),
+            'address' => $request->input('address'),
             'password' => bcrypt(($request->input('password'))),
             'active' => 1,//預設啟用
             'role_id' => 1,//角色使用者

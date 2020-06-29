@@ -42,7 +42,7 @@
                         <td><a href="{{ url('shop', [$item->model->id]) }}">{{ $item->name }}</a></td>
                         <td>
                             <select class="quantity" data-id="{{ $item->rowId }}" >
-                                @for ($i = 1; $i < 5 + 1 ; $i++)
+                                @for ($i = 1; $i <= $item->model->amount ; $i++)
                                 <option {{ $item->qty == $i ? 'selected' : '' }}>{{ $i }}</option>
                                 @endfor
                             </select>
@@ -67,14 +67,19 @@
                         <td></td>
                         <td></td>
                     </tr>
+                    @if (Auth::user()->level->offer->discount_yn == 'Y')
                     <tr>
                         <td class="table-image"></td>
                         <td></td>
-                        <td class="small-caps table-bg" style="text-align: right">{{$discount*100 }}折</td>
+                        <td class="small-caps table-bg" style="text-align: right">
+                            {{Auth::user()->level->name}}消費滿{{$discount->above}}以上享{{$discount->percent*100 }}折
+                        </td>
                         <td>-${{ $discountMoney }}</td>
                         <td></td>
                         <td></td>
                     </tr>
+                    @endif
+                    
                     <tr>
                         <td class="table-image"></td>
                         <td></td>
@@ -105,9 +110,18 @@
 
                 </tbody>
             </table>
-
+            <div style="float:left">
             <a href="{{ url('/shop') }}" class="btn btn-primary btn-lg">繼 續 購 物</a> &nbsp;
-            <a href="#" class="btn btn-success btn-lg">結 帳</a>
+            </div>
+            {{-- <a href="#" class="btn btn-success btn-lg">結 帳</a> --}}
+            <div style="float:left">
+            <form action="{{route('cart.checkout')}}" method="POST">
+                {!! csrf_field() !!}
+                <input type="hidden" name="dollor" value="{{ $dollor->dollor }}">
+                <input type="hidden" name="newTotal" value="{{ $newTotal }}">
+                <input type="submit" class="btn btn-success btn-lg" value="結 帳">
+            </form>
+            </div>
 
             <div style="float:right">
                 <form action="{{ url('/emptyCart') }}" method="POST">

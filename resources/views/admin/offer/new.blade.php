@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="form-group ">
-                        <label class="col-md-3 control-label" for="discount_above">消費未滿</label>
+                        <label class="col-md-3 control-label" for="discount_above">消費滿額</label>
                         <div class="col-md-2" ">
                             <input id="discount_above" name="discount_above" type="text"  class="form-control input-md group1" required="" oninput = "value=value.replace(/[^\d]/g,'')"  autocomplete="off">
                         </div>

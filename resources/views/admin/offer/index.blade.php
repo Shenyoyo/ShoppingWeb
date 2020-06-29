@@ -39,7 +39,10 @@
                        <td>{{$offer->cashback_yn}}</td>           
                        <td>
                        <a href="{{route('offer.edit',['id' => $offer->id ])}}"><button class="btn btn-primary">修改</button></a> 
+                       {{-- VIP0優惠只能修改不能刪除 --}}
+                       @if ($offer->level->name != 'VIP0')
                        <a href="{{route('offer.destroy',['id' => $offer->id ])}}" onclick="javascript:return del()"><button class="btn btn-danger">删除</button></a>
+                       @endif
                        </td>
                    </tr>
                @endforeach

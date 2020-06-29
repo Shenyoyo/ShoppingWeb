@@ -15,10 +15,10 @@ class AddPaidToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('phone')->nullable();
-            $table->string('adress')->nullable();
+            $table->string('address')->nullable();
             $table->float('total_cost')->nullable();
             $table->integer('role_id');
-            $table->integer('level_id');
+            $table->integer('level_level');
         });
     }
 
@@ -31,10 +31,10 @@ class AddPaidToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('phone');
-            $table->dropColumn('adress');
+            $table->dropColumn('address');
             $table->dropColumn('total_cost');
             $table->dropColumn('role_id');
-            $table->dropColumn('level_id');
+            $table->dropColumn('level_level');
         });
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
 use Carbon\Carbon;
-use Auth;
 function presentPrice($price)
 {
     return number_format($price);

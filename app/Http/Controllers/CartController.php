@@ -6,6 +6,7 @@ use Auth;
 use App\User;
 use App\Level;
 use App\Product;
+use Session;
 use Illuminate\Http\Request;
 use Boolfalse\LaravelShoppingCart\Facades\Cart;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,7 @@ class CartController extends Controller
         $offer = Auth::user()->level->offer;
         $discount_yn = $offer->discount_yn;
         $above = $offer->discount->above;
-        $discount = $offer->discount->percent;
+        $discount = $offer->discount;
         $dollor = Auth::user()->dollor;
         $newSubtotal = Cart::subtotal();
         if ($newSubtotal < 0) {
@@ -27,7 +28,7 @@ class CartController extends Controller
         if ($newSubtotal < $above || $discount_yn !='Y') {
             $newTotal = $newSubtotal;
         } else {
-            $newTotal = $newSubtotal * $discount;
+            $newTotal = $newSubtotal * $discount->percent;
         }
         $discountMoney = $newSubtotal -$newTotal;
         return view('shop/cart')->with([
@@ -59,11 +60,11 @@ class CartController extends Controller
     {
         // Validation on max quantity
         $validator = Validator::make($request->all(), [
-            'quantity' => 'required|numeric|between:1,5'
+            'quantity' => 'required|numeric'
         ]);
 
         if ($validator->fails()) {
-            session()->flash('error_message', '請輸入1~5');
+            session()->flash('error_message', '錯誤數量請聯絡管理員');
             return response()->json(['success' => false]);
         }
 
@@ -91,7 +92,7 @@ class CartController extends Controller
         $offer = Auth::user()->level->offer;
         $discount_yn = $offer->discount_yn;
         $above = $offer->discount->above;
-        $discount = $offer->discount->percent;
+        $discount = $offer->discount;
         $dollor = Auth::user()->dollor;
         $newSubtotal = Cart::subtotal();
         if ($newSubtotal < 0) {
@@ -100,7 +101,7 @@ class CartController extends Controller
         if ($newSubtotal < $above || $discount_yn !='Y') {
             $newTotal = $newSubtotal;
         } else {
-            $newTotal = $newSubtotal * $discount;
+            $newTotal = $newSubtotal * $discount->percent;
         }
         $discountMoney = $newSubtotal -$newTotal;
 
@@ -122,5 +123,24 @@ class CartController extends Controller
             'discountMoney' => $discountMoney,
             'newTotal' => $newTotal,
         ]);
+    }
+
+    public function checkout(Request $request)
+    {
+        if (sizeof(Cart::content()) < 0) {
+            return view('shop.cart');
+        }
+        $newTotal = $request->newTotal;
+        $dollor = $request->dollor;
+        Auth::user()->dollor->dollor = $dollor;
+        return view('shop.checkout')->with([
+            'newTotal' => $newTotal,
+            'dollor' => $dollor,
+        ]);
+    }
+
+    public function buy(Request $request)
+    {
+        
     }
 }

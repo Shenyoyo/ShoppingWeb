@@ -29,7 +29,7 @@
         </div>
         <div class="form-group">
             <label for="email">地 址</label>
-            <input type="text" id="adress" name="adress" class="form-control" placeholder="台中市....">
+            <input type="text" id="address" name="address" class="form-control" placeholder="台中市....">
         </div>
         <div class="form-group">
             <label for="password">密 碼</label>
