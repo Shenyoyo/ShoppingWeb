@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Dollor;
+use App\Order;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -71,6 +72,17 @@ class UserController extends Controller
     public function getProfile()
     {
         return view('user.profile');
+    }
+    public function getOrder()
+    {
+        $orders = Auth::user()->order;
+       
+
+        // $test = Order::find(1)->orderDetail;
+        // echo $test;
+        return view('user.order')->with([
+            'orders' => $orders,
+        ]);
     }
 
     public function getLogout()

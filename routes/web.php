@@ -38,6 +38,7 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
     Route::patch('/cart/{id}', 'CartController@update')->name('cart.update');
     Route::post('/cart/dollor', 'CartController@dollor')->name('cart.dollor');
     Route::post('/cart/checkout','CartController@checkout')->name('cart.checkout');
+    Route::post('/cart/buy','CartController@buy')->name('cart.buy');
 
     //忘記密碼
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -68,6 +69,10 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
             'uses'  => 'UserController@getProfile' ,
             'as'   => 'user.profile'
             ]);
+        Route::get('/order', [
+                'uses'  => 'UserController@getOrder' ,
+                'as'   => 'user.order'
+            ]);            
         Route::get('/logout', [
             'uses' => 'UserController@getLogout',
             'as' => 'user.logout'

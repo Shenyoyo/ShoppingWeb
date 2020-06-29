@@ -122,16 +122,7 @@ class ProductController extends Controller
         foreach ($categories as $category) {
             $product->category()->attach($request->input($category->name));
         }
-
-
-
         // $product->category_id = $request->input('category_id');
-        
-        
-        
-
-        
-
         return redirect()->route('admin.products');
     }
 

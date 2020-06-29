@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 use Auth;
-use App\User;
-use App\Level;
+use App\Order;
+use App\OrderDetail;
 use App\Product;
-use Session;
 use Illuminate\Http\Request;
 use Boolfalse\LaravelShoppingCart\Facades\Cart;
 use Illuminate\Support\Facades\Validator;
@@ -30,6 +30,8 @@ class CartController extends Controller
         } else {
             $newTotal = $newSubtotal * $discount->percent;
         }
+        //計入若退貨需要返回的錢
+        $recordReturnTotal = $newTotal;
         $discountMoney = $newSubtotal -$newTotal;
         return view('shop/cart')->with([
             'dollor_yn' => $dollor_yn,
@@ -38,6 +40,7 @@ class CartController extends Controller
             'newSubtotal' => $newSubtotal,
             'discountMoney' => $discountMoney,
             'newTotal' => $newTotal,
+            'recordReturnTotal' => $recordReturnTotal,
         ]);
     }
 
@@ -104,6 +107,8 @@ class CartController extends Controller
             $newTotal = $newSubtotal * $discount->percent;
         }
         $discountMoney = $newSubtotal -$newTotal;
+        //計入若退貨需要返回的錢
+        $recordReturnTotal = $newTotal;
 
         if ($dollor_yn == 'Y') {
             $newTotal =  $newTotal-$dollor->dollor;
@@ -122,6 +127,7 @@ class CartController extends Controller
             'newSubtotal' => $newSubtotal,
             'discountMoney' => $discountMoney,
             'newTotal' => $newTotal,
+            'recordReturnTotal' => $recordReturnTotal,
         ]);
     }
 
@@ -132,15 +138,45 @@ class CartController extends Controller
         }
         $newTotal = $request->newTotal;
         $dollor = $request->dollor;
+        //顯示與上方
+        $recordReturnTotal = $request->recordReturnTotal;
         Auth::user()->dollor->dollor = $dollor;
+        // echo $request->recordReturnTotal;
         return view('shop.checkout')->with([
             'newTotal' => $newTotal,
             'dollor' => $dollor,
+            'recordReturnTotal' => $recordReturnTotal,
         ]);
     }
 
     public function buy(Request $request)
     {
-        
+        //setp.1 更新會員虛擬幣
+        $dollor =Auth::user()->dollor;
+        $dollor->dollor = $request->dollor;
+        $dollor->save();
+        //setp.2 建立訂單
+        $order = new Order;
+        $order->record = $request->recordReturnTotal;//紀錄退貨金額使用
+        $order->total = $request->newTotal;
+        $order->receiver = $request->receiver;
+        $order->receiver_address = $request->receiverAddress;
+        $order->status = 1 ;//1.訂單確認中 2.送貨中 3.已簽收 4.退貨
+        Auth::user()->order()->save($order);
+        //setp.3 建立訂單明細
+        foreach (Cart::content() as $item) {
+            $orderDetail = new OrderDetail;
+            $orderDetail->order_id = $order->id;
+            $orderDetail->product_id = $item->model->id;
+            $orderDetail->quantity = $item->qty;
+            $orderDetail->price =$item->subtotal;
+            $orderDetail->save();
+            //更新庫存，減去賣出去的商品
+            $product = Product::find($orderDetail->product_id);
+            $product->amount = ($product->amount) - ($orderDetail->quantity);
+            $product->save();
+        }
+
+
     }
 }

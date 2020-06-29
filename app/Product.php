@@ -16,14 +16,19 @@ class Product extends Model
         return $this->belongsToMany('App\Category');
     }
 
+    public function OrderDetail()
+    {
+        return $this->hasOne('App\OrderDetails');
+    }
+
+
     public function scopeProductEnable($query)
     {
-        return $query->where('enable','!=' ,'0');
+        return $query->where('enable', '!=', '0');
     }
     
     public function scopeProductDisplay($query)
     {
-        return $query->where('enable','!=' ,'0')->where('display_yn','=','Y');
+        return $query->where('enable', '!=', '0')->where('display_yn', '=', 'Y');
     }
-
 }

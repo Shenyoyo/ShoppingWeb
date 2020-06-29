@@ -15,22 +15,25 @@
             {{ session()->get('error_message') }}
             </div>
             @endif
-            <form action="#" method="post" id="checkout-form">
+            <form action="{{route('cart.buy')}}" method="post" id="checkout-form">
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="form-group">
                             <label for="name">收件人</label>
-                            <input type="text" id="name" class="form-control" required name="name" value="{{Auth::user()->name}}">
+                            <input type="text" id="receiver" class="form-control" required name="receiver" value="{{Auth::user()->name}}">
                         </div>
                     </div>
                     <div class="col-xs-12">
                         <div class="form-group">
                             <label for="address">收件地址</label>
-                            <input type="text" id="address" class="form-control" required name="address" value="{{Auth::user()->address}}">
+                            <input type="text" id="receiverAddress" class="form-control" required name="receiverAddress" value="{{Auth::user()->address}}">
                         </div>
                     </div>
                     <hr>
-                </div>    
+                </div>
+                <input type="hidden" name="newTotal"" value="{{ $newTotal }}"> 
+                <input type="hidden" name="dollor"" value="{{ $dollor }}">    
+                <input type="hidden" name="recordReturnTotal" value="{{ $recordReturnTotal }}">
                 {{ csrf_field() }}
                 <a href="{{ url('cart')}}" class="btn btn-danger ">取消</a> &nbsp;
                 <button type="submit" class="btn btn-success pull-right">購買</button>
