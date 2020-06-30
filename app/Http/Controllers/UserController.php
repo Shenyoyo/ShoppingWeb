@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Cashback;
+use App\Level;
 use App\User;
 use App\Dollor;
 use App\Order;
@@ -58,7 +60,7 @@ class UserController extends Controller
             'email' => 'email|required',
             'password' => 'required|min:4',
             'captcha'  => 'required|captcha'
-        ],[
+        ], [
             'captcha.required' => '驗證碼，不能為空',
             'captcha.captcha' => '請輸入正确的驗證碼',
         ]);
@@ -75,11 +77,45 @@ class UserController extends Controller
     }
     public function getOrder()
     {
-        $orders = Auth::user()->order()->orderBy('id','desc')->get();
+        $orders = Auth::user()->order()->orderBy('id', 'desc')->get();
         
         return view('user.order')->with([
             'orders' => $orders,
         ]);
+    }
+    public function confirmOrder($id)
+    {
+        // step.1 更改商品狀態
+        $order = Order::find($id);
+        $order->status = '3';//已簽收
+        $order->save();
+        // step.2 虛擬幣回饋確認
+        $user = Auth::user();
+        $cashback_yn = $user->level->offer->cashback_yn;
+        $cashbackAbove = $user->level->offer->cashback->above;
+        if ($cashback_yn == 'Y' && $order->total >= $cashbackAbove) {
+            $cashbackPercent = $user->level->offer->cashback->percent;
+            $cashbackDollor = round($order->total * $cashbackPercent);
+            $userDollor = $user->dollor;
+            $userDollor->dollor = $userDollor->dollor + $cashbackDollor ; //給予虛擬幣回饋
+            $userDollor->save();
+        }
+        // step.3 累計用戶消費總額
+        $user->total_cost = $user->total_cost + $order->total;
+        $user->save();
+        // setp.4 會員晉升
+        $nextLevel = $user->level_level+1;
+        $nextLevelUpgrade = Level::find($nextLevel)->upgrade;
+        //有設定才會升等 
+        if (!empty($nextLevelUpgrade)) {
+            if ($user->total_cost > $nextLevelUpgrade) {
+                //不能跳級
+                $user->level_level = $nextLevel;
+                $user->save();
+            }
+        }
+       
+        return redirect()->route('user.order');
     }
 
     public function getLogout()

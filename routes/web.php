@@ -72,7 +72,11 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
         Route::get('/order', [
                 'uses'  => 'UserController@getOrder' ,
                 'as'   => 'user.order'
-            ]);            
+            ]); 
+        Route::get('/confirm/{id}', [
+                'uses'  => 'UserController@confirmOrder' ,
+                'as'   => 'user.confirm'
+            ]);             
         Route::get('/logout', [
             'uses' => 'UserController@getLogout',
             'as' => 'user.logout'

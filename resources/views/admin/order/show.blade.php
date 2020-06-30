@@ -61,7 +61,7 @@
           虛擬幣回饋{{$user->level->offer->cashback->percent *100}}%
         </td>
             @if ($order->total > $user->level->offer->cashback->above)
-            <td style="padding-top: 18px;" colspan="3" >${{ $order->total * $user->level->offer->cashback->percent }}</td>   
+            <td style="padding-top: 18px;" colspan="3" >${{ round($order->total * $user->level->offer->cashback->percent) }}</td>   
             @else
             <td style="padding-top: 18px;" colspan="3" >${{ $order->total * 0 }}</td>     
             @endif

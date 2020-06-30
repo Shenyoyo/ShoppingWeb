@@ -50,9 +50,15 @@
                                   <td rowspan="{{ count($order->orderDetail) }}" class="text-center border">
               
                                     {{-- 訂單 --}}
-                                    <a class="btn btn-primary btn-sm" href="#">
-                                      查看訂單
-                                    </a>
+                                    @if ($order->status == '1')
+                                    <a class="btn btn-primary btn-sm" href="#">查看訂單</a>
+                                    @elseif(($order->status == '2'))
+                                    <a class="btn btn-success btn-sm" href="{{route('user.confirm',['id' => $order->id ])}}">確認簽收</a><br><br>
+                                    <a class="btn btn-primary btn-sm" href="#">查看訂單</a>
+                                    @else
+                                    <a class="btn btn-primary btn-sm" href="#">查看訂單</a>
+                                    @endif
+                                    
                                   </td>
                                   @endif
                                 </tr>
