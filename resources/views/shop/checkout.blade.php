@@ -9,7 +9,7 @@
         <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
             <h1>結 帳-貨到付款</h1>
             <h4>數 量： {{Cart::instance('default')->count(false)}} 件商品</h4>
-            <h4>總 額： ${{ $newTotal }}元</h4>
+            <h4>總 額： ${{  presentPrice($newTotal) }}元</h4>
             @if (session()->has('error_message'))
             <div class="alert alert-danger">
             {{ session()->get('error_message') }}

@@ -9,6 +9,7 @@ use App\Dollor;
 use App\Order;
 use Illuminate\Http\Request;
 use Auth;
+use Boolfalse\LaravelShoppingCart\Facades\Cart;
 
 class UserController extends Controller
 {
@@ -66,6 +67,7 @@ class UserController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'active' => 1])) {
+            Cart::restore(Auth::user()->name);
             return redirect()->back();
         }
         return redirect()->back();
@@ -120,6 +122,8 @@ class UserController extends Controller
 
     public function getLogout()
     {
+        //清除購物車
+        Cart::destroy();
         Auth::logout();
         return redirect()->back();
     }

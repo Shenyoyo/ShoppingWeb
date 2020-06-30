@@ -64,22 +64,25 @@
                         <td class="table-image"></td>
                         <td></td>
                         <td class="small-caps table-bg" style="text-align: right">小計</td>
-                        <td>${{ $newSubtotal }}</td>
+                        <td>${{ presentPrice($newSubtotal) }}</td>
                         <td></td>
                         <td></td>
                     </tr>
-                    @if (Auth::user()->level->offer->discount_yn == 'Y')
-                    <tr>
-                        <td class="table-image"></td>
-                        <td></td>
-                        <td class="small-caps table-bg" style="text-align: right">
-                            {{Auth::user()->level->name}}消費滿{{$discount->above}}以上享{{$discount->percent*100 }}折
-                        </td>
-                        <td>-${{ $discountMoney }}</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    @if (!empty(Auth::user()->level->offer->discount_yn))
+                        @if (Auth::user()->level->offer->discount_yn == 'Y')
+                        <tr>
+                            <td class="table-image"></td>
+                            <td></td>
+                            <td class="small-caps table-bg" style="text-align: right">
+                                {{Auth::user()->level->name}}消費滿{{$above}}以上享{{$percent*100 }}折
+                            </td>
+                            <td>-${{ presentPrice($discountMoney) }}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        @endif
                     @endif
+                   
                     
                     <tr>
                         <td class="table-image"></td>
@@ -95,7 +98,7 @@
                                 
                             </form>
                         </td>
-                        <td>${{ $dollor->dollor }}</td>
+                        <td>${{ presentPrice($dollor->dollor) }}</td>
                         <td></td>
                         <td></td>
                     </tr>
@@ -104,7 +107,7 @@
                         <td class="table-image"></td>
                         <td style="padding: 40px;"></td>
                         <td class="small-caps table-bg" style="text-align: right">總額</td>
-                        <td class="table-bg">${{ $newTotal }}</td>
+                        <td class="table-bg">${{ presentPrice($newTotal) }}</td>
                         <td class="column-spacer"></td>
                         <td></td>
                     </tr>
@@ -114,7 +117,6 @@
             <div style="float:left">
             <a href="{{ url('/shop') }}" class="btn btn-primary btn-lg">繼 續 購 物</a> &nbsp;
             </div>
-            {{-- <a href="#" class="btn btn-success btn-lg">結 帳</a> --}}
             <div style="float:left">
             <form action="{{route('cart.checkout')}}" method="POST">
                 {!! csrf_field() !!}

@@ -34,7 +34,7 @@
                    <tr>
                        <td>{{$order->id}}</td>
                        <td>{{$order->user->name}}</td>
-                       <td>{{$order->total}}</td>
+                       <td>{{presentPrice($order->total)}}</td>
                        <td>{{$order->receiver}}</td>           
                        <td>{{$order->receiver_address}}</td>           
                        <td>{{$order->created_at}}</td>           

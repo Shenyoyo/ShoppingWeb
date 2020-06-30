@@ -17,7 +17,6 @@ class MainController extends Controller
     }
 
     public function show($id)
-    
     {
         $product = Product::productDisplay()->where('id', $id)->firstOrFail();
         $interested = Product::productDisplay()->where('id', '!=', $id)->get()->random(4);

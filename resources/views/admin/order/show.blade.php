@@ -42,43 +42,46 @@
         <td>
           <div>{{ $item->product->name }}</div>
         </td>
-        <td>${{ $item->price }}</td>
+        <td>${{ presentPrice($item->price) }}</td>
         <td>{{ $item->quantity }}</td>
       </tr>
       @endforeach
 
       <tr>
         <td>訂單金額：</td>
-        <td>${{ $order->total }}</td>
+        <td>${{ presentPrice($order->total) }}</td>
         <td>訂單狀態：</td>
         <td>{{  orderStatus($order->status) }}</td>
       </tr>
 
       <tr>
-        
-        @if ($user->level->offer->cashback_yn == 'Y')
-        <td>{{$user->level->name}}滿額{{$user->level->offer->cashback->above}}以上<br>
-          虛擬幣回饋{{$user->level->offer->cashback->percent *100}}%
+      @if ($order->status == '1' )
+          @if(!empty($user->level->offer->cashback_yn))
+              @if ($user->level->offer->cashback_yn == 'Y')
+              <td>{{$user->level->name}}滿額{{$user->level->offer->cashback->above}}以上<br>
+                虛擬幣回饋{{$user->level->offer->cashback->percent *100}}%
+              </td>
+                  @if ($order->total > $user->level->offer->cashback->above)
+                  <td style="padding-top: 18px;" colspan="3" >${{ presentPrice(round($order->total * $user->level->offer->cashback->percent)) }}</td>   
+                  @else
+                  <td style="padding-top: 18px;" colspan="3" >${{ $order->total * 0 }}</td>     
+                  @endif
+              @endif
+          @endif
+      <tr>
+        <td colspan="4">
+          <a class="pull-right" href="{{route('order.sand',['id' => $order->id ])}}"><button class="btn btn-success">送貨</button></a> 
         </td>
-            @if ($order->total > $user->level->offer->cashback->above)
-            <td style="padding-top: 18px;" colspan="3" >${{ round($order->total * $user->level->offer->cashback->percent) }}</td>   
-            @else
-            <td style="padding-top: 18px;" colspan="3" >${{ $order->total * 0 }}</td>     
-            @endif
-       
-        @endif
-        
-        
       </tr>
-
-      
-        @if($order->status == '1')
-        <tr>
-          <td colspan="4">
-            <a class="pull-right" href="{{route('order.sand',['id' => $order->id ])}}"><button class="btn btn-success">送貨</button></a> 
+      @else
+          @if ($order->pre_cashback_yn == 'Y')
+          <td>{{$order->pre_levelname}}滿額{{$order->pre_above}}以上<br>
+            虛擬幣回饋{{$order->pre_percent *100}}%
           </td>
-        </tr>
-        @endif
+              <td style="padding-top: 18px;" colspan="3" >${{ presentPrice(round($order->pre_dollor)) }}</td>   
+          @endif
+      @endif  
+      </tr>
 
       {{-- @if($order->refund_status !== \App\Models\Order::REFUND_STATUS_PENDING)
         <tr>

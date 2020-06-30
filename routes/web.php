@@ -33,12 +33,7 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
         'uses' => 'MainController@categoryProduct',
         'as'   => 'shop.category'
     ]);
-    Route::resource('cart', 'CartController');
-    Route::delete('emptyCart', 'CartController@emptyCart');
-    Route::patch('/cart/{id}', 'CartController@update')->name('cart.update');
-    Route::post('/cart/dollor', 'CartController@dollor')->name('cart.dollor');
-    Route::post('/cart/checkout','CartController@checkout')->name('cart.checkout');
-    Route::post('/cart/buy','CartController@buy')->name('cart.buy');
+   
 
     //忘記密碼
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -81,6 +76,12 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
             'uses' => 'UserController@getLogout',
             'as' => 'user.logout'
             ]);
+        Route::resource('cart', 'CartController');
+        Route::delete('emptyCart', 'CartController@emptyCart');
+        Route::patch('/cart/{id}', 'CartController@update')->name('cart.update');
+        Route::post('/cart/dollor', 'CartController@dollor')->name('cart.dollor');
+        Route::post('/cart/checkout','CartController@checkout')->name('cart.checkout');
+        Route::post('/cart/buy','CartController@buy')->name('cart.buy');
     });
 });
 

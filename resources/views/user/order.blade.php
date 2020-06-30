@@ -36,12 +36,12 @@
                                       </a>&emsp;
                                     <a target="_blank" href="{{ url('shop', [$item->product->id]) }}">{{ $item->product->name }}</a>
                                   </td>
-                                  <td class="sku-price text-center">${{ $item->price }}</td>
+                                  <td class="sku-price text-center">${{ presentPrice($item->price) }}</td>
                                   <td class="sku-amount text-center">{{ $item->quantity }}</td>
                                   
                                   @if($index === 0)
                                   <td rowspan="{{ count($order->orderDetail) }}" class="text-center total-amount border">
-                                    ${{ $order->total }}
+                                    ${{ presentPrice($order->total) }}
                                   </td>
                                   <td rowspan="{{ count($order->orderDetail) }}" class="text-center border">
                                     {{orderStatus($order->status)}}
