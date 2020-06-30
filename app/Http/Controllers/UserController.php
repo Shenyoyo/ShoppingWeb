@@ -75,11 +75,8 @@ class UserController extends Controller
     }
     public function getOrder()
     {
-        $orders = Auth::user()->order;
-       
-
-        // $test = Order::find(1)->orderDetail;
-        // echo $test;
+        $orders = Auth::user()->order()->orderBy('id','desc')->get();
+        
         return view('user.order')->with([
             'orders' => $orders,
         ]);

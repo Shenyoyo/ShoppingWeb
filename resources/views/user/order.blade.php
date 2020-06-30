@@ -1,50 +1,63 @@
 @extends('layouts.master')
 
+@section('title')
+    我的訂單
+@endsection
 @section('content')
-    {{-- <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <h2>My Orders</h2>
-            @foreach($orders as $order)
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <ul class="list-group">
-                            @foreach($order->orderDetail as $item)
-                                <li class="list-group-item">
-                                    <span class="badge">${{ $item->price }}</span>
-                                    {{ $item->product->name }} | {{ $item->quantity }} 
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <div class="panel-footer">
-                        <strong>Total Price: ${{ $order->total}}</strong>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div> --}}
+    <h1>我的訂單</h1>
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title">訂單列表</div>
         </div>
         <div class="panel-body" >
             @foreach($orders as $order)
-            <div class="panel panel-default">
+            <div class="panel panel-default" >
                 <div class="panel-heading">
                     <div class="panel-title">訂單號碼：{{$order->id}} <span class="pull-right">{{ $order->created_at->format('Y/m/d H:i:s') }}</span></div> 
                 </div>
-                <div class="panel-body" >
-                    <table class="table mb-0">
-                        <thead>
+                <div class="panel-body"  >
+                    <table class="table mb-0 border" style="margin-bottom:0px">
+                        <thead >
                           <tr class="text-center">
                             <th class="text-left">商品內容</th>
-                            <th>單價</th>
-                            <th>數量</th>
-                            <th>總計</th>
-                            <th>狀態</th>
-                            <th>操作</th>
+                            <th class="text-center">單價</th>
+                            <th class="text-center">數量</th>
+                            <th class="text-center">總計</th>
+                            <th class="text-center">狀態</th>
+                            <th class="text-center">操作</th>
                           </tr>
                         </thead>
+                        <tbody>
+                            @foreach ($order->orderDetail as $index => $item )
+                                <tr>
+                                  <td class="table-image">
+                                      <a target="_blank" href="{{ url('shop', [$item->product->id]) }}">
+                                        <img class=" cart-image" src="{{ $item->product->imageurl }}">
+                                      </a>&emsp;
+                                    <a target="_blank" href="{{ url('shop', [$item->product->id]) }}">{{ $item->product->name }}</a>
+                                  </td>
+                                  <td class="sku-price text-center">${{ $item->price }}</td>
+                                  <td class="sku-amount text-center">{{ $item->quantity }}</td>
+                                  
+                                  @if($index === 0)
+                                  <td rowspan="{{ count($order->orderDetail) }}" class="text-center total-amount border">
+                                    ${{ $order->total }}
+                                  </td>
+                                  <td rowspan="{{ count($order->orderDetail) }}" class="text-center border">
+                                    {{orderStatus($order->status)}}
+                                  </td>
+
+                                  <td rowspan="{{ count($order->orderDetail) }}" class="text-center border">
+              
+                                    {{-- 訂單 --}}
+                                    <a class="btn btn-primary btn-sm" href="#">
+                                      查看訂單
+                                    </a>
+                                  </td>
+                                  @endif
+                                </tr>
+                            @endforeach
+                          </tbody>
                     </table>
                 </div>
             </div>

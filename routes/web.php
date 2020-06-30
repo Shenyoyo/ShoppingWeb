@@ -220,7 +220,26 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'as'   => 'offer.search'
             ]);
             
-        });        
+        });
+        Route::group(['prefix' => 'order'], function () {
+            Route::get('/', [
+                'uses' => 'OrderController@getIndex',
+                'as'   => 'order.index'
+            ]);
+            Route::get('/sand/{id}', [
+                'uses' => 'OrderController@sandProduct',
+                'as'   => 'order.sand'
+            ]);
+            Route::get('/show/{id}', [
+                'uses' => 'OrderController@showOrder',
+                'as'   => 'order.show'
+            ]);
+            Route::get('/search', [
+                'uses' => 'OrderController@searchOrder',
+                'as'   => 'order.search'
+            ]);
+            
+        });                
     });
 });
 

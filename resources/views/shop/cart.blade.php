@@ -4,6 +4,7 @@
     購物車
 @endsection
 
+
 @section('content')
     <p><a href="{{ url('shop') }}">首頁</a> / 購物車</p>
     <h1>購物車</h1>

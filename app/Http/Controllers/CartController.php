@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use Auth;
 use App\Order;
 use App\OrderDetail;
@@ -176,7 +175,8 @@ class CartController extends Controller
             $product->amount = ($product->amount) - ($orderDetail->quantity);
             $product->save();
         }
+        Cart::destroy();
 
-
+        return redirect()->route('user.order');
     }
 }
