@@ -3,6 +3,11 @@
     訂單明細
 @endsection
 @section('content')
+@if (session()->has('success_message'))
+  <div class="alert alert-success">
+      {{ session()->get('success_message') }}
+  </div>
+@endif
 <div class="box box-info">
   <div class="box-header with-border">
     <h1 class="box-title">訂單號碼：{{ $order->id }}</h1>
@@ -27,8 +32,10 @@
         <td colspan="3">貨到付款</td>
       </tr>
       <tr>
-        <td>收貨地址：</td>
-        <td colspan="3">{{ $order->receiver_address }}</td>
+        <td>收件人：</td>
+        <td >{{ $order->receiver }}</td>
+        <td>收件地址：</td>
+        <td >{{ $order->receiver_address }}</td>
       </tr>
 
       <tr>
@@ -61,7 +68,7 @@
               <td>{{$user->level->name}}滿額{{$user->level->offer->cashback->above}}以上<br>
                 虛擬幣回饋{{$user->level->offer->cashback->percent *100}}%
               </td>
-                  @if ($order->total > $user->level->offer->cashback->above)
+                  @if ($order->total >= $user->level->offer->cashback->above)
                   <td style="padding-top: 18px;" colspan="3" >${{ presentPrice(round($order->total * $user->level->offer->cashback->percent)) }}</td>   
                   @else
                   <td style="padding-top: 18px;" colspan="3" >${{ $order->total * 0 }}</td>     
@@ -80,101 +87,34 @@
           </td>
               <td style="padding-top: 18px;" colspan="3" >${{ presentPrice(round($order->pre_dollor)) }}</td>   
           @endif
+
+          @if($order->status == '4')
+          <tr>
+            <td>退款理由：</td>
+            <td colspan="2">{{ $order->refund->message }}</td>
+            <td>
+              <form id='refund-disagree' action="{{route('order.refundDisagree')}}" method="post">
+                {!! csrf_field() !!}
+                <a href="{{route('order.refundAgree',['id' => $order->id ])}}">
+                  <button class="btn btn-sm btn-success" id="btn-refund-agree">同意</button>
+                </a>
+                <button class="btn btn-sm btn-danger" name="nomessage"  id="btn-refund-disagree" type="submit" value="" onClick="subForm()";>不同意</button>
+                <input type="hidden" name="orderId" value="{{ $order->id }}"> 
+              </form>
+            </td>
+          </tr>
+      @endif
       @endif  
       </tr>
 
-      {{-- @if($order->refund_status !== \App\Models\Order::REFUND_STATUS_PENDING)
-        <tr>
-          <td>退款狀態：</td>
-          <td colspan="2">{{ __("order.refund.{$order->refund_status}") }}，理由：{{ $order->extra['refund_reason'] }}</td>
-          <td>
-            @if($order->refund_status === \App\Models\Order::REFUND_STATUS_APPLIED)
-            <button class="btn btn-sm btn-success" id="btn-refund-agree">同意</button>
-            <button class="btn btn-sm btn-danger" id="btn-refund-disagree">不同意</button>
-            @endif
-          </td>
-        </tr>
-      @endif --}}
+      
       </tbody>
     </table>
   </div>
 </div>
 @endsection
 
+@section('scripts')
+<script  src="{{ asset('js/show.js') }}"></script>
+@endsection
 
-{{-- <script>
-$(function() {
-  $('#btn-refund-agree').click(function () {
-    swal({
-      title: '確定要將款項退還給用戶?',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonText: '確定',
-      cancelButtonText: '取消',
-      showLoaderOnConfirm: true,
-      preConfirm: function () {
-        return $.ajax({
-          url: '{{ route('admin.orders.handle_refund', $order) }}',
-          type: 'POST',
-          data: JSON.stringify({
-            agree: true,
-            _token: LA.token
-          }),
-          contentType: 'application/json'
-        });
-      }
-    }).then(function (ret) {
-      if (ret.dismiss === 'cancel') {
-        return;
-      }
-      swal({
-        title: '操作成功',
-        type: 'success'
-      }).then(function () {
-        location.reload();
-      });
-    });
-  })
-
-  $('#btn-refund-disagree').click(function () {
-    swal({
-      title: '輸入拒絕退款裡由',
-      input: 'text',
-      showCancelButton: true,
-      confirmButtonText: '確定',
-      cancelButtonText: '取消',
-      showLoaderOnConfirm: true,
-      preConfirm: function (input) {
-        if (!input) {
-          swal('理由不能為空', '', 'error')
-          return false;
-        }
-
-        return $.ajax({
-          url: '{{ route('admin.orders.handle_refund', $order) }}',
-          type: 'POST',
-          data: JSON.stringify({
-            agree: false,
-            reason: inputValue,
-            _token: LA.token
-          }),
-          contentType: 'application/json'
-        });
-      },
-      allowOutsideClick: function () {
-        return !swal.isLoading();
-      }
-    }).then(function (ret) {
-      if (ret.dismiss === 'cancel') {
-        return;
-      }
-      swal({
-        title: '操作成功',
-        type: 'success'
-      }).then(function () {
-        location.reload();
-      });
-    });
-  })
-})
-</script> --}}

@@ -68,6 +68,14 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
                 'uses'  => 'UserController@getOrder' ,
                 'as'   => 'user.order'
             ]); 
+        Route::get('/orderDetial/{id}', [
+            'uses'  => 'UserController@getOrderDetail' ,
+            'as'   => 'user.orderDetail'
+        ]);
+        Route::post('/refund/', [
+            'uses'  => 'UserController@refund' ,
+            'as'   => 'user.refund'
+        ]);
         Route::get('/confirm/{id}', [
                 'uses'  => 'UserController@confirmOrder' ,
                 'as'   => 'user.confirm'
@@ -234,6 +242,14 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
             Route::get('/sand/{id}', [
                 'uses' => 'OrderController@sandProduct',
                 'as'   => 'order.sand'
+            ]);
+            Route::get('/refundAgree/{id}', [
+                'uses' => 'OrderController@refundAgree',
+                'as'   => 'order.refundAgree'
+            ]);
+            Route::post('/refundDisagree', [
+                'uses' => 'OrderController@refundDisagree',
+                'as'   => 'order.refundDisagree'
             ]);
             Route::get('/show/{id}', [
                 'uses' => 'OrderController@showOrder',

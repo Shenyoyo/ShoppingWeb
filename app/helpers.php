@@ -19,7 +19,13 @@ function orderStatus($status)
             break;
         case '4':
             return '申請退款';
-            break;    
+            break;   
+        case '5':
+            return '已退款';
+            break; 
+        case '6':
+            return '拒絕退款';
+            break; 
         default:
             return '訂單有問題，請聯絡管理員';
             break;

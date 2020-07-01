@@ -14,4 +14,8 @@ class Order extends Model
     {
         return $this->hasMany('App\OrderDetail');
     }
+    public function refund()
+    {
+        return $this->hasOne('App\Refund');
+    }
 }

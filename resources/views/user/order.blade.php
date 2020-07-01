@@ -36,7 +36,7 @@
                                       </a>&emsp;
                                     <a target="_blank" href="{{ url('shop', [$item->product->id]) }}">{{ $item->product->name }}</a>
                                   </td>
-                                  <td class="sku-price text-center">${{ presentPrice($item->price) }}</td>
+                                  <td class="sku-price text-center">${{ presentPrice($item->product->price) }}</td>
                                   <td class="sku-amount text-center">{{ $item->quantity }}</td>
                                   
                                   @if($index === 0)
@@ -50,13 +50,11 @@
                                   <td rowspan="{{ count($order->orderDetail) }}" class="text-center border">
               
                                     {{-- 訂單 --}}
-                                    @if ($order->status == '1')
-                                    <a class="btn btn-primary btn-sm" href="#">查看訂單</a>
-                                    @elseif(($order->status == '2'))
+                                    @if(($order->status == '2'))
                                     <a class="btn btn-success btn-sm" href="{{route('user.confirm',['id' => $order->id ])}}">確認簽收</a><br><br>
-                                    <a class="btn btn-primary btn-sm" href="#">查看訂單</a>
+                                    <a class="btn btn-primary btn-sm" href="{{route('user.orderDetail',['id' => $order->id ])}}">查看訂單</a>
                                     @else
-                                    <a class="btn btn-primary btn-sm" href="#">查看訂單</a>
+                                    <a class="btn btn-primary btn-sm" href="{{route('user.orderDetail',['id' => $order->id ])}}">查看訂單</a>
                                     @endif
                                     
                                   </td>
