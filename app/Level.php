@@ -8,7 +8,7 @@ class Level extends Model
 {
     protected $primaryKey = 'level';
 
-    public function users()
+    public function user()
     {
         return $this->hasMany('App\User');
     }

@@ -47,20 +47,30 @@ class ProductController extends Controller
 
     public function update(Request $request)
     {
-        // $file =  $request->file('file');
-        // $extension = $file->getClientOriginalExtension(); //取得副檔名
-        // Storage::disk('local')->put($file->getFilename().'.'.$extension, File::get($file));
-        // $entry = new \App\File();
-        // $entry->mime = $file->getClientMimeType();
-        // $entry->original_filename = $file->getClientOriginalName();
-        // $entry->filename = $file->getFilename().'.'.$extension;
-        // $entry->save();
+        $this->validate($request, [
+            'file'  => 'mimes:jpeg,jpg,png',
+            'price' => 'required|integer',
+
+        ], [
+            'file.mimes' => '上傳檔案格式必須是.jpg .png .jpeg',
+            'price.integer' => '價格只能輸入數字',
+        ]);
+        if(!empty ($request->file('file'))){
+            $file =  $request->file('file');
+            $extension = $file->getClientOriginalExtension(); //取得副檔名
+            Storage::disk('public')->put($file->getFilename().'.'.$extension, File::get($file));
+            $entry = new \App\File();
+            $entry->mime = $file->getClientMimeType();
+            $entry->original_filename = $file->getClientOriginalName();
+            $entry->filename = $file->getFilename().'.'.$extension;
+            $entry->save();
+        }
+       
 
         $product = Product::find($request->input('id'));
         $product->name =$request->input('name');
         $product->description =$request->input('description');
         $product->price =$request->input('price');
-        $product->imageurl =$request->input('imageurl');
         $product->amount = $request->input('amount');
         if (!empty($request->input('display_yn'))) {
             $product->display_yn =$request->input('display_yn');
@@ -73,7 +83,10 @@ class ProductController extends Controller
             $product->buy_yn = "N";
         }
 
-        // $product->file_id = $entry->id;
+        if(!empty ($request->file('file'))){
+           $product->file_id = $entry->id;
+        }
+        
 
         $product->save();
 
@@ -88,9 +101,17 @@ class ProductController extends Controller
 
     public function add(Request $request)
     {
+        $this->validate($request, [
+            'file'  => 'required|mimes:jpeg,jpg,png',
+            'price' => 'required|integer',
+        ], [
+            'file.required' => '請上傳圖片',
+            'file.mimes' => '上傳檔案格式必須是.jpg .png .jpeg',
+            'price.integer' => '價格只能輸入數字'
+        ]);
         $file =  $request->file('file');
         $extension = $file->getClientOriginalExtension(); //取得副檔名
-        Storage::disk('local')->put($file->getFilename().'.'.$extension, File::get($file));
+        Storage::disk('public')->put($file->getFilename().'.'.$extension, File::get($file));
 
         $entry = new \App\File();
         $entry->mime = $file->getClientMimeType();
@@ -105,7 +126,6 @@ class ProductController extends Controller
         $product->description = $request->input('description');
         $product->price = $request->input('price');
         $product->amount = $request->input('amount');
-        $product->imageurl = $request->input('imageurl');
         if (!empty($request->input('buy_yn'))) {
             $product->buy_yn = $request->input('buy_yn');
         } else {
@@ -122,7 +142,6 @@ class ProductController extends Controller
         foreach ($categories as $category) {
             $product->category()->attach($request->input($category->name));
         }
-        // $product->category_id = $request->input('category_id');
         return redirect()->route('admin.products');
     }
 

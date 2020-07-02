@@ -30,7 +30,7 @@
                 <td>分類</td>
                 <td>商品是否要顯示</td>
                 <td>商品是否可購買</td>
-                <td>文件</td>
+                <td>圖片</td>
                 <td>操作</td>
             </thead>
             <tbody>

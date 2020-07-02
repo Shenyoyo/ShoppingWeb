@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use App\File;
 function presentPrice($price)
 {
     return number_format($price);
@@ -30,4 +31,9 @@ function orderStatus($status)
             return '訂單有問題，請聯絡管理員';
             break;
     }
+}
+function getImageInCart($file_id){
+    $filename =File::find($file_id)->filename;
+    $imgUrl = 'storage/'.$filename.'';
+    return $imgUrl;
 }

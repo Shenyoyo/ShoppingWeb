@@ -24,8 +24,12 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'email|required|unique:users',
-            'password' => 'required|min:4|confirmed'
-
+            'password' => 'required|min:4|confirmed',
+        ],[
+            'email.email' => '不是正確的電子信箱',
+            'email.unique' => '此信箱已重複創建',
+            'password.min' => '密碼長度至少4碼',
+            'password.confirmed' => '確認密碼不相同',
         ]);
 
         $user = new User([

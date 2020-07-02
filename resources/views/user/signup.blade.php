@@ -17,11 +17,11 @@
     <form action="{{ route('user.signup')}}" method="post">
         <div class="form-group">
             <label for="name"">姓 名</label>
-            <input type="text" id="name" name="name" class="form-control">
+            <input type="text" id="name" name="name" class="form-control" required>
         </div>
         <div class="form-group">
             <label for="email">帳 號(信箱)</label>
-            <input type="text" id="email" name="email" class="form-control" placeholder="XXX@gmail.com">
+            <input type="text" id="email" name="email" class="form-control" placeholder="XXX@gmail.com" required>
         </div>
         <div class="form-group">
             <label for="email">手 機</label>
@@ -29,15 +29,15 @@
         </div>
         <div class="form-group">
             <label for="email">地 址</label>
-            <input type="text" id="address" name="address" class="form-control" placeholder="台中市....">
+            <input type="text" id="address" name="address" class="form-control" placeholder="台中市...." required>
         </div>
         <div class="form-group">
             <label for="password">密 碼</label>
-            <input type="password" id="password" name="password" class="form-control">
+            <input type="password" id="password" name="password" class="form-control" required>
         </div>
         <div class="form-group">
             <label for="password">確認密碼</label>
-            <input type="password" id="password" name="password_confirmation" class="form-control">
+            <input type="password" id="password" name="password_confirmation" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-primary">註 冊</button>
         {{csrf_field()}}

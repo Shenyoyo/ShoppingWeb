@@ -49,7 +49,7 @@
                 <div class="col-md-3">
                     <div class="thumbnail">
                         <div class="caption text-center">
-                            <a href="{{ route('shop.show', [$product->id]) }}"><img src="{{$product->imageurl}}" alt="product" class="img-responsive"></a>
+                            <a href="{{ route('shop.show', [$product->id]) }}"><img src="{{asset('storage/'.$product->file->filename.'')}}" alt="product" class="img-responsive"></a>
                             <a href="{{ route('shop.show', [$product->id]) }}"><h3>{{ $product->name }}</h3>
                             <p>${{ $product->price }}</p>
                             </a>
@@ -59,4 +59,7 @@
             @endforeach
         </div> <!-- end row -->
     @endforeach
+    <div class="text-center">
+        {{ $products->links() }}
+    </div>
 @endsection

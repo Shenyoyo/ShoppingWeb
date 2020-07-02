@@ -12,14 +12,16 @@ class MainController extends Controller
     {
         $id='';
         $categories = Category::CategoryDisplay()->get(); 
-        $products = Product::productDisplay()->get();
+        $products = Product::productDisplay()->paginate(8);
         return view('shop.index', ['products' => $products,'categories' => $categories,'id' =>$id]);
     }
 
     public function show($id)
     {
+        $products = Product::productDisplay()->get();
         $product = Product::productDisplay()->where('id', $id)->firstOrFail();
-        $interested = Product::productDisplay()->where('id', '!=', $id)->get()->random(4);
+        $productQuantity = (count($products) < 5 ) ? count($products)-1 : 4 ;
+        $interested = Product::productDisplay()->where('id', '!=', $id)->get()->random($productQuantity);
         return view('shop.product', ['product' => $product, 'interested' => $interested]);
     }
 
@@ -27,18 +29,18 @@ class MainController extends Controller
     {
         $id='';
         $query = $request->input('query');
-        $products = Product::productDisplay()->where('name', 'LIKE', '%'.$query.'%')->get();
+        $products = Product::productDisplay()->where('name', 'LIKE', '%'.$query.'%')->paginate(8);
         $categories = Category::CategoryDisplay()->get(); 
         return view('shop.index', ['products' => $products,'categories' => $categories,'id' =>$id]);
     }
     public function orderbyPorduct($sort){
         $id='';
         $categories = Category::CategoryDisplay()->get(); 
-        $products = Product::productDisplay()->orderBy('price', $sort)->get();
+        $products = Product::productDisplay()->orderBy('price', $sort)->paginate(8);
         return view('shop.index', ['products' => $products,'categories' => $categories,'id' =>$id]);
     }
     public function categoryProduct($id){
-        $products = Category::find($id)->product;
+        $products = Category::find($id)->product()->paginate(8);
         $categories = Category::CategoryDisplay()->get(); 
         return view('shop.index', ['products' => $products,'categories' => $categories,'id' =>$id]);
        

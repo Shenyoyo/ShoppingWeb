@@ -32,7 +32,7 @@
                                 <tr>
                                   <td class="table-image">
                                       <a target="_blank" href="{{ url('shop', [$item->product->id]) }}">
-                                        <img class=" cart-image" src="{{ $item->product->imageurl }}">
+                                        <img class=" cart-image" src="{{asset('storage/'.$item->product->file->filename.'')}}">
                                       </a>&emsp;
                                     <a target="_blank" href="{{ url('shop', [$item->product->id]) }}">{{ $item->product->name }}</a>
                                   </td>

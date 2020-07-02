@@ -5,6 +5,13 @@
 @endsection
 
 @section('content')
+@if (count($errors) > 0)
+<div class="alert alert-danger">
+    @foreach ($errors->all() as $errors)
+        <p>{{ $errors }}</p>    
+    @endforeach
+</div>
+@endif 
     <div class="panel panel-info">
         <div class="panel-heading">
             <div class="panel-title">新增商品</div>
@@ -33,12 +40,7 @@
                             <input id="price" name="price" type="text" placeholder="商品價格" class="form-control input-md" required="">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" for="imageurl">圖片URL</label>
-                        <div class="col-md-9">
-                            <input id="imageurl" name="imageurl" type="text" placeholder="商品圖片URL" class="form-control input-md" >
-                        </div>
-                    </div>
+                 
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="amount">庫存數量</label>
                         <div class="col-md-9">

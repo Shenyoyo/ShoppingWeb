@@ -19,7 +19,6 @@ class CreateProductsTable extends Migration
             $table->string('description');
             $table->float('price');
             $table->integer('amount');
-            $table->string('imageurl')->nullable();
             $table->string('buy_yn')->nullable();
             $table->string('display_yn')->nullable();
             $table->string('file_id');

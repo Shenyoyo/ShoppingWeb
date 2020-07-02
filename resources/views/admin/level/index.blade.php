@@ -58,7 +58,7 @@
                     <td>{{$level->name}}</td>
                     <td>{{$level->description}}</td>
                     <td>{{$level->upgrade}}</td>
-                    <td>0</td>
+                    <td>{{count($level->user)}}</td>
                     <td>
                         {{-- 預設0級不能修改 --}}
                         @if ($level->level != 0)
