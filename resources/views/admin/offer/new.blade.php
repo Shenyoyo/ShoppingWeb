@@ -62,6 +62,26 @@
                             %
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="rebate_yn">滿額送現金</label>
+                        <div class="col-md-9" style="margin-top: 7px;">
+                            <input id="rebate_yn" name="rebate_yn" class="form-check-input" type="checkbox" value="Y"  checked >
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-md-3 control-label" for="rebate_above">消費滿額</label>
+                        <div class="col-md-2" ">
+                            <input id="rebate_above" name="rebate_above" type="text"  class="form-control input-md group3" required="" oninput = "value=value.replace(/[^\d]/g,'')"  autocomplete="off">
+                        </div>
+                        <label class="col-md-1 control-label" for="rebate_rebate">回贈金額</label>
+                        <div class="col-md-1" ">
+                            <input id="rebate_rebate" name="rebate_rebate" type="text"  class="form-control input-md group3" required="" oninput = "value=value.replace(/[^\d]/g,'')"  autocomplete="off">
+                        </div>
+                        <div style="margin-top: 7px;">
+                            元
+                        </div>
+                    </div>
                     
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="submit"></label>

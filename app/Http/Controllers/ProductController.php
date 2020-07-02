@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function getIndex()
     {
-        $products = Product::productEnable()->get();
+        $products = Product::productEnable()->paginate(10);
         return view('admin/stock.products', ['products' => $products]);
     }
 
@@ -130,7 +130,7 @@ class ProductController extends Controller
     {
         $query = $request->input('query');
 
-        $products = Product::where('name', 'LIKE', '%'.$query.'%')->get();
+        $products = Product::where('name', 'LIKE', '%'.$query.'%')->paginate(10);
 
         return view('admin/stock.products', ['products' => $products]);
     }

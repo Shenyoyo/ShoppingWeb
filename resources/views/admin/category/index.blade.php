@@ -48,6 +48,9 @@
         </table>
     </div>
 </div>
+<div class="text-center">
+    {{ $categories->links() }}
+</div>
 @endsection
 @section('scripts')
 <script src="{{ asset('js/category.js') }}"></script>

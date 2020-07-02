@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function getIndex()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(10);
         return view('admin/category.index', ['categories' => $categories]);
     }
 
@@ -60,7 +60,7 @@ class CategoryController extends Controller
     {
         $query = $request->input('query');
 
-        $categories = Category::where('name', 'LIKE', '%'.$query.'%')->get();
+        $categories = Category::where('name', 'LIKE', '%'.$query.'%')->paginate(10);
 
         return view('admin/category.index',['categories' => $categories]);
     }

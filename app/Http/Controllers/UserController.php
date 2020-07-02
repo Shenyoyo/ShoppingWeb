@@ -98,7 +98,7 @@ class UserController extends Controller
         $order = Order::find($id);
         $order->status = '3';//已簽收
         $order->save();
-        // step.2 虛擬幣回饋確認
+        // step.2 虛擬幣回饋與滿額送現金
         $user = Auth::user();
         $cashback_yn = $user->level->offer->cashback_yn ?? 'N';
         $cashbackAbove = $user->level->offer->cashback->above ?? '0';
@@ -109,12 +109,21 @@ class UserController extends Controller
             $userDollor->dollor = $userDollor->dollor + $cashbackDollor ; //給予虛擬幣回饋
             $userDollor->save();
         }
+        $rebate_yn = $user->level->offer->rebate_yn ?? 'N';
+        $rebateAbove = $user->level->offer->rebate->above ?? '0';
+        if ($rebate_yn == 'Y' && $order->total >= $rebateAbove) {
+            $cashbackDollor = $user->level->offer->rebate->rebate;
+            $userDollor = $user->dollor;
+            $userDollor->dollor = $userDollor->dollor + $cashbackDollor ; //給予滿額送現金
+            $userDollor->save();
+        }
+        
         // step.3 累計用戶消費總額
         $user->total_cost = $user->total_cost + $order->total;
         $user->save();
         // setp.4 會員晉升
         $nextLevel = $user->level_level+1;
-        $nextLevelUpgrade = Level::find($nextLevel)->upgrade;
+        $nextLevelUpgrade = Level::find($nextLevel)->upgrade ?? "";
         //有設定才會升等 
         if (!empty($nextLevelUpgrade)) {
             if ($user->total_cost >= $nextLevelUpgrade) {

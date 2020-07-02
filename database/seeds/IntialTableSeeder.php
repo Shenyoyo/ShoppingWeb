@@ -180,6 +180,7 @@ class IntialTableSeeder extends Seeder
                 'level_level' => 0,
                 'cashback_yn' => 'N',
                 'discount_yn' => 'N',
+                'rebate_yn'   => 'N',
             ],
         ]);
         DB::table('cashbacks')->insert([
@@ -196,6 +197,14 @@ class IntialTableSeeder extends Seeder
                 'offer_id' => 1,
                 'above' => 0,
                 'percent' => 0,
+            ],
+        ]);
+        DB::table('rebates')->insert([
+            [
+                'id' => 1,
+                'offer_id' => 1,
+                'above' => 0,
+                'rebate' => 0,
             ],
         ]);
     }

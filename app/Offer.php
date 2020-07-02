@@ -18,4 +18,8 @@ class Offer extends Model
     {
         return $this->hasOne('App\Discount');
     }
+    public function rebate()
+    {
+        return $this->hasOne('App\Rebate');
+    }
 }

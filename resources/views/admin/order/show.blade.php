@@ -75,6 +75,19 @@
                   @endif
               @endif
           @endif
+
+          @if(!empty($user->level->offer->rebate_yn))
+          @if ($user->level->offer->rebate_yn == 'Y')
+          <td>{{$user->level->name}}滿額{{$user->level->offer->rebate->above}}以上<br>
+            滿額送現金{{$user->level->offer->rebate->rebate}}元
+          </td>
+              @if ($order->total >= $user->level->offer->rebate->above)
+              <td style="padding-top: 18px;" colspan="3" >${{ presentPrice($user->level->offer->rebate->rebate) }}</td>   
+              @else
+              <td style="padding-top: 18px;" colspan="3" >${{ $order->total * 0 }}</td>     
+              @endif
+          @endif
+      @endif
       <tr>
         <td colspan="4">
           <a class="pull-right" href="{{route('order.sand',['id' => $order->id ])}}"><button class="btn btn-success">送貨</button></a> 
@@ -88,17 +101,24 @@
               <td style="padding-top: 18px;" colspan="3" >${{ presentPrice(round($order->pre_dollor)) }}</td>   
           @endif
 
+          @if ($order->pre_rebate_yn == 'Y')
+          <td>{{$order->pre_levelname}}滿額{{$order->pre_rebate_above}}以上<br>
+            滿額送現金{{$order->pre_rebate_dollor}}元
+          </td>
+              <td style="padding-top: 18px;" colspan="3" >${{ presentPrice($order->pre_rebate_dollor)}}</td>   
+          @endif
+
           @if($order->status == '4')
           <tr>
             <td>退款理由：</td>
             <td colspan="2">{{ $order->refund->message }}</td>
             <td>
-              <form id='refund-disagree' action="{{route('order.refundDisagree')}}" method="post">
+              <a href="{{route('order.refundAgree',['id' => $order->id ])}}">
+                <button class="btn btn-sm btn-success" id="btn-refund-agree">同意</button>
+              </a>
+              <form style="display: inline-block" id='refund-disagree' action="{{route('order.refundDisagree')}}" method="post">
                 {!! csrf_field() !!}
-                <a href="{{route('order.refundAgree',['id' => $order->id ])}}">
-                  <button class="btn btn-sm btn-success" id="btn-refund-agree">同意</button>
-                </a>
-                <button class="btn btn-sm btn-danger" name="nomessage"  id="btn-refund-disagree" type="submit" value="" onClick="subForm()";>不同意</button>
+                <button class="btn btn-sm btn-danger" name="nomessage"  id="btn-refund-disagree" type="button" value="" onClick="subForm()";>不同意</button>
                 <input type="hidden" name="orderId" value="{{ $order->id }}"> 
               </form>
             </td>

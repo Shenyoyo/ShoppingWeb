@@ -16,7 +16,7 @@
 </div>
 <div style="margin-top:10px;">
     <form action="{{route('admin.search')}}" method="GET" class="search-form">
-        <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box" placeholder="Search for product">
+        <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box" placeholder="商品名稱">
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
 </div>
@@ -56,6 +56,9 @@
             </tbody>
         </table>
     </div>
+</div>
+<div class="text-center">
+    {{ $products->links() }}
 </div>
 @endsection
 

@@ -17,7 +17,7 @@
 </div>
 <div class="row"">
     <div class="col-md-12 text-center" >
-        <table class="table mb-0 table-striped ">
+        <table class="table table-striped ">
             <thead class="bg-info">
                 <td>訂單號碼</td>
                 <td>買家</td>

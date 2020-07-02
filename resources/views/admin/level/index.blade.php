@@ -75,8 +75,10 @@
                 @endforeach
             </tbody>
         </table>
-         
     </div>
+</div>
+<div class="text-center">
+    {{ $levels->links() }}
 </div>
 @endsection
 @section('scripts')

@@ -13,6 +13,13 @@ $( document ).ready(function() {
     enable_cashback()
   }
   $("#cashback_yn").click(enable_cashback);
+
+  if($('#rebate_yn').is(':checked')){
+    $("#rebate_yn").click(enable_rebate);
+  }else{
+    enable_rebate()
+  }
+  $("#rebate_yn").click(enable_rebate);
 });
   
 function enable_discount() {
@@ -27,5 +34,12 @@ function enable_cashback() {
     $("input.group2").removeAttr("disabled");
   } else {
     $("input.group2").attr("disabled", true);
+  }
+}
+function enable_rebate() {
+  if (this.checked) {
+    $("input.group3").removeAttr("disabled");
+  } else {
+    $("input.group3").attr("disabled", true);
   }
 }

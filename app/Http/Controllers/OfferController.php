@@ -7,12 +7,13 @@ use App\Level;
 use App\Offer;
 use App\Discount;
 use App\Cashback;
+use App\rebate;
 
 class OfferController extends Controller
 {
     public function getIndex()
     {
-        $offers = Offer::all();
+        $offers = Offer::paginate(10);
         return view('admin/offer.index', ['offers' => $offers]);
     }
     public function newOffer()
@@ -55,6 +56,14 @@ class OfferController extends Controller
         } else {
             $offer->cashback_yn = 'N';
         }
+        if (!empty($request->input('rebate_yn'))) {
+            $offer->rebate_yn = $request->input('rebate_yn');
+            $offer->rebate->above = $request->input('rebate_above');
+            $offer->rebate->rebate = $request->input('rebate_rebate');
+            $offer->rebate->save();
+        } else {
+            $offer->rebate_yn = 'N';
+        }
         $offer->save();
         return redirect()->route('offer.index');
     }
@@ -72,6 +81,11 @@ class OfferController extends Controller
             $offer->cashback_yn = $request->input('cashback_yn');
         } else {
             $offer->cashback_yn = 'N';
+        }
+        if (!empty($request->input('rebate_yn'))) {
+            $offer->rebate_yn = $request->input('rebate_yn');
+        } else {
+            $offer->rebate_yn = 'N';
         }
 
         $offer->save();
@@ -104,6 +118,20 @@ class OfferController extends Controller
             $cashback->save();
         }
 
+        if ($offer->rebate_yn == 'Y') {
+            $rebate = new Rebate();
+            $rebate->offer_id = $offer->id;
+            $rebate->above = $request->input('rebate_above');
+            $rebate->rebate = $request->input('rebate_rebate');
+            $cashback->save();
+        } else {
+            $rebate = new Rebate();
+            $rebate->offer_id = $offer->id;
+            $rebate->above = $request->input('rebate_above');
+            $rebate->rebate = $request->input('rebate_rebate');
+            $rebate->save();
+        }
+
         return redirect()->route('offer.index');
     }
     public function destroyOffer($id)
@@ -118,7 +146,7 @@ class OfferController extends Controller
     public function searchOffer(Request $request)
     {
         $query = $request->input('query');
-        $offers = Offer::where('name', 'LIKE', '%'.$query.'%')->get();
+        $offers = Offer::where('id', 'LIKE', '%'.$query.'%')->paginate(10);
         return view('admin/offer.index', ['offers' => $offers]);
     }
 }

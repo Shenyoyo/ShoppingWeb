@@ -62,15 +62,25 @@
               {{-- 當下紀錄 --}}
           @if ($order->status == '1')
               @if(!empty($user->level->offer->cashback_yn))
-                @if ($user->level->offer->cashback_yn == 'Y')
+                @if ($user->level->offer->cashback_yn == 'Y' && $order->total >=$user->level->offer->cashback->above )
                 虛擬幣回饋{{$user->level->offer->cashback->percent *100}}%：${{presentPrice(round($order->total * $user->level->offer->cashback->percent))}}
+                @endif
+              @endif
+
+              @if(!empty($user->level->offer->rebate_yn))
+                @if ($user->level->offer->rebate_yn == 'Y' && $order->total >=$user->level->offer->rebate->above)
+                滿額送現金：${{presentPrice($user->level->offer->rebate->rebate)}}
                 @endif
               @endif
           @else
               {{-- 歷史紀錄 --}}
-              @if ($order->pre_cashback_yn == 'Y')
+              @if ($order->pre_cashback_yn == 'Y' && $order->total >= $order->pre_above )
               虛擬幣回饋{{$order->pre_percent *100}}%：${{presentPrice(round($order->pre_dollor))}}
               @endif  
+
+              @if ($order->pre_rebate_yn == 'Y' && $order->total >= $order->pre_rebate_above)
+              滿額送現金：${{presentPrice($order->pre_rebate_dollor)}}
+              @endif 
           @endif
           
         </div>

@@ -11,7 +11,7 @@ class LevelController extends Controller
 {
     public function getIndex()
     {
-        $levels = Level::all();
+        $levels = Level::paginate(10);
         $highestLevel = Level::orderBy('level', 'desc')->first();
         return view('admin/level.index', ['levels' =>$levels], ['highestLevel' => $highestLevel] );
     }
@@ -61,7 +61,7 @@ class LevelController extends Controller
     public function searchLevel(Request $request)
     {
         $query = $request->input('query');
-        $levels = Level::where('name', 'LIKE', '%'.$query.'%')->get();
+        $levels = Level::where('name', 'LIKE', '%'.$query.'%')->paginate(10);
         $highestLevel = Level::orderBy('level', 'desc')->first();
 
         return view('admin/level.index',['levels' => $levels,'highestLevel' =>$highestLevel]);

@@ -15,9 +15,9 @@
     </div>
 </div>
 <div style="margin-top:10px;">
-    <form action="#" method="GET" class="search-form">
+    <form action="{{route('offer.search')}}" method="GET" class="search-form">
         <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box"
-            placeholder="Search for product">
+            placeholder="編號">
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
 </div>
@@ -29,6 +29,7 @@
                 <td>受惠會員</td>
                 <td>是否給予打折優惠</td>
                 <td>是否給予虛擬幣回饋</td>
+                <td>是否給予滿額送現金</td>
                 <td>操作</td>
             </thead>
             <tbody>
@@ -38,6 +39,7 @@
                     <td>{{$offer->level->name}}</td>
                     <td>{{$offer->discount_yn}}</td>
                     <td>{{$offer->cashback_yn}}</td>       
+                    <td>{{$offer->rebate_yn}}</td>       
                     <td>
                         <a href="{{route('offer.edit',['id' => $offer->id ])}}"><button
                                 class="btn btn-primary btn-sm">修改</button></a>
@@ -52,6 +54,9 @@
             </tbody>
         </table>
     </div>
+</div>
+<div class="text-center">
+    {{ $offers->links() }}
 </div>
 @endsection
 @section('scripts')
