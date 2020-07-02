@@ -260,7 +260,14 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'as'   => 'order.search'
             ]);
             
-        });                
+        }); 
+        Route::group(['prefix' => 'user'], function () {
+            Route::get('/', [
+                'uses' => 'AdminUserController@getIndex',
+                'as'   => 'adminUser.index'
+            ]);
+            
+        });                               
     });
 });
 
