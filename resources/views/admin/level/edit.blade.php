@@ -17,11 +17,16 @@
             <div class="panel-title">編輯等級</div>
         </div>
         <div class="panel-body" >
+            <div class="box-tools">
+                <div class="btn-group pull-right" style="margin-bottom: 10px">
+                  <a href="{{route('level.index')}}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> 返回列表</a>
+                </div>
+            </div>
             <form method="POST" action="{{route('level.update')}}" class="form-horizontal" enctype="multipart/form-data" role="form">
                 {!! csrf_field() !!}
                 <fieldset>
                     <!-- Text input-->
-                    <input type="hidden" name="id" value="{{$level->id}}">
+                    <input type="hidden" name="id" value="{{$level->level}}">
                     <input type="hidden" name="level" value="{{$level->level}}">
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="name">等級名稱</label>

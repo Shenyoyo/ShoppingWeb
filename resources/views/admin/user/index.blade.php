@@ -1,14 +1,19 @@
 @extends('layouts.admin')
 
 @section('title')
-    會員帳號管理
+    帳號管理
 @endsection
 
 @section('styles')
 <link rel="stylesheet" href="/css/products.css">
 @endsection
 @section('content')
-<h1>會員帳號管理</h1>
+@if (session()->has('success_message'))
+  <div class="alert alert-success">
+      {{ session()->get('success_message') }}
+  </div>
+@endif
+<h1>帳號管理</h1>
 <div style="margin-top:20px;">
     <form action="#" method="GET" class="search-form">
         <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box" placeholder="用戶名">
@@ -26,7 +31,7 @@
                 <td>通訊地址</td>
                 <td>累積消費</td>
                 <td>等級</td>
-                <td>用戶狀態</td>
+                <td>停權</td>
                 <td>操作</td>
             </thead>
             <tbody>
@@ -34,14 +39,16 @@
                 <tr>
                     <td>{{$user->id}}</td>
                     <td>{{$user->name}}</td>
+                    
                     <td>{{$user->email}}</td>
                     <td>{{$user->phone}}</td>           
                     <td>{{$user->address}}</td>           
-                    <td>{{$user->total_cost}}</td>           
+                    <td>{{presentPrice($user->total_cost)}}</td>           
                     <td>{{$user->level->name}}</td> 
-                    <td>{{$user->active}}</td>           
+                    <td>{{userActive($user->active)}}</td>           
                     <td>
-                       <a href="#"><button class="btn btn-primary btn-sm">修改</button></a> 
+                       <a href="{{route('adminUser.edit',['id' => $user->id ])}}"><button class="btn btn-primary btn-sm">修改</button></a>
+                       <a href="{{route('adminUser.resetPassword',['id' => $user->id ])}}"><button class="btn btn-success btn-sm">重設密碼</button></a>
                     </td>
                     </tr>
                     @endforeach

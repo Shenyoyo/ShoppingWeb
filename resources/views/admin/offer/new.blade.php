@@ -10,6 +10,11 @@
             <div class="panel-title">新增優惠設定</div>
         </div>
         <div class="panel-body" >
+            <div class="box-tools">
+                <div class="btn-group pull-right" style="margin-bottom: 10px">
+                  <a href="{{route('offer.index')}}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> 返回列表</a>
+                </div>
+            </div>
             <form method="POST" action="{{route('offer.add')}}" class="form-horizontal" enctype="multipart/form-data" role="form">
                 {!! csrf_field() !!}
                 <fieldset>

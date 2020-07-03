@@ -25,7 +25,7 @@
         @endif 
         <div class="login-container">
                 <div id="output"></div>
-                <div class="avatar"></div>
+                <div class="avatar"><img class="square" src="{{asset('img/admin.jpg')}}" alt=""> </div>
                 <div class="form-box">
                     <form action="{{route('admin.login')}}" method="post">
                         <input id="name" name="name"     type="text" placeholder="管理者">

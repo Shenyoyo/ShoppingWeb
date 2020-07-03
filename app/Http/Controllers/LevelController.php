@@ -30,7 +30,7 @@ class LevelController extends Controller
         $this->validate($request, [
             'upgrade' => ['required',new UpgradeEditRule($request->input('level'))],
         ]);
-        $level = Level::find($request->input('id'));
+        $level = Level::find($request->input('level'));
         $level->description = $request->input('description');
         $level->upgrade = $request->input('upgrade');
         $level->save();

@@ -87,7 +87,7 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
         Route::resource('cart', 'CartController');
         Route::delete('emptyCart', 'CartController@emptyCart');
         Route::patch('/cart/{id}', 'CartController@update')->name('cart.update');
-        Route::post('/cart/dollor', 'CartController@dollor')->name('cart.dollor');
+        Route::post('/cart/', 'CartController@dollor')->name('cart.dollor');
         Route::post('/cart/checkout','CartController@checkout')->name('cart.checkout');
         Route::post('/cart/buy','CartController@buy')->name('cart.buy');
     });
@@ -265,6 +265,22 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
             Route::get('/', [
                 'uses' => 'AdminUserController@getIndex',
                 'as'   => 'adminUser.index'
+            ]);
+            Route::get('/edit/{id}', [
+                'uses' => 'AdminUserController@editUser',
+                'as'   => 'adminUser.edit'
+            ]);
+            Route::post('/update', [
+                'uses' => 'AdminUserController@updateUser',
+                'as'   => 'adminUser.update'
+            ]);
+            Route::get('/resetPassword/{id}', [
+                'uses' => 'AdminUserController@resetPassword',
+                'as'   => 'adminUser.resetPassword'
+            ]);
+            Route::post('/updatePassword', [
+                'uses' => 'AdminUserController@updatePassword',
+                'as'   => 'adminUser.updatePassword'
             ]);
             
         });                               

@@ -29,6 +29,12 @@
             <div class="col-md-8">
                 <h3>價錢：${{ $product->price }}</h3> 
                 <h4>庫存：{{ $product->amount }}</h4>
+                @if ($product->amount <= 0)
+                <h4 class="text-danger">Oops! 現在庫存沒貨了，廠商正在火速補貨中.... </h4>   
+                @endif
+                @if ($product->buy_yn == 'N')
+                <h4 class="text-danger"> 此商品還沒開賣，先給你看看... </h4>   
+                @endif
                 <form action="{{ url('/cart') }}" method="POST" class="side-by-side">
                     {!! csrf_field() !!}
                     <input type="hidden" name="id" value="{{ $product->id }}">
@@ -43,7 +49,7 @@
                     <br>
                     <br>
                     
-                    <input type="submit" class="btn btn-success btn-lg" value="新增至購物車">
+                    <input {{($product->buy_yn == 'N' || $product->amount <= 0) ? 'disabled' : ""}} type="submit" class="btn btn-success btn-lg" value="新增至購物車">
                 </form>
                 <br><br>
 

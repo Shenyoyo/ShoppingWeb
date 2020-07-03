@@ -25,7 +25,7 @@ class UserController extends Controller
             'name' => 'required|max:255',
             'email' => 'email|required|unique:users',
             'password' => 'required|min:4|confirmed',
-        ],[
+        ], [
             'email.email' => '不是正確的電子信箱',
             'email.unique' => '此信箱已重複創建',
             'password.min' => '密碼長度至少4碼',
@@ -80,7 +80,10 @@ class UserController extends Controller
 
     public function getProfile()
     {
-        return view('user.profile');
+
+        $user = Auth::user();
+        $nextLevel = Level::find($user->level_level +1);
+        return view('user.profile', ['user' => $user ,'nextLevel' => $nextLevel]);
     }
     public function getOrder()
     {
@@ -128,7 +131,7 @@ class UserController extends Controller
         // setp.4 會員晉升
         $nextLevel = $user->level_level+1;
         $nextLevelUpgrade = Level::find($nextLevel)->upgrade ?? "";
-        //有設定才會升等 
+        //有設定才會升等
         if (!empty($nextLevelUpgrade)) {
             if ($user->total_cost >= $nextLevelUpgrade) {
                 //不能跳級

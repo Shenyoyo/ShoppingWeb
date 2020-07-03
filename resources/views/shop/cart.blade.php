@@ -75,7 +75,7 @@
                             <td class="table-image"></td>
                             <td></td>
                             <td class="small-caps table-bg" style="text-align: right">
-                                {{Auth::user()->level->name}}消費滿{{$above}}以上享{{$percent*100 }}折
+                                {{Auth::user()->level->name}}消費滿{{$above}}以上享{{showDiscount($percent*100) }}折
                             </td>
                             <td>-${{ presentPrice($discountMoney) }}</td>
                             <td></td>

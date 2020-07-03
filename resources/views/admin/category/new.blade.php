@@ -10,13 +10,18 @@
             <div class="panel-title">新增分類</div>
         </div>
         <div class="panel-body" >
+            <div class="box-tools">
+                <div class="btn-group pull-right" style="margin-bottom: 10px">
+                  <a href="{{route('category.index')}}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> 返回列表</a>
+                </div>
+            </div>
             <form method="POST" action="{{route('category.add')}}" class="form-horizontal" enctype="multipart/form-data" role="form">
                 {!! csrf_field() !!}
                 <fieldset>
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="name">分類名稱</label>
-                        <div class="col-md-9">
+                        <div class="col-md-4">
                             <input id="name" name="name" type="text" placeholder="例：優惠商品類" class="form-control input-md" required="">
                         </div>
                     </div>

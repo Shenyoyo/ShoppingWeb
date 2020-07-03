@@ -10,6 +10,11 @@
             <div class="panel-title">修改優惠設定</div>
         </div>
         <div class="panel-body" >
+            <div class="box-tools">
+                <div class="btn-group pull-right" style="margin-bottom: 10px">
+                  <a href="{{route('offer.index')}}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> 返回列表</a>
+                </div>
+            </div>
             <form method="POST" action="{{route('offer.update')}}" class="form-horizontal" enctype="multipart/form-data" role="form">
                 {!! csrf_field() !!}
                 <fieldset>
@@ -40,7 +45,7 @@
                         <label class="col-md-1 control-label" for="discount_percent">優惠折數</label>
                         <div class="col-md-1" ">
                             <input id="discount_percent" name="discount_percent" type="text"  class="form-control input-md group1" required=""
-                            value="{{$offer->discount->percent*100}}" >
+                            value="{{showDiscount($offer->discount->percent*100)}}" >
                         </div>
                         <div style="margin-top: 7px;">
                             折

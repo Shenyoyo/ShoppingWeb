@@ -43,7 +43,7 @@ class OfferController extends Controller
         if (!empty($request->input('discount_yn'))) {
             $offer->discount_yn = $request->input('discount_yn');
             $offer->discount->above = $request->input('discount_above');
-            $offer->discount->percent = $request->input('discount_percent')/100;
+            $offer->discount->percent = saveDiscount($request->input('discount_percent'))/100;
             $offer->discount->save();
         } else {
             $offer->discount_yn = 'N';
@@ -94,7 +94,7 @@ class OfferController extends Controller
             $discount = new Discount();
             $discount->offer_id = $offer->id;
             $discount->above = $request->input('discount_above');
-            $discount->percent = $request->input('discount_percent')/100;
+            $discount->percent = saveDiscount($request->input('discount_percent'))/100;
             $discount->save();
         } else {
             $discount = new Discount();
@@ -123,7 +123,7 @@ class OfferController extends Controller
             $rebate->offer_id = $offer->id;
             $rebate->above = $request->input('rebate_above');
             $rebate->rebate = $request->input('rebate_rebate');
-            $cashback->save();
+            $rebate->save();
         } else {
             $rebate = new Rebate();
             $rebate->offer_id = $offer->id;
