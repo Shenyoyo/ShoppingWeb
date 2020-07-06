@@ -33,7 +33,15 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
         'uses' => 'MainController@categoryProduct',
         'as'   => 'shop.category'
     ]);
-   
+    //聯絡我們
+    Route::get('/contact', [
+        'uses' => 'ContactController@getIndex',
+        'as'   => 'contact.index'
+    ]);
+    Route::post('/contact', [
+        'uses' => 'ContactController@sendMessage',
+        'as'   => 'contact.sendMessage'
+    ]);
 
     //忘記密碼
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -87,7 +95,7 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
         Route::resource('cart', 'CartController');
         Route::delete('emptyCart', 'CartController@emptyCart');
         Route::patch('/cart/{id}', 'CartController@update')->name('cart.update');
-        Route::post('/cart/', 'CartController@dollor')->name('cart.dollor');
+        Route::post('/cart/dollor', 'CartController@dollor')->name('cart.dollor');
         Route::post('/cart/checkout','CartController@checkout')->name('cart.checkout');
         Route::post('/cart/buy','CartController@buy')->name('cart.buy');
     });
@@ -282,8 +290,28 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'uses' => 'AdminUserController@updatePassword',
                 'as'   => 'adminUser.updatePassword'
             ]);
+            Route::get('/search', [
+                'uses' => 'AdminUserController@searchUser',
+                'as'   => 'adminUser.search'
+            ]);
+        });  
+        Route::group(['prefix' => 'contact'], function () {
+            Route::get('/', [
+                'uses' => 'AdminContactController@getIndex',
+                'as'   => 'adminContact.index'
+            ]);
+            Route::get('/show/{id}', [
+                'uses' => 'AdminContactController@showContact',
+                'as'   => 'adminContact.show'
+            ]);
+            Route::post('/show/reply', [
+                'uses' => 'AdminContactController@replyContact',
+                'as'   => 'adminContact.reply'
+            ]);
             
-        });                               
+            
+        });    
+
     });
 });
 

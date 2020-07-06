@@ -43,7 +43,5 @@ class MainController extends Controller
         $products = Category::find($id)->product()->paginate(8);
         $categories = Category::CategoryDisplay()->get(); 
         return view('shop.index', ['products' => $products,'categories' => $categories,'id' =>$id]);
-       
-      
     }
 }

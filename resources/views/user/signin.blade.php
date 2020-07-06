@@ -1,5 +1,8 @@
 @extends('layouts.master')
 
+@section('title')
+登入    
+@endsection
 @section('content')
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
@@ -14,11 +17,11 @@
     <form action="{{ route('user.signin')}}" method="post">
         <div class="form-group">
             <label for="email">信 箱</label>
-            <input type="text" id="email" name="email" class="form-control">
+            <input type="text" id="email" name="email" class="form-control" value="{{old('email')}}">
         </div>
         <div class="form-group">
             <label for="password">密 碼</label>
-            <input type="password" id="password" name="password" class="form-control">
+            <input type="password" id="password" name="password" class="form-control" required value="{{old('password')}}">
         </div>
         <div class="form-group ">
             <label for="captcha">驗證碼</label>

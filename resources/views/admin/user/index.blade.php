@@ -14,9 +14,10 @@
   </div>
 @endif
 <h1>帳號管理</h1>
-<div style="margin-top:20px;">
-    <form action="#" method="GET" class="search-form">
-        <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box" placeholder="用戶名">
+<div style="margin-top:10px;">
+    <form action="{{route('adminUser.search')}}" method="GET" class="search-form">
+        <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box"
+            placeholder="用戶名">
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
 </div>

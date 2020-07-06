@@ -40,7 +40,7 @@
 
                     <tr>
                         
-                        <td class="table-image"><a href="{{ url('shop', [$item->model->id]) }}"><img src="{{getImageInCart($item->model->file_id)}}" alt="product" class="img-responsive cart-image"></a></td>
+                        <td class="table-image"><a href="{{ url('shop', [$item->model->id]) }}"><img src="{{asset(getImageInCart($item->model->file_id))}}" alt="product" class="img-responsive cart-image"></a></td>
                         <td><a href="{{ url('shop', [$item->model->id]) }}">{{ $item->name }}</a></td>
                         <td>
                             <select class="quantity" data-id="{{ $item->rowId }}" >

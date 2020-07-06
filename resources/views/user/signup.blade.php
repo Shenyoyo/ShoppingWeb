@@ -1,7 +1,7 @@
 @extends('layouts.master')
-
-
-
+@section('title')
+註冊    
+@endsection
 @section('content')
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
@@ -17,23 +17,24 @@
     <form action="{{ route('user.signup')}}" method="post">
         <div class="form-group">
             <label for="name"">姓 名</label>
-            <input type="text" id="name" name="name" class="form-control" required>
+            <input type="text" id="name" name="name" class="form-control" required value="{{ old('name') }}">
         </div>
         <div class="form-group">
             <label for="email">帳 號(信箱)</label>
-            <input type="text" id="email" name="email" class="form-control" placeholder="XXX@gmail.com" required>
+            <input type="text" id="email" name="email" class="form-control" placeholder="XXX@gmail.com" required value="{{ old('email') }}">
         </div>
         <div class="form-group">
             <label for="email">手 機</label>
-            <input type="text" id="phone"" name="phone" class="form-control" placeholder="0912345678">
+            <input type="text" id="phone"" name="phone" class="form-control" placeholder="0912345678" value="{{ old('phone') }}">
         </div>
         <div class="form-group">
             <label for="email">地 址</label>
-            <input type="text" id="address" name="address" class="form-control" placeholder="台中市...." required>
+            <input type="text" id="address" name="address" class="form-control" placeholder="台中市...." required value="{{ old('address') }}">
         </div>
         <div class="form-group">
             <label for="password">密 碼</label>
             <input type="password" id="password" name="password" class="form-control" required>
+            <span class="">(至少包含1個大寫字母、1個小寫字母、1個數字組合)</span>
         </div>
         <div class="form-group">
             <label for="password">確認密碼</label>

@@ -23,7 +23,11 @@
       <tbody>
       <tr>
         <td>買家：</td>
+        @if ($order->status == '1' )
         <td>{{ $order->user->name }}({{$user->level->name}})</td>
+        @else
+        <td>{{ $order->user->name }}({{$order->pre_levelname}})</td>
+        @endif
         <td>購買時間：</td>
         <td>{{ $order->created_at }}</td>
       </tr>
@@ -63,21 +67,19 @@
 
       <tr>
       @if ($order->status == '1' )
-          @if(!empty($user->level->offer->cashback_yn))
-              @if ($user->level->offer->cashback_yn == 'Y')
-              <td>{{$user->level->name}}滿額{{$user->level->offer->cashback->above}}以上<br>
-                虛擬幣回饋{{$user->level->offer->cashback->percent *100}}%
-              </td>
-                  @if ($order->total >= $user->level->offer->cashback->above)
-                  <td style="padding-top: 18px;" colspan="3" >${{ presentPrice(round($order->total * $user->level->offer->cashback->percent)) }}</td>   
-                  @else
-                  <td style="padding-top: 18px;" colspan="3" >${{ $order->total * 0 }}</td>     
-                  @endif
+          @if (($user->level->offer->cashback_yn ?? '') == 'Y')
+          <td>{{$user->level->name}}滿額{{$user->level->offer->cashback->above}}以上<br>
+            虛擬幣回饋{{$user->level->offer->cashback->percent *100}}%
+          </td>
+              @if ($order->total >= $user->level->offer->cashback->above)
+              <td style="padding-top: 18px;" colspan="3" >${{ presentPrice(round($order->total * $user->level->offer->cashback->percent)) }}</td>   
+              @else
+              <td style="padding-top: 18px;" colspan="3" >${{ $order->total * 0 }}</td>     
               @endif
           @endif
-
-          @if(!empty($user->level->offer->rebate_yn))
-          @if ($user->level->offer->rebate_yn == 'Y')
+      </tr>
+      <tr>
+          @if (($user->level->offer->rebate_yn ?? '') == 'Y')
           <td>{{$user->level->name}}滿額{{$user->level->offer->rebate->above}}以上<br>
             滿額送現金{{$user->level->offer->rebate->rebate}}元
           </td>
@@ -87,27 +89,28 @@
               <td style="padding-top: 18px;" colspan="3" >${{ $order->total * 0 }}</td>     
               @endif
           @endif
-      @endif
       <tr>
         <td colspan="4">
           <a class="pull-right" href="{{route('order.sand',['id' => $order->id ])}}"><button class="btn btn-success">送貨</button></a> 
         </td>
       </tr>
       @else
+      <tr>
           @if ($order->pre_cashback_yn == 'Y')
           <td>{{$order->pre_levelname}}滿額{{$order->pre_above}}以上<br>
             虛擬幣回饋{{$order->pre_percent *100}}%
           </td>
               <td style="padding-top: 18px;" colspan="3" >${{ presentPrice(round($order->pre_dollor)) }}</td>   
           @endif
-
+      </tr>
+      <tr>
           @if ($order->pre_rebate_yn == 'Y')
           <td>{{$order->pre_levelname}}滿額{{$order->pre_rebate_above}}以上<br>
             滿額送現金{{$order->pre_rebate_dollor}}元
           </td>
               <td style="padding-top: 18px;" colspan="3" >${{ presentPrice($order->pre_rebate_dollor)}}</td>   
           @endif
-
+      </tr>
           @if($order->status == '4')
           <tr>
             <td>退款理由：</td>
@@ -118,7 +121,7 @@
               </a>
               <form style="display: inline-block" id='refund-disagree' action="{{route('order.refundDisagree')}}" method="post">
                 {!! csrf_field() !!}
-                <button class="btn btn-sm btn-danger" name="nomessage"  id="btn-refund-disagree" type="button" value="" onClick="subForm()";>不同意</button>
+                <button class="btn btn-sm btn-danger " name="nomessage"  id="btn-refund-disagree" type="button" value="" onClick="subForm()";>不同意</button>
                 <input type="hidden" name="orderId" value="{{ $order->id }}"> 
               </form>
             </td>

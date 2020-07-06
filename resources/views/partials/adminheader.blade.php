@@ -20,6 +20,7 @@
                 <li><a href="{{route('offer.index')}}"></i> 優惠管理</a></li>
                 <li><a href="{{route('order.index')}}"></i> 訂單管理</a></li>
                 <li><a href="{{route('adminUser.index')}}"></i> 帳號管理</a></li>
+                <li><a href="{{route('adminContact.index')}}"></i> 問題回覆管理</a></li>
                 
             </ul>
             <ul class="nav navbar-nav navbar-right">

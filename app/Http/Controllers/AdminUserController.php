@@ -49,5 +49,13 @@ class AdminUserController extends Controller
         $user->save();
         return redirect()->route('adminUser.index')->withSuccessMessage('更改用戶'.$user->name.'成功');
     }
+    public function searchUser(Request $request)
+    {
+        $query = $request->input('query');
+
+        $users = User::where('name', 'LIKE', '%'.$query.'%')->paginate(10);
+
+        return view('admin/user.index', ['users' => $users]);
+    }
     
 }

@@ -35,7 +35,7 @@
                 @if ($product->buy_yn == 'N')
                 <h4 class="text-danger"> 此商品還沒開賣，先給你看看... </h4>   
                 @endif
-                <form action="{{ url('/cart') }}" method="POST" class="side-by-side">
+                <form action="{{ route('cart.store') }}" method="POST" class="side-by-side">
                     {!! csrf_field() !!}
                     <input type="hidden" name="id" value="{{ $product->id }}">
                     <input type="hidden" name="name" value="{{ $product->name }}">

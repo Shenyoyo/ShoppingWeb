@@ -32,6 +32,23 @@ function orderStatus($status)
             break;
     }
 }
+function ContactStatus($status)
+{
+    switch ($status) {
+        case '1':
+            return '未處理';
+            break;
+        case '2':
+            return '處理中';
+            break;
+        case '3':
+            return '已回覆';
+            break;
+        default:
+            return '不明狀態';
+            break;
+    }
+}
 function userActive($active)
 {
     switch ($active) {

@@ -29,27 +29,27 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="name">名稱</label>
                         <div class="col-md-7">
-                            <input id="name" name="name" type="text" placeholder="商品名稱" class="form-control input-md" required="">
+                            <input id="name" name="name" type="text" placeholder="商品名稱" class="form-control input-md" required="" value="{{old('name')}}">
 
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="textarea">描述</label>
                         <div class="col-md-7">
-                            <textarea class="form-control" id="textarea" name="description"></textarea>
+                            <textarea class="form-control" id="textarea" name="description" value="{{old('description')}}"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="price">價格</label>
                         <div class="col-md-7">
-                            <input id="price" name="price" type="text" placeholder="商品價格" class="form-control input-md" oninput = "value=value.replace(/[^\d]/g,'')" required="">
+                            <input id="price" name="price" type="text" placeholder="商品價格" class="form-control input-md" oninput = "value=value.replace(/[^\d]/g,'')" required="" value="{{old('price')}}">
                         </div>
                     </div>
                  
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="amount">庫存數量</label>
                         <div class="col-md-7">
-                            <input id="amount" name="amount" type="number" class="form-control input-md" value="1" min="1">
+                            <input id="amount" name="amount" type="number" class="form-control input-md" value="1" min="1" >
                         </div>
                     </div>
                     <div class="form-group ">
