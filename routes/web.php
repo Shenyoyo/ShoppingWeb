@@ -267,6 +267,10 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'uses' => 'OrderController@searchOrder',
                 'as'   => 'order.search'
             ]);
+            Route::post('/orderbyStatus', [
+                'uses' => 'OrderController@orderbyStatus',
+                'as'   => 'order.orderby'
+            ]);
             
         }); 
         Route::group(['prefix' => 'user'], function () {

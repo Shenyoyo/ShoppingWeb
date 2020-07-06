@@ -21,7 +21,7 @@
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
 </div>
-<div class="row"">
+<div style="margin-top:10px;" class="row"">
     <div class="col-md-12 text-center" >
         <table class="table table-striped ">
             <thead class="bg-info">
@@ -42,11 +42,11 @@
                     <td>{{$user->name}}</td>
                     
                     <td>{{$user->email}}</td>
-                    <td>{{$user->phone}}</td>           
-                    <td>{{$user->address}}</td>           
-                    <td>{{presentPrice($user->total_cost)}}</td>           
-                    <td>{{$user->level->name}}</td> 
-                    <td>{{userActive($user->active)}}</td>           
+                    <td>{{$user->phone}}</td>
+                    <td>{{$user->address}}</td>
+                    <td>{{presentPrice($user->total_cost)}}</td>
+                    <td>{{$user->level->name}}</td>
+                    <td>{{userActive($user->active)}}</td>
                     <td>
                        <a href="{{route('adminUser.edit',['id' => $user->id ])}}"><button class="btn btn-primary btn-sm">修改</button></a>
                        <a href="{{route('adminUser.resetPassword',['id' => $user->id ])}}"><button class="btn btn-success btn-sm">重設密碼</button></a>

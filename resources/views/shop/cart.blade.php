@@ -34,12 +34,9 @@
                         <th>操作</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     @foreach (Cart::content() as $item)
-
                     <tr>
-                        
                         <td class="table-image"><a href="{{ url('shop', [$item->model->id]) }}"><img src="{{asset(getImageInCart($item->model->file_id))}}" alt="product" class="img-responsive cart-image"></a></td>
                         <td><a href="{{ url('shop', [$item->model->id]) }}">{{ $item->name }}</a></td>
                         <td>
@@ -84,7 +81,6 @@
                         @endif
                     @endif
                    
-                    
                     <tr>
                         <td class="table-image"></td>
                         <td></td>

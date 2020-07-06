@@ -21,7 +21,7 @@
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
 </div>
-<div class="row">
+<div style="margin-top:10px;" class="row">
     <div class="col-md-12 text-center">
         <table class="table table-striped ">
             <thead class="bg-info">
@@ -38,8 +38,8 @@
                     <td>{{$offer->id}}</td>
                     <td>{{$offer->level->name}}</td>
                     <td>{{$offer->discount_yn}}</td>
-                    <td>{{$offer->cashback_yn}}</td>       
-                    <td>{{$offer->rebate_yn}}</td>       
+                    <td>{{$offer->cashback_yn}}</td>
+                    <td>{{$offer->rebate_yn}}</td>
                     <td>
                         <a href="{{route('offer.edit',['id' => $offer->id ])}}"><button
                                 class="btn btn-primary btn-sm">修改</button></a>

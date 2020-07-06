@@ -17,7 +17,7 @@
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
 </div>
-<div class="row"">
+<div style="margin-top:10px;" class="row"">
     <div class=" col-md-12 text-center">
     <table class="table table-striped ">
         <thead class="bg-info">
@@ -36,10 +36,10 @@
                 <td>{{$contact->id}}</td>
                 <td>{{$contact->name}}</td>
                 <td>{{$contact->email}}</td>
-                <td>{{$contact->phone}}</td>      
-                <td>{{$contact->subject}}</td> 
-                <td>{{ContactStatus($contact->status)}}</td>      
-                <td>{{ $contact->updated_at->format('Y/m/d H:i:s') }}</td>    
+                <td>{{$contact->phone}}</td>
+                <td>{{$contact->subject}}</td>
+                <td>{{ContactStatus($contact->status)}}</td>
+                <td>{{ $contact->updated_at->format('Y/m/d H:i:s') }}</td>
                 <td>
                     <a href="{{route('adminContact.show',['id' => $contact->id ])}}"><button class="btn btn-primary btn-sm">明細</button></a>
                 </td>

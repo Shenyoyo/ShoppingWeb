@@ -95,4 +95,11 @@ class OrderController extends Controller
         $orders = Order::where('id', 'LIKE', '%'.$query.'%')->paginate(10);
         return view('admin/order.index', ['orders' => $orders]);
     }
+    public function orderbyStatus(Request $request)
+    {
+        $oderbyStatus = $request->input('oderbyStatus');
+        $orders = ($oderbyStatus == '0') ? Order::orderBy('id', 'desc')->paginate(10) : $orders = Order::where('status',$oderbyStatus)->paginate(10);
+        
+        return view('admin/order.index', ['orders' => $orders ,'oderbyStatus' => $oderbyStatus]);
+    }
 }

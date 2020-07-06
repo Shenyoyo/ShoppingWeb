@@ -9,7 +9,7 @@ class AdminContactController extends Controller
 {
     public function getIndex()
     {
-        $contacts = Contact::paginate(10); 
+        $contacts = Contact::orderBy('id','dsec')->paginate(10); 
         return view('admin/contact.index',['contacts' => $contacts]);
     }
     public function showContact($id)
@@ -19,7 +19,6 @@ class AdminContactController extends Controller
             $contact->status = '2';
             $contact->save();
         }
-        
         return view('admin/contact.show',['contact' => $contact]);
     }
     public function replyContact(Request $request)
