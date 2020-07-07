@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use App\File;
+use App\DollorLog;
 function presentPrice($price)
 {
     return number_format($price);
@@ -134,4 +135,13 @@ function showDiscount($percent)
             return $percent;
             break;
     }
+}
+function setDollorLog($user_id,$tx_type,$amount,$sub_total,$memo){
+    $dollorLog = new DollorLog;
+    $dollorLog->user_id = $user_id;
+    $dollorLog->tx_type = $tx_type;
+    $dollorLog->amount = $amount;
+    $dollorLog->sub_total = $sub_total;
+    $dollorLog->memo = $memo;
+    $dollorLog->save();
 }

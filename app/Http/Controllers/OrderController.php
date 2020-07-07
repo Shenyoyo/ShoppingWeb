@@ -98,7 +98,8 @@ class OrderController extends Controller
     public function orderbyStatus(Request $request)
     {
         $oderbyStatus = $request->input('oderbyStatus');
-        $orders = ($oderbyStatus == '0') ? Order::orderBy('id', 'desc')->paginate(10) : $orders = Order::where('status',$oderbyStatus)->paginate(10);
+        $orders = ($oderbyStatus == '0') ? Order::orderBy('id', 'desc')->paginate(10) : 
+        Order::where('status',$oderbyStatus)->orderBy('id', 'desc')->paginate(10);
         
         return view('admin/order.index', ['orders' => $orders ,'oderbyStatus' => $oderbyStatus]);
     }

@@ -57,5 +57,38 @@ class AdminUserController extends Controller
 
         return view('admin/user.index', ['users' => $users]);
     }
+
+    public function getDepositIndex($id)
+    {
+        $user = User::find($id);
+        return view('admin/user.deposit', ['user' => $user]);
+    }
+    
+    public function postDeposit(Request $request)
+    {
+      
+        $user = User::find($request->input('id'));
+        setDollorLog($user->id,'1',$request->input('deposit'),$user->dollor->dollor,$request->input('memo'));
+        $user->dollor->dollor =$user->dollor->dollor + $request->input('deposit');
+       
+        $user->dollor->save();
+        return redirect()->route('adminUser.index')->withSuccessMessage('人工存取'.$user->name.'成功');
+    }
+    public function getWithdrawIndex($id)
+    {
+        $user = User::find($id);
+        return view('admin/user.withdraw', ['user' => $user]);
+    }
+    
+    public function postWithdraw(Request $request)
+    {
+      
+        $user = User::find($request->input('id'));
+        setDollorLog($user->id,'2',$request->input('deposit'),$user->dollor->dollor,$request->input('memo'));
+        $user->dollor->dollor =$user->dollor->dollor - $request->input('deposit');
+       
+        $user->dollor->save();
+        return redirect()->route('adminUser.index')->withSuccessMessage('人工提取'.$user->name.'成功');
+    }
     
 }

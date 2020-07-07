@@ -16,6 +16,17 @@
         <div class="panel-heading">
             <div class="panel-title">用戶修改</div>
         </div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" href="{{route('adminUser.edit',['id' => $user->id ])}}">基本資料修改</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('adminUser.deposit',['id' => $user->id ])}}">人工存入</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('adminUser.withdraw',['id' => $user->id ])}}">人工提取</a>
+            </li>
+          </ul>
         <div class="panel-body" >
             <div class="box-tools">
                 <div class="btn-group pull-right" style="margin-bottom: 10px">

@@ -30,6 +30,7 @@
                 <td>信箱</td>
                 <td>手機</td>
                 <td>通訊地址</td>
+                <td>虛擬幣</td>
                 <td>累積消費</td>
                 <td>等級</td>
                 <td>停權</td>
@@ -40,10 +41,10 @@
                 <tr>
                     <td>{{$user->id}}</td>
                     <td>{{$user->name}}</td>
-                    
                     <td>{{$user->email}}</td>
                     <td>{{$user->phone}}</td>
                     <td>{{$user->address}}</td>
+                    <td>{{presentPrice($user->dollor->dollor ?? 0)}}</td>
                     <td>{{presentPrice($user->total_cost)}}</td>
                     <td>{{$user->level->name}}</td>
                     <td>{{userActive($user->active)}}</td>

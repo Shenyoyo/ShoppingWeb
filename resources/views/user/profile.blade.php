@@ -46,15 +46,15 @@
                             <span>
                                 <h4>{{$user->level->name}}可享優惠：</h4>
                                 
-                                @if ($user->level->offer->discount_yn ?? ''  == 'Y')
+                                @if (($user->level->offer->discount_yn ?? '')  == 'Y')
                                 <p>單筆消費滿{{$user->level->offer->discount->above}}元以上，
                                     可獲得{{showDiscount($user->level->offer->discount->percent*100)}}折的優惠。</p>
                                 @endif
-                                @if ($user->level->offer->cashback_yn ?? '' == 'Y')
+                                @if (($user->level->offer->cashback_yn ?? '') == 'Y')
                                 <p>單筆消費滿{{$user->level->offer->cashback->above}}元以上，
                                    可獲得{{$user->level->offer->cashback->percent*100}}%的虛擬幣回饋。</p>
                                 @endif
-                                @if ($user->level->offer->rebate_yn ?? '' == 'Y')
+                                @if (($user->level->offer->rebate_yn ?? '') == 'Y')
                                 <p>單筆消費滿{{$user->level->offer->rebate->above}}元以上，
                                    可獲得{{$user->level->offer->rebate->rebate}}元的虛擬幣回饋。</p>
                                 @endif

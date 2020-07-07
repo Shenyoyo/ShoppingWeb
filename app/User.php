@@ -48,5 +48,8 @@ class User extends Authenticatable
     public function order(){
         return $this->hasMany('App\Order');
     }
+    public function dollorlog(){
+        return $this->hasMany('App\DollorLog');
+    }
 
 }

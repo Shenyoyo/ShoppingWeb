@@ -10,13 +10,24 @@
 </div>
 @endif
 <h1>問題回覆管理</h1>
-<div style="margin-top:20px;">
-    <form action="#" method="GET" class="search-form">
+<div   style="margin-top:20px;">
+    <form  style="display: inline-block"  action="{{route('adminContact.search')}}"" method="GET" class="search-form">
         <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box"
-            placeholder="用戶名">
+            placeholder="ID"">
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
+
+    <form class="pull-right" action="{{route('adminContact.orderby')}}" method="POST" class="search-form">
+        {!! csrf_field() !!}
+        <select class="form-control" name="oderbyStatus" id="oderbyStatus" onchange="this.form.submit()" >
+            <option value="0">全部</option>
+            @for ($i = 1; $i <= 3 ; $i++)
+                <option {{($oderbyStatus ?? '') == $i ? 'selected' : ''}} value="{{$i}}">{{contactStatus($i)}}</option>
+            @endfor
+        </select>
+    </form>
 </div>
+
 <div style="margin-top:10px;" class="row"">
     <div class=" col-md-12 text-center">
     <table class="table table-striped ">

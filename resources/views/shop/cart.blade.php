@@ -16,11 +16,13 @@
     </div>
     @endif
 
-    @if (session()->has('error_message'))
+    @if (count($errors) > 0)
     <div class="alert alert-danger">
-        {{ session()->get('error_message') }}
+        @foreach ($errors->all() as $errors)
+            <p>{{ $errors }}</p>    
+        @endforeach
     </div>
-    @endif
+    @endif 
     @if (sizeof(Cart::content()) > 0)
 
             <table class="table">

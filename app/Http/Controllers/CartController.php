@@ -152,8 +152,11 @@ class CartController extends Controller
 
     public function checkout(Request $request)
     {
-        if (sizeof(Cart::content()) < 0) {
-            return view('shop.cart');
+        //檢查有無庫存防呆
+        foreach (Cart::content() as $item ) {
+            if($item->model->amount == 0){
+               return redirect()->route('cart.index')->withErrors($item->model->name.'已無庫存，無法結帳。');
+            }
         }
         $newTotal = $request->newTotal;
         $dollor = $request->dollor;

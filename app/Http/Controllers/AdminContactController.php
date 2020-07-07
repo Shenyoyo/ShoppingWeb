@@ -29,6 +29,20 @@ class AdminContactController extends Controller
         $contact->save();
         return redirect()->back()->withSuccessMessage('已紀錄處理方式。');
     }
+    public function searchContact(Request $request)
+    {
+        $query = $request->input('query');
+        $contacts = Contact::where('id', 'LIKE', '%'.$query.'%')->paginate(10);
+        return view('admin/contact.index', ['contacts' => $contacts]);
+    }
+    public function orderbyStatus(Request $request)
+    {
+        $oderbyStatus = $request->input('oderbyStatus');
+        $contacts = ($oderbyStatus == '0') ? Contact::orderBy('id', 'desc')->paginate(10) : 
+        Contact::where('status',$oderbyStatus)->orderBy('id', 'desc')->paginate(10);
+        
+        return view('admin/contact.index', ['contacts' => $contacts ,'oderbyStatus' => $oderbyStatus]);
+    }
 
     
 }

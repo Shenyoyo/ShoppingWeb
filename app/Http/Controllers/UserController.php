@@ -6,6 +6,7 @@ use App\Cashback;
 use App\Level;
 use App\User;
 use App\Dollor;
+use App\DollorLog;
 use App\Order;
 use App\Refund;
 use Illuminate\Http\Request;
@@ -51,6 +52,11 @@ class UserController extends Controller
         $dollor->user_id = $user->id;
         $dollor->dollor = 0;
         $dollor->save();
+
+        $dollorLog = new DollorLog();
+        $dollorLog->user_id = $user->id; 
+        $dollorLog->sub_total = 0; 
+        $dollorLog->save();
 
 
         Auth::login($user);

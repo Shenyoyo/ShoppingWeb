@@ -282,6 +282,22 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'uses' => 'AdminUserController@editUser',
                 'as'   => 'adminUser.edit'
             ]);
+            Route::get('/deposit/{id}', [
+                'uses' => 'AdminUserController@getDepositIndex',
+                'as'   => 'adminUser.deposit'
+            ]);
+            Route::post('/deposit/', [
+                'uses' => 'AdminUserController@postDeposit',
+                'as'   => 'adminUser.postDeposit'
+            ]);
+            Route::get('/withdraw/{id}', [
+                'uses' => 'AdminUserController@getWithdrawIndex',
+                'as'   => 'adminUser.withdraw'
+            ]);
+            Route::post('/withdraw/', [
+                'uses' => 'AdminUserController@postWithdraw',
+                'as'   => 'adminUser.postWithdraw'
+            ]);
             Route::post('/update', [
                 'uses' => 'AdminUserController@updateUser',
                 'as'   => 'adminUser.update'
@@ -290,6 +306,7 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'uses' => 'AdminUserController@resetPassword',
                 'as'   => 'adminUser.resetPassword'
             ]);
+            
             Route::post('/updatePassword', [
                 'uses' => 'AdminUserController@updatePassword',
                 'as'   => 'adminUser.updatePassword'
@@ -311,6 +328,14 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
             Route::post('/show/reply', [
                 'uses' => 'AdminContactController@replyContact',
                 'as'   => 'adminContact.reply'
+            ]);
+            Route::post('/orderbyStatus', [
+                'uses' => 'AdminContactController@orderbyStatus',
+                'as'   => 'adminContact.orderby'
+            ]);
+            Route::get('/search', [
+                'uses' => 'AdminContactController@searchContact',
+                'as'   => 'adminContact.search'
             ]);
             
             
