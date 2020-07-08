@@ -23,10 +23,11 @@ class UserController extends Controller
     public function postSignup(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique:users',
             'email' => 'email|required|unique:users',
             'password' => 'required|min:6|confirmed|regex:/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/',
         ], [
+            'name.unique' => '使用者名稱已被使用',
             'email.email' => '不是正確的電子信箱',
             'email.unique' => '信箱已重複',
             'password.min' => '密碼長度至少6碼',
@@ -124,6 +125,8 @@ class UserController extends Controller
             $cashbackDollor = round($order->total * $cashbackPercent);
             $userDollor = $user->dollor;
             $userDollor->dollor = $userDollor->dollor + $cashbackDollor ; //給予虛擬幣回饋
+             //紀錄回饋
+            setDollorLog(Auth::user()->id,'4',$cashbackDollor,$userDollor->dollor,'');
             $userDollor->save();
         }
         $rebate_yn = $user->level->offer->rebate_yn ?? 'N';
@@ -132,6 +135,7 @@ class UserController extends Controller
             $cashbackDollor = $user->level->offer->rebate->rebate;
             $userDollor = $user->dollor;
             $userDollor->dollor = $userDollor->dollor + $cashbackDollor ; //給予滿額送現金
+            setDollorLog(Auth::user()->id,'5',$cashbackDollor,$userDollor->dollor,'');
             $userDollor->save();
         }
         

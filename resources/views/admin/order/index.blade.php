@@ -6,6 +6,12 @@
 <link rel="stylesheet" href="/css/products.css">
 @endsection
 @section('content')
+@section('content')
+@if (session()->has('success_message'))
+  <div class="alert alert-success">
+      {{ session()->get('success_message') }}
+  </div>
+@endif
 <h1>訂單管理</h1>
 <div style="margin-top:20px;">
     <form style="display: inline-block" action="{{route('order.search')}}" method="GET" class="search-form">

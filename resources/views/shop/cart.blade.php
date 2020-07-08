@@ -119,6 +119,7 @@
             <div style="float:left">
             <form action="{{route('cart.checkout')}}" method="POST">
                 {!! csrf_field() !!}
+                <input type="hidden" name="dollor_yn" value="{{ $dollor_yn}}">
                 <input type="hidden" name="dollor" value="{{ $dollor->dollor }}">
                 <input type="hidden" name="recordReturnTotal" value="{{ $recordReturnTotal }}">
                 <input type="hidden" name="newTotal" value="{{ $newTotal }}">

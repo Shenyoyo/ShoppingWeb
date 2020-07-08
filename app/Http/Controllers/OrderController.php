@@ -56,9 +56,15 @@ class OrderController extends Controller
         $user = Auth::user()->find($order->user_id);
         $userDollor = $user->dollor->dollor;
         $userDollor = $userDollor + ($order->record);
+        //計入退貨要回饋到虛擬幣
+        setDollorLog($user->id,'6',$order->record,$userDollor,'');
         // step.3 虛擬幣優惠饋扣除
         $userDollor = $userDollor - ($order->pre_dollor); //虛擬幣回饋
+        //紀錄虛擬幣優惠饋扣除
+        ($order->pre_dollor != 0) ? setDollorLog($user->id,'7',-($order->pre_dollor),$userDollor,'') : '';
         $userDollor = $userDollor - ($order->pre_rebate_dollor); //滿額現金
+        //紀錄虛擬幣滿額現金扣除
+        ($order->pre_rebate_dollor != 0) ? setDollorLog($user->id,'8',-($order->pre_rebate_dollor),$userDollor,'') : '';
         $user->dollor->dollor= $userDollor ;
         // setp.4 會員等級重新判斷
         $user->dollor->save();

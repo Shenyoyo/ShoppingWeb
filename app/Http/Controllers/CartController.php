@@ -158,6 +158,7 @@ class CartController extends Controller
                return redirect()->route('cart.index')->withErrors($item->model->name.'已無庫存，無法結帳。');
             }
         }
+        $dollor_yn= $request->dollor_yn;
         $newTotal = $request->newTotal;
         $dollor = $request->dollor;
         //顯示與上方
@@ -165,6 +166,7 @@ class CartController extends Controller
         Auth::user()->dollor->dollor = $dollor;
         // echo $request->recordReturnTotal;
         return view('shop.checkout')->with([
+            'dollor_yn' => $dollor_yn,
             'newTotal' => $newTotal,
             'dollor' => $dollor,
             'recordReturnTotal' => $recordReturnTotal,
@@ -176,6 +178,15 @@ class CartController extends Controller
         //setp.1 更新會員虛擬幣
         $dollor =Auth::user()->dollor;
         $dollor->dollor = $request->dollor;
+        //紀錄是否花費虛擬幣，有使用才會紀錄
+        if($request->dollor_yn == 'Y'){
+            if($dollor->dollor- $request->recordReturnTotal > 0){
+                $buyusedollor = $request->recordReturnTotal;
+            }else{
+                $buyusedollor = $dollor->dollor;
+            }
+            setDollorLog(Auth::user()->id,'3',-$buyusedollor,$dollor->dollor,'');
+        }
         $dollor->save();
         //setp.2 建立訂單
         $order = new Order;

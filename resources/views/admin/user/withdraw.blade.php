@@ -39,21 +39,21 @@
                     <!-- Text input-->
                     <input type="hidden" name="id" value="{{$user->id}}">
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="deposit">用戶名</label>
+                        <label class="col-md-4 control-label" for="neam">用戶名</label>
                         <div class="col-md-2" style="margin-top: 7px;">
                             {{$user->name}}
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="deposit">虛擬幣</label>
+                        <label class="col-md-4 control-label" for="dollor">虛擬幣</label>
                         <div class="col-md-2" style="margin-top: 7px;">
                             {{presentPrice($user->dollor->dollor)}}
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="deposit">提取金額</label>
+                        <label class="col-md-4 control-label" for="withdraw">提取金額</label>
                         <div class="col-md-2">
-                        <input id="deposit"" name="deposit" type="text"  class="form-control input-md"  required="" oninput = "value=value.replace(/[^\d]/g,'')" autofocus="">
+                        <input id="withdraw"" name="withdraw" type="text"  class="form-control input-md"  required="" oninput = "value=value.replace(/[^\d]/g,'')" autofocus="">
                         </div>
                     </div>
                     <div class="form-group">

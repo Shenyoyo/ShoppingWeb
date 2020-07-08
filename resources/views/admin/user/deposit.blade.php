@@ -39,13 +39,13 @@
                     <!-- Text input-->
                     <input type="hidden" name="id" value="{{$user->id}}">
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="deposit">用戶名</label>
+                        <label class="col-md-4 control-label" for="name">用戶名</label>
                         <div class="col-md-2" style="margin-top: 7px;">
                             {{$user->name}}
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="deposit">虛擬幣</label>
+                        <label class="col-md-4 control-label" for="dollor">虛擬幣</label>
                         <div class="col-md-2" style="margin-top: 7px;">
                             {{presentPrice($user->dollor->dollor)}}
                         </div>

@@ -10,6 +10,10 @@
             <h1>結 帳-貨到付款</h1>
             <h4>數 量： {{Cart::instance('default')->count(false)}} 件商品</h4>
             <h4>總 額： ${{  presentPrice($newTotal) }}元</h4>
+            @if ($dollor_yn == 'Y')
+            <h4>使用虛擬幣付款</h4>
+            @endif
+            
             @if (session()->has('error_message'))
             <div class="alert alert-danger">
             {{ session()->get('error_message') }}
@@ -31,6 +35,7 @@
                     </div>
                     <hr>
                 </div>
+                <input type="hidden" name="dollor_yn" value="{{ $dollor_yn }}"> 
                 <input type="hidden" name="newTotal"" value="{{ $newTotal }}"> 
                 <input type="hidden" name="dollor"" value="{{ $dollor }}">    
                 <input type="hidden" name="recordReturnTotal" value="{{ $recordReturnTotal }}">

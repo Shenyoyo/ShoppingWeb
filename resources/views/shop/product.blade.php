@@ -41,9 +41,9 @@
                     <input type="hidden" name="name" value="{{ $product->name }}">
                     <input type="hidden" name="price" value="{{ $product->price }}">
                     <label class="mr-sm-2" >數量:</label>
-                    <select  name="quantity" >
+                    <select  name="quantity" onfocus="selectFocus(this)" >
                     @for ($i = 1; $i <= $product->amount; $i++)
-                    <option value="{{$i}}">{{$i}}</option>    
+                    <option onclick="selectClick(this)" value="{{$i}}">{{$i}}</option>    
                     @endfor    
                     </select>
                     <br>
@@ -78,4 +78,7 @@
         </div> <!-- end row -->
 
         <div class="spacer"></div>
+@endsection
+@section('scripts')
+<script  src="{{ asset('js/productshow.js') }}"></script>
 @endsection

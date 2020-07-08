@@ -142,6 +142,6 @@ function setDollorLog($user_id,$tx_type,$amount,$sub_total,$memo){
     $dollorLog->tx_type = $tx_type;
     $dollorLog->amount = $amount;
     $dollorLog->sub_total = $sub_total;
-    $dollorLog->memo = $memo;
+    $dollorLog->memo = $memo ?? '';
     $dollorLog->save();
 }
