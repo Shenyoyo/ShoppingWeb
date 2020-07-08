@@ -21,7 +21,7 @@
                 <li><a href="{{route('order.index')}}"></i> 訂單管理</a></li>
                 <li><a href="{{route('adminUser.index')}}"></i> 帳號管理</a></li>
                 <li><a href="{{route('adminContact.index')}}"></i> 問題回覆管理</a></li>
-                
+                <li><a href="{{route('dollor.index')}}"></i> 虛擬幣紀錄</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown ">

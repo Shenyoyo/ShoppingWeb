@@ -50,6 +50,38 @@ function ContactStatus($status)
             break;
     }
 }
+function txStatus($status)
+{
+    switch ($status) {
+        case '1':
+            return '人工存款';
+            break;
+        case '2':
+            return '人工提款';
+            break;
+        case '3':
+            return '購物折抵';
+            break;
+        case '4':
+            return '虛擬幣回饋';
+            break;
+        case '5':
+            return '滿額送現金';
+            break;
+        case '6':
+            return '退貨退還虛擬幣';
+            break;
+        case '7':
+            return '退貨扣除虛擬幣回饋';
+            break;
+        case '8':
+            return '退貨扣除滿額送現金';
+            break;
+        default:
+            return '帳號創建預設';
+            break;
+    }
+}
 function userActive($active)
 {
     switch ($active) {
@@ -136,7 +168,8 @@ function showDiscount($percent)
             break;
     }
 }
-function setDollorLog($user_id,$tx_type,$amount,$sub_total,$memo){
+function setDollorLog($user_id,$tx_type,$amount,$sub_total,$memo)
+{
     $dollorLog = new DollorLog;
     $dollorLog->user_id = $user_id;
     $dollorLog->tx_type = $tx_type;

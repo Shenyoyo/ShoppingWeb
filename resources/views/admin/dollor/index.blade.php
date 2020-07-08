@@ -15,9 +15,12 @@
 @endif
 <h1>虛擬幣紀錄</h1>
 <div style="margin-top:10px;">
-    <form action="{{route('adminUser.search')}}" method="GET" class="search-form">
-        <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box"
-            placeholder="用戶名">
+    
+    <form action="{{ route('dollor.search') }}" method="post" class="search-form">
+        {!! csrf_field() !!}
+        <input id="date" type="date" name="startDate" value="{{$startDate }}" required> ~
+        <input id="date" type="date" name="endDate"   value="{{$endDate }}" required>
+        <input type="text" name="name" id="name"  class="search-box" placeholder="用戶名" >
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
 </div>
@@ -28,38 +31,33 @@
                 <td>ID</td>
                 <td>用戶名</td>
                 <td>交易類別</td>
-                <td>手機</td>
-                <td>通訊地址</td>
-                <td>虛擬幣</td>
-                <td>累積消費</td>
-                <td>等級</td>
-                <td>停權</td>
-                <td>操作</td>
+                <td>金額</td>
+                <td>小計</td>
+                <td>執行時間</td>
+                <td>註解</td>
             </thead>
             <tbody>
-                @foreach ($users as $user)
+                @if (isset($dollorlogs))
+                @foreach ($dollorlogs as $dollorlog)
                 <tr>
-                    <td>{{$user->id}}</td>
-                    <td>{{$user->name}}</td>
-                    <td>{{$user->email}}</td>
-                    <td>{{$user->phone}}</td>
-                    <td>{{$user->address}}</td>
-                    <td>{{presentPrice($user->dollor->dollor ?? 0)}}</td>
-                    <td>{{presentPrice($user->total_cost)}}</td>
-                    <td>{{$user->level->name}}</td>
-                    <td>{{userActive($user->active)}}</td>
-                    <td>
-                       <a href="{{route('adminUser.edit',['id' => $user->id ])}}"><button class="btn btn-primary btn-sm">修改</button></a>
-                       <a href="{{route('adminUser.resetPassword',['id' => $user->id ])}}"><button class="btn btn-success btn-sm">重設密碼</button></a>
-                    </td>
-                    </tr>
-                    @endforeach
+                    <td>{{$dollorlog->id}}</td>
+                    <td>{{$dollorlog->user->name}}</td>
+                    <td>{{txStatus($dollorlog->tx_type)}}</td>
+                    <td>{{presentPrice($dollorlog->amount)}}</td>
+                    <td>{{presentPrice($dollorlog->sub_total)}}</td>
+                    <td>{{$dollorlog->created_at}}</td>
+                    <td>{{$dollorlog->memo}}</td>
+                </tr>
+                @endforeach    
+                @endif
                 </tbody>
             </table>
     </div>
 </div>
 <div class="text-center">
-    {{ $users->links() }}
+    @if (isset($dollorlogs))
+    {{ $dollorlogs->links()  }}
+    @endif
 </div>
 
 @endsection

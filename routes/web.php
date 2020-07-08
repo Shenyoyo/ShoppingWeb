@@ -337,9 +337,17 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'uses' => 'AdminContactController@searchContact',
                 'as'   => 'adminContact.search'
             ]);
-            
-            
-        });    
+        });
+        Route::group(['prefix' => 'dollor'], function () {
+            Route::get('/', [
+                'uses' => 'DollorController@getIndex',
+                'as'   => 'dollor.index'
+            ]);
+            Route::post('/search', [
+                'uses' => 'DollorController@searchDollor',
+                'as'   => 'dollor.search'
+            ]);
+        });        
 
     });
 });
