@@ -6,6 +6,9 @@
 5.產生預設資料php artisan db:seed<br>
 6.產生php artisan key:generate<br>
 7.使用內建php artisan serve 開啟方法:<br>
+8.並到hosts設定增加<br>
+127.0.0.1       shoppingweb.user.com<br>
+127.0.0.1       shoppingweb.admin.com<br>
 開啟兩個cmd 到專案路徑底下 分別執行：<br>
 php artisan serve --host=shoppingweb.user.com --port=8001<br>
 http://shoppingweb.user.com:8001/<br>
