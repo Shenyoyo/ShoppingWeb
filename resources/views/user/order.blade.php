@@ -4,27 +4,27 @@
     我的訂單
 @endsection
 @section('content')
-    <h1>我的訂單</h1>
+    <h1>{{__('shop.myorder')}}</h1>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <div class="panel-title">訂單列表</div>
+            <div class="panel-title">{{__('shop.orderlist')}}</div>
         </div>
         <div class="panel-body" >
             @foreach($orders as $order)
             <div class="panel panel-default" >
                 <div class="panel-heading">
-                    <div class="panel-title">訂單號碼：{{$order->id}} <span class="pull-right">{{ $order->created_at->format('Y/m/d H:i:s') }}</span></div> 
+                    <div class="panel-title">{{__('shop.ordernumber')}}：{{$order->id}} <span class="pull-right">{{ $order->created_at->format('Y/m/d H:i:s') }}</span></div> 
                 </div>
                 <div class="panel-body"  >
                     <table class="table mb-0 border" style="margin-bottom:0px">
                         <thead >
                           <tr class="text-center">
-                            <th class="text-left">商品內容</th>
-                            <th class="text-center">單價</th>
-                            <th class="text-center">數量</th>
-                            <th class="text-center">總計</th>
-                            <th class="text-center">狀態</th>
-                            <th class="text-center">操作</th>
+                            <th class="text-left">{{__('shop.productcontent')}}</th>
+                            <th class="text-center">{{__('shop.unit')}}</th>
+                            <th class="text-center">{{__('shop.quantity')}}</th>
+                            <th class="text-center">{{__('shop.total')}}</th>
+                            <th class="text-center">{{__('shop.status')}}</th>
+                            <th class="text-center">{{__('shop.operate')}}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -51,10 +51,10 @@
               
                                     {{-- 訂單 --}}
                                     @if(($order->status == '2'))
-                                    <a class="btn btn-success btn-sm" href="{{route('user.confirm',['id' => $order->id ])}}">確認簽收</a><br><br>
-                                    <a class="btn btn-primary btn-sm" href="{{route('user.orderDetail',['id' => $order->id ])}}">查看訂單</a>
+                                    <a class="btn btn-success btn-sm" href="{{route('user.confirm',['id' => $order->id ])}}">{{__('shop.confirmOrder')}}</a><br><br>
+                                    <a class="btn btn-primary btn-sm" href="{{route('user.orderDetail',['id' => $order->id ])}}">{{__('shop.checkOrder')}}</a>
                                     @else
-                                    <a class="btn btn-primary btn-sm" href="{{route('user.orderDetail',['id' => $order->id ])}}">查看訂單</a>
+                                    <a class="btn btn-primary btn-sm" href="{{route('user.orderDetail',['id' => $order->id ])}}">{{__('shop.checkOrder')}}</a>
                                     @endif
                                     
                                   </td>

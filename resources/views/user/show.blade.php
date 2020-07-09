@@ -11,15 +11,15 @@
 @endif
 <div class="panel panel-default">
   <div class="panel-heading">
-    <div class="panel-title">訂單詳情</div>
+    <div class="panel-title">{{__('shop.orderDetail')}}</div>
   </div>
   <table class="table mb-0">
     <thead>
       <tr class="text-center">
-        <th class="text-left">商品內容</th>
-        <th>單價</th>
-        <th>數量</th>
-        <th class="text-right item-amount">小計</th>
+        <th class="text-left">{{__('shop.productcontent')}}</th>
+        <th>{{__('shop.unit')}}</th>
+        <th>{{__('shop.quantity')}}</th>
+        <th class="text-right item-amount">{{__('shop.subtotal')}}</th>
       </tr>
     </thead>
     <tbody>
@@ -42,22 +42,22 @@
 
   <div class="row">
     <div class="col-md-6" style="border-right: 2px solid #e9e9e9">
-      <div class="col-md-12" style="font-size: 16px">收件人：{{ $order->receiver }}</div>
-      <div class="col-md-12" style="font-size: 16px">收貨地址：{{ $order->receiver_address }}</div>
-      <div class="col-md-12" style="font-size: 16px">訂單號碼：{{ $order->id }}</div>
-      <div class="col-md-12" style="font-size: 16px">訂單狀態：{{ orderStatus($order->status) }}</div>
+      <div class="col-md-12" style="font-size: 16px">{{__('shop.receiver')}}：{{ $order->receiver }}</div>
+      <div class="col-md-12" style="font-size: 16px">{{__('shop.receiverAddress')}}：{{ $order->receiver_address }}</div>
+      <div class="col-md-12" style="font-size: 16px">{{__('shop.ordernumber')}}：{{ $order->id }}</div>
+      <div class="col-md-12" style="font-size: 16px">{{__('shop.orderstatus')}}：{{ orderStatus($order->status) }}</div>
       @if ($order->status == '4')
-      <div class="col-md-12" style="font-size: 16px">退款理由：{{ $order->refund->message }}</div>
+      <div class="col-md-12" style="font-size: 16px">{{__('shop.reasonRefund')}}：{{ $order->refund->message }}</div>
       @endif
       @if ($order->status == '6')
-      <div class="col-md-12" style="font-size: 16px">退款理由：{{ $order->refund->message }}</div>
-      <div class="col-md-12" style="font-size: 16px">拒絕退款理由：{{ $order->refund->nomessage }}</div>
+      <div class="col-md-12" style="font-size: 16px">{{__('shop.reasonRefund')}}：{{ $order->refund->message }}</div>
+      <div class="col-md-12" style="font-size: 16px">{{__('shop.reasonRejection')}}：{{ $order->refund->nomessage }}</div>
       @endif
     </div>
 
     <div class="col-md-6 text-right">
 
-      <div class="col-md-12" style="font-size: 24px">訂單總價：${{ presentPrice($order->total )}}</div>
+      <div class="col-md-12" style="font-size: 24px">{{__('shop.orderTotal')}}：${{ presentPrice($order->total )}}</div>
 
       {{-- 當下紀錄 --}}
       @if ($order->status == '1')
@@ -96,7 +96,7 @@
     @if($order->status == '2')
     <div class="col-md-12">
       <a class="btn btn-success btn-sm pull-right"
-        href="{{route('user.confirm',['id' => $order->id ])}}">確認簽收</a><br><br>
+        href="{{route('user.confirm',['id' => $order->id ])}}">{{__('shop.confirmOrder')}}</a><br><br>
     </div>
     @endif
 
@@ -107,10 +107,10 @@
   {!! csrf_field() !!}
   <input type="hidden" name="orderId" value="{{ $order->id }}">
   <div class="form-group ">
-    <label for="exampleFormControlTextarea1">請輸入退款理由</label>
+    <label for="exampleFormControlTextarea1">{{__('shop.enterRefund')}}</label>
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" name="refundMessage" required></textarea>
     <br>
-    <button type="submit" class="btn btn-sm btn-danger pull-right">申請退款</button>
+    <button type="submit" class="btn btn-sm btn-danger pull-right">{{__('shop.applyrefund')}}</button>
   </div>
 </form>
 

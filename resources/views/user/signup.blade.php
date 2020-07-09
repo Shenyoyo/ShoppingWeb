@@ -5,7 +5,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
-    <h1>註 冊</h1>
+    <h1>{{__('shop.registered')}}</h1>
     @if (count($errors) > 0)
     <div class="alert alert-danger">
         @foreach ($errors->all() as $errors)
@@ -16,31 +16,31 @@
     @endif 
     <form action="{{ route('user.signup')}}" method="post">
         <div class="form-group">
-            <label for="name"">姓 名</label>
+            <label for="name"">{{__('shop.name')}}</label>
             <input type="text" id="name" name="name" class="form-control" required value="{{ old('name') }}">
         </div>
         <div class="form-group">
-            <label for="email">帳 號(信箱)</label>
+            <label for="email">{{__('shop.account')}}</label>
             <input type="text" id="email" name="email" class="form-control" placeholder="XXX@gmail.com" required value="{{ old('email') }}">
         </div>
         <div class="form-group">
-            <label for="email">手 機</label>
+            <label for="email">{{__('shop.phone')}}</label>
             <input type="text" id="phone"" name="phone" class="form-control" placeholder="0912345678" value="{{ old('phone') }}">
         </div>
         <div class="form-group">
-            <label for="email">地 址</label>
+            <label for="email">{{__('shop.address')}}</label>
             <input type="text" id="address" name="address" class="form-control" placeholder="台中市...." required value="{{ old('address') }}">
         </div>
         <div class="form-group">
-            <label for="password">密 碼</label>
+            <label for="password">{{__('shop.password')}}</label>
             <input type="password" id="password" name="password" class="form-control" required>
-            <span class="">(至少包含1個大寫字母、1個小寫字母、1個數字組合)</span>
+            <span class="">{{__('shop.passwordrule')}}</span>
         </div>
         <div class="form-group">
-            <label for="password">確認密碼</label>
+            <label for="password">{{__('shop.confirmpassword')}}</label>
             <input type="password" id="password" name="password_confirmation" class="form-control" required>
         </div>
-        <button type="submit" class="btn btn-primary">註 冊</button>
+        <button type="submit" class="btn btn-primary">{{__('shop.registered')}}</button>
         {{csrf_field()}}
     </form>
     </div>

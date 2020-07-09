@@ -21,34 +21,34 @@
         <form class="form-horizontal" action="{{route('contact.sendMessage')}}" method="post">
             {{csrf_field()}}
         <fieldset>
-          <legend class="text-center">聯絡我們</legend>
+          <legend class="text-center">{{__('shop.contact')}}</legend>
   
           <!-- Name input-->
           <div class="form-group">
-            <label class="col-md-3 control-label" for="name">姓名</label>
+            <label class="col-md-3 control-label" for="name">{{__('shop.name')}}</label>
             <div class="col-md-7">
-              <input id="name" name="name" type="text" placeholder="怎麼稱呼您?" class="form-control" value="{{$user->name ?? old('name')}}" required>
+              <input id="name" name="name" type="text" placeholder="{{__('shop.howcallyou')}}" class="form-control" value="{{$user->name ?? old('name')}}" required>
             </div>
           </div>
   
           <!-- Email input-->
           <div class="form-group">
-            <label class="col-md-3 control-label" for="email">電子郵件信箱</label>
+            <label class="col-md-3 control-label" for="email">{{__('shop.emailaddress')}}</label>
             <div class="col-md-7">
-              <input id="email" name="email" type="text" placeholder="電子郵件信箱" class="form-control" value="{{$user->email ?? old('email')}}" required>
+              <input id="email" name="email" type="text" placeholder="{{__('shop.emailaddress')}}" class="form-control" value="{{$user->email ?? old('email')}}" required>
             </div>
           </div>
-          <!-- Email input-->
+          <!-- phone input-->
           <div class="form-group">
-            <label class="col-md-3 control-label" for="email">聯絡電話</label>
+            <label class="col-md-3 control-label" for="email">{{__('shop.contactnumber')}}</label>
             <div class="col-md-7">
-              <input id="phone" name="phone" type="text" placeholder="聯絡電話" class="form-control" value="{{$user->phone ?? old('phone')}}" required>
+              <input id="phone" name="phone" type="text" placeholder="{{__('shop.contactnumber')}}" class="form-control" value="{{$user->phone ?? old('phone')}}" required>
             </div>
           </div>
 
            <!-- Subject input-->
            <div class="form-group">
-            <label class="col-md-3 control-label" for="subject">主旨</label>
+            <label class="col-md-3 control-label" for="subject">{{__('shop.subject')}}</label>
             <div class="col-md-7">
               <input id="subject" name="subject" type="text" class="form-control" value="{{old('subject')}}" required>
             </div>
@@ -56,16 +56,16 @@
 
           <!-- Message body -->
           <div class="form-group">
-            <label class="col-md-3 control-label" for="message">訊息</label>
+            <label class="col-md-3 control-label" for="message">{{__('shop.message')}}</label>
             <div class="col-md-7">
-              <textarea class="form-control" id="message" name="message" placeholder="您的意見或疑問..." rows="5" required>{{old('message')}}</textarea>
+              <textarea class="form-control" id="message" name="message" placeholder="{{__('shop.requests')}}" rows="5" required>{{old('message')}}</textarea>
             </div>
           </div>
   
           <!-- Form actions -->
           <div class="form-group">
             <div class="col-md-10 text-right">
-              <button type="submit" class="btn btn-primary btn-lg">送出</button>
+              <button type="submit" class="btn btn-primary btn-lg">{{__('shop.submit')}}</button>
             </div>
           </div>
         </fieldset>

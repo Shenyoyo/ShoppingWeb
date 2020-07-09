@@ -20,14 +20,14 @@
     <div class="row">
         <div class="col-md-3">
             <form action="{{route('shop.search')}}" method="GET" class="search-form">
-                <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box" placeholder="搜尋">
+                <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box" placeholder="{{ __('shop.search') }}">
                 <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
             </form>
         </div>
         <div class="col-md-3 pull-right">
                 <strong>Price: </strong>
-                <a href="{{ route('shop.orderby', ['sort'=> 'asc'])}}">價錢由低到高</a> 
-                <a href="{{ route('shop.orderby', ['sort'=> 'desc']) }}">價錢由高到低</a>
+                <a href="{{ route('shop.orderby', ['sort'=> 'asc'])}}">{{__('shop.lowtohigh') }}</a> 
+                <a href="{{ route('shop.orderby', ['sort'=> 'desc']) }}">{{__('shop.hightolow') }}</a>
         </div>
         
     </div>

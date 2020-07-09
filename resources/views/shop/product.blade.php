@@ -16,7 +16,7 @@
                 {{ session()->get('error_message') }}
             </div>
     @endif
-    <p><a href="{{ url('/shop') }}">首頁</a> / {{ $product->name }}</p>
+    <p><a href="{{ url('/shop') }}">{{__('shop.home')}}</a> / {{ $product->name }}</p>
         <h1>{{ $product->name }}</h1>
 
         <hr>
@@ -27,20 +27,20 @@
             </div>
 
             <div class="col-md-8">
-                <h3>價錢：${{ $product->price }}</h3> 
-                <h4>庫存：{{ $product->amount }}</h4>
+                <h3>{{__('shop.price') }}：${{ $product->price }}</h3> 
+                <h4>{{__('shop.stock') }}：{{ $product->amount }}</h4>
                 @if ($product->amount <= 0)
-                <h4 class="text-danger">Oops! 現在庫存沒貨了，廠商正在火速補貨中.... </h4>   
+                <h4 class="text-danger">{{__('shop.oopsnostock') }} </h4>   
                 @endif
                 @if ($product->buy_yn == 'N')
-                <h4 class="text-danger"> 此商品還沒開賣，先給你看看... </h4>   
+                <h4 class="text-danger">{{__('shop.notyet') }} </h4>   
                 @endif
                 <form action="{{ route('cart.store') }}" method="POST" class="side-by-side">
                     {!! csrf_field() !!}
                     <input type="hidden" name="id" value="{{ $product->id }}">
                     <input type="hidden" name="name" value="{{ $product->name }}">
                     <input type="hidden" name="price" value="{{ $product->price }}">
-                    <div style="font-size:18px" >數量:</div>
+                    <div style="font-size:18px" >{{__('shop.quantity') }}</div>
                     <select  name="quantity" onfocus="selectFocus(this)" >
                     @for ($i = 1; $i <= $product->amount; $i++)
                     <option onclick="selectClick(this)" value="{{$i}}">{{$i}}</option>    
@@ -49,7 +49,7 @@
                     <br>
                     <br>
                     
-                    <input {{($product->buy_yn == 'N' || $product->amount <= 0) ? 'disabled' : ""}} type="submit" class="btn btn-success btn-lg" value="新增至購物車">
+                    <input {{($product->buy_yn == 'N' || $product->amount <= 0) ? 'disabled' : ""}} type="submit" class="btn btn-success btn-lg" value="{{__('shop.addcart') }}">
                 </form>
                 <br><br>
 
@@ -60,7 +60,7 @@
         <div class="spacer"></div>
 
         <div class="row">
-            <h3>其他你可能會喜歡...</h3>
+            <h3>{{__('shop.like') }}</h3>
 
             @foreach ($interested as $product)
                 <div class="col-md-3">

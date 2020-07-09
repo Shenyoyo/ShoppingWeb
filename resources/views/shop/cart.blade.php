@@ -6,8 +6,8 @@
 
 
 @section('content')
-    <p><a href="{{ url('shop') }}">首頁</a> / 購物車</p>
-    <h1>購物車</h1>
+    <p><a href="{{ url('shop') }}">{{__('shop.home')}}</a> / {{__('shop.ShoppingCart')}}</p>
+    <h1>{{__('shop.ShoppingCart')}}</h1>
     
     <hr>
     @if (session()->has('success_message'))
@@ -29,11 +29,11 @@
                 <thead>
                     <tr>
                         <th class="table-image"></th>
-                        <th>商品</th>
-                        <th>數量</th>
-                        <th>價錢</th>
+                        <th>{{__('shop.product')}}</th>
+                        <th>{{__('shop.quantity')}}</th>
+                        <th>{{__('shop.price')}}</th>
                         <th class="column-spacer"></th>
-                        <th>操作</th>
+                        <th>{{__('shop.operate')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,7 +54,7 @@
                             <form action="{{ url('cart', [$item->rowId]) }}" method="POST" class="side-by-side">
                                 {!! csrf_field() !!}
                                 <input type="hidden" name="_method" value="DELETE">
-                                <input type="submit" class="btn btn-danger btn-sm" value="刪除"">
+                                <input type="submit" class="btn btn-danger btn-sm" value="{{__('shop.remove')}}"">
                             </form>
                         </td>
                     </tr>
@@ -63,7 +63,7 @@
                     <tr>
                         <td class="table-image"></td>
                         <td></td>
-                        <td class="small-caps table-bg" style="text-align: right">小計</td>
+                        <td class="small-caps table-bg" style="text-align: right">{{__('shop.subtotal')}}</td>
                         <td>${{ presentPrice($newSubtotal) }}</td>
                         <td></td>
                         <td></td>
@@ -90,9 +90,9 @@
                             <form action="{{ route('cart.dollor') }}" method="POST" class="side-by-side">
                                 {!! csrf_field() !!}
                                 @if ($dollor_yn == 'Y')
-                                <p><input type="checkbox" name="dollor_yn" value="Y" onchange="this.form.submit()" checked>是否使用虛擬幣<p>    
+                                <p><input type="checkbox" name="dollor_yn" value="Y" onchange="this.form.submit()" checked>{{__('shop.doyouuse')}}<p>    
                                 @else
-                                <p><input type="checkbox" name="dollor_yn" value="Y" onchange="this.form.submit()">是否使用虛擬幣<p>
+                                <p><input type="checkbox" name="dollor_yn" value="Y" onchange="this.form.submit()">{{__('shop.doyouuse')}}<p>
                                 @endif
                                 
                             </form>
@@ -105,7 +105,7 @@
                     <tr class="border-bottom">
                         <td class="table-image"></td>
                         <td style="padding: 40px;"></td>
-                        <td class="small-caps table-bg" style="text-align: right">總額</td>
+                        <td class="small-caps table-bg" style="text-align: right">{{__('shop.total')}}</td>
                         <td class="table-bg">${{ presentPrice($newTotal) }}</td>
                         <td class="column-spacer"></td>
                         <td></td>
@@ -114,7 +114,7 @@
                 </tbody>
             </table>
             <div style="float:left">
-            <a href="{{ url('/shop') }}" class="btn btn-primary btn-lg">繼 續 購 物</a> &nbsp;
+            <a href="{{ url('/shop') }}" class="btn btn-primary btn-lg">{{__('shop.continue')}}</a> &nbsp;
             </div>
             <div style="float:left">
             <form action="{{route('cart.checkout')}}" method="POST">
@@ -123,7 +123,7 @@
                 <input type="hidden" name="dollor" value="{{ $dollor->dollor }}">
                 <input type="hidden" name="recordReturnTotal" value="{{ $recordReturnTotal }}">
                 <input type="hidden" name="newTotal" value="{{ $newTotal }}">
-                <input type="submit" class="btn btn-success btn-lg" value="結 帳">
+                <input type="submit" class="btn btn-success btn-lg" value="{{__('shop.checkout')}}">
             </form>
             </div>
 
@@ -131,15 +131,15 @@
                 <form action="{{ url('/emptyCart') }}" method="POST">
                     {!! csrf_field() !!}
                     <input type="hidden" name="_method" value="DELETE">
-                    <input type="submit" class="btn btn-danger btn-lg" value="清空購物車">
+                    <input type="submit" class="btn btn-danger btn-lg" value="{{__('shop.emptycart')}}">
                 </form>
             </div>
 
         @else
 
-            <h3>Oops!看來購物車內沒有商品</h3>
+            <h3>{{__('shop.noitems')}}</h3>
             <br>
-            <a href="{{ url('/shop') }}" class="btn btn-primary btn-lg">去商城逛逛吧～</a>
+            <a href="{{ url('/shop') }}" class="btn btn-primary btn-lg">{{__('shop.goshopping')}}</a>
 
         @endif
 
