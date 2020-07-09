@@ -97,6 +97,36 @@ class UserController extends Controller
         $nextLevel = Level::find($user->level_level +1);
         return view('user.profile', ['user' => $user ,'nextLevel' => $nextLevel]);
     }
+    public function getProfileEdit()
+    {
+        $user = Auth::user();
+        $nextLevel = Level::find($user->level_level +1);
+        return view('user.profileEdit', ['user' => $user ,'nextLevel' => $nextLevel]);
+    }
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+        $user->name =$request->input('name');
+        $user->email =$request->input('email');
+        $user->phone =$request->input('phone');
+        $user->address = $request->input('address');
+        $user->save();
+        return redirect()->route('user.profile');
+    }
+    public function updatePassword(Request $request)
+    {
+        $this->validate($request, [
+            'password' => 'required|min:6|confirmed|regex:/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/',
+        ], [
+            'password.min' => '密碼長度至少6碼',
+            'password.confirmed' => '確認密碼不相同',
+            'password.regex' => '密碼必須包含大小寫字母與整數' 
+        ]);
+        $user = Auth::user();
+        $user->password = bcrypt(($request->input('password')));
+        $user->save();
+        return redirect()->route('user.profile')->withSuccessMessage('修改密碼成功');
+    }
     public function getOrder()
     {
         $orders = Auth::user()->order()->orderBy('id', 'desc')->paginate(10);

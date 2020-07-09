@@ -40,9 +40,9 @@ class AdminUserController extends Controller
     public function updatePassword(Request $request)
     {
         $this->validate($request, [
-            'password' => 'required|min:4',
+            'password' => 'required|min:6',
         ], [
-            'password.min' => '密碼長度至少4碼',
+            'password.min' => '密碼長度至少6碼',
         ]);
         $user = User::find($request->input('id'));
         $user->password = bcrypt(($request->input('password')));

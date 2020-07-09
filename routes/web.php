@@ -71,6 +71,18 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
             'uses'  => 'UserController@getProfile' ,
             'as'   => 'user.profile'
         ]);
+        Route::get('/profileEdit', [
+            'uses'  => 'UserController@getProfileEdit' ,
+            'as'   => 'user.profileEdit'
+        ]);
+        Route::post('/profileUpdate', [
+            'uses'  => 'UserController@updateProfile' ,
+            'as'   => 'user.updateProfile'
+        ]);
+        Route::post('/profile', [
+            'uses'  => 'UserController@updatePassword' ,
+            'as'   => 'user.updatePassword'
+        ]);
         Route::get('/order', [
             'uses'  => 'UserController@getOrder' ,
             'as'   => 'user.order'
