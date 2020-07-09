@@ -37,7 +37,7 @@ class CartController extends Controller
             $newTotal = $newSubtotal * $percent;
         }
         //計入若退貨需要返回的錢
-        $recordReturnTotal = $newTotal;
+        $recordReturnTotal = round($newTotal);
         $discountMoney = $newSubtotal -$newTotal;
         return view('shop/cart')->with([
             'dollor_yn' => $dollor_yn,
@@ -46,7 +46,7 @@ class CartController extends Controller
             'percent' => $percent,
             'newSubtotal' => $newSubtotal,
             'discountMoney' => $discountMoney,
-            'newTotal' => $newTotal,
+            'newTotal' => round($newTotal),
             'recordReturnTotal' => $recordReturnTotal,
         ]);
     }
@@ -76,7 +76,7 @@ class CartController extends Controller
         }
         $discountMoney = $newSubtotal -$newTotal;
         //計入若退貨需要返回的錢
-        $recordReturnTotal = $newTotal;
+        $recordReturnTotal = round($newTotal);
 
         if ($dollor_yn == 'Y') {
             $newTotal =  $newTotal-$dollor->dollor;
@@ -199,16 +199,19 @@ class CartController extends Controller
         }
         //setp.3 更新會員虛擬幣
         $dollor =Auth::user()->dollor;
-        $dollor->dollor = $request->dollor;
+        $userDollor = $dollor->dollor;//原始餘額
+
+        $dollor->dollor = round($request->dollor);
         //紀錄是否花費虛擬幣，有使用才會紀錄
         if($request->dollor_yn == 'Y'){
-            if($dollor->dollor- $request->recordReturnTotal > 0){
+            if(($userDollor - $request->recordReturnTotal) > 0){
                 $buyusedollor = $request->recordReturnTotal;
             }else{
-                $buyusedollor = $dollor->dollor;
+                $buyusedollor = $userDollor;
             }
             setDollorLog(Auth::user()->id,'3',-$buyusedollor,$dollor->dollor,$order->id,'');
         }
+        
         $dollor->save();
         Cart::destroy();
 

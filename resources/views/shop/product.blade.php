@@ -40,7 +40,7 @@
                     <input type="hidden" name="id" value="{{ $product->id }}">
                     <input type="hidden" name="name" value="{{ $product->name }}">
                     <input type="hidden" name="price" value="{{ $product->price }}">
-                    <label class="mr-sm-2" >數量:</label>
+                    <div style="font-size:18px" >數量:</div>
                     <select  name="quantity" onfocus="selectFocus(this)" >
                     @for ($i = 1; $i <= $product->amount; $i++)
                     <option onclick="selectClick(this)" value="{{$i}}">{{$i}}</option>    

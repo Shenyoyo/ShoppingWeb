@@ -15,7 +15,7 @@ class MainController extends Controller
         $products = Product::productDisplay()->paginate(8);
         return view('shop.index', ['products' => $products,'categories' => $categories,'id' =>$id]);
     }
-
+   
     public function show($id)
     {
         $products = Product::productDisplay()->get();
@@ -27,6 +27,7 @@ class MainController extends Controller
 
     public function search(Request $request)
     {
+        $sessions = $request->session()->all();
         $id='';
         $query = $request->input('query');
         $products = Product::productDisplay()->where('name', 'LIKE', '%'.$query.'%')->paginate(8);

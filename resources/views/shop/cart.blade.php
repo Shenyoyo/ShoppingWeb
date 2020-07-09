@@ -42,9 +42,9 @@
                         <td class="table-image"><a href="{{ url('shop', [$item->model->id]) }}"><img src="{{asset(getImageInCart($item->model->file_id))}}" alt="product" class="img-responsive cart-image"></a></td>
                         <td><a href="{{ url('shop', [$item->model->id]) }}">{{ $item->name }}</a></td>
                         <td>
-                            <select class="quantity" data-id="{{ $item->rowId }}" >
+                            <select class="quantity" onfocus="selectFocus(this)" data-id="{{ $item->rowId }}" >
                                 @for ($i = 1; $i <= $item->model->amount ; $i++)
-                                <option {{ $item->qty == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                <option onclick="selectClick(this)" {{ $item->qty == $i ? 'selected' : '' }}>{{ $i }}</option>
                                 @endfor
                             </select>
                         </td>
@@ -148,6 +148,7 @@
 
 @section('scripts')
 <script src="{{ asset('js/app.js') }}"></script>
+<script  src="{{ asset('js/productshow.js') }}"></script>
     <script>
         (function(){
             const classname = document.querySelectorAll('.quantity')
