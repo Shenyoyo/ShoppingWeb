@@ -18,7 +18,7 @@ class DollorController extends Controller
     }
     public function searchDollor(Request $request)
     {
-        
+        $username = $request->name;
         $startDate = $request->startDate;
         $endDate = $request->endDate;
         $user = User::where('name',$request->name)->first();
@@ -34,6 +34,7 @@ class DollorController extends Controller
         }
        
         return view('admin/dollor.index', [
+            'username' => $username,
             'dollorlogs' => $dollorlogs,
             'startDate' => $startDate ,
             'endDate' => $endDate

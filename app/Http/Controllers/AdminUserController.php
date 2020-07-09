@@ -69,7 +69,7 @@ class AdminUserController extends Controller
       
         $user = User::find($request->input('id'));
         $user->dollor->dollor =$user->dollor->dollor + $request->input('deposit');
-        setDollorLog($user->id,'1',$request->input('deposit'),$user->dollor->dollor,$request->input('memo'));
+        setDollorLog($user->id,'1',$request->input('deposit'),$user->dollor->dollor,'',$request->input('memo'));
         $user->dollor->save();
         return redirect()->route('adminUser.index')->withSuccessMessage('人工存取'.$user->name.'成功');
     }
@@ -83,7 +83,7 @@ class AdminUserController extends Controller
     {
         $user = User::find($request->input('id'));
         $user->dollor->dollor =$user->dollor->dollor - $request->input('withdraw');
-        setDollorLog($user->id,'2',-($request->input('withdraw')),$user->dollor->dollor,$request->input('memo'));
+        setDollorLog($user->id,'2',-($request->input('withdraw')),$user->dollor->dollor,'',$request->input('memo'));
         $user->dollor->save();
         return redirect()->route('adminUser.index')->withSuccessMessage('人工提取'.$user->name.'成功');
     }

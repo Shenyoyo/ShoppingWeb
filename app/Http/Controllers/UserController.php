@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Cashback;
 use App\Level;
 use App\User;
@@ -98,7 +99,7 @@ class UserController extends Controller
     }
     public function getOrder()
     {
-        $orders = Auth::user()->order()->orderBy('id', 'desc')->get();
+        $orders = Auth::user()->order()->orderBy('id', 'desc')->paginate(10);
         
         return view('user.order')->with([
             'orders' => $orders,
@@ -110,6 +111,29 @@ class UserController extends Controller
         $user = Auth::user()->find($order->user_id);
         return view('user.show', ['order' => $order,'user' => $user]);
     }
+    public function getDollor()
+    {
+        $startDate = Carbon::now()->toDateString();
+        $endDate = Carbon::tomorrow()->toDateString();
+        return view('user.dollor',['startDate' => $startDate , 'endDate' => $endDate] );   
+    }
+    public function searchDollor(Request $request)
+    {
+        $startDate = $request->startDate;
+        $endDate = $request->endDate;
+        $user_id = Auth::user()->id;
+        $dollorlogs = DollorLog::whereBetween('created_at',[$startDate, $endDate ])
+        ->Where('user_id', $user_id)
+        ->orderBy('id','desc')
+        ->paginate(15);
+       
+        return view('user.dollor', [
+            'dollorlogs' => $dollorlogs,
+            'startDate' => $startDate ,
+            'endDate' => $endDate
+            ]);
+    } 
+
     public function confirmOrder($id)
     {
         // step.1 更改商品狀態
@@ -126,7 +150,7 @@ class UserController extends Controller
             $userDollor = $user->dollor;
             $userDollor->dollor = $userDollor->dollor + $cashbackDollor ; //給予虛擬幣回饋
              //紀錄回饋
-            setDollorLog(Auth::user()->id,'4',$cashbackDollor,$userDollor->dollor,'');
+            setDollorLog(Auth::user()->id,'4',$cashbackDollor,$userDollor->dollor,$order->id,'');
             $userDollor->save();
         }
         $rebate_yn = $user->level->offer->rebate_yn ?? 'N';
@@ -135,7 +159,7 @@ class UserController extends Controller
             $cashbackDollor = $user->level->offer->rebate->rebate;
             $userDollor = $user->dollor;
             $userDollor->dollor = $userDollor->dollor + $cashbackDollor ; //給予滿額送現金
-            setDollorLog(Auth::user()->id,'5',$cashbackDollor,$userDollor->dollor,'');
+            setDollorLog(Auth::user()->id,'5',$cashbackDollor,$userDollor->dollor,$order->id,'');
             $userDollor->save();
         }
         

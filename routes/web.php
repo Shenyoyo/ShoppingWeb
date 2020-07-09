@@ -13,11 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//客端網址(購物網前台) 
+//客端網址(購物網前台)
 Route::group(['domain' => 'shoppingweb.user.com'], function () {
     Route::get('/', function () {
         return redirect('shop');
-        
     });
     //商品頁面
     Route::resource('shop', 'MainController', ['only' => ['index', 'show']]);
@@ -53,29 +52,37 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
         Route::get('/signup', [
             'uses' => 'UserController@getSignup',
             'as'    => 'user.signup'
-            ]);
+        ]);
         Route::post('/signup', [
             'uses' => 'UserController@postSignup',
             'as'    => 'user.signup',
-            ]);
+        ]);
         Route::get('/signin', [
             'uses' => 'UserController@getSignin',
             'as'    => 'user.signin'
-            ]);
+        ]);
         Route::post('/signin', [
             'uses' => 'UserController@postSignin',
             'as'    => 'user.signin'
-             ]);
+        ]);
     });
     Route::group(['middleware' => ['auth']], function () {
         Route::get('/profile', [
             'uses'  => 'UserController@getProfile' ,
             'as'   => 'user.profile'
-            ]);
+        ]);
         Route::get('/order', [
-                'uses'  => 'UserController@getOrder' ,
-                'as'   => 'user.order'
-            ]); 
+            'uses'  => 'UserController@getOrder' ,
+            'as'   => 'user.order'
+        ]);
+        Route::get('/dollor', [
+            'uses'  => 'UserController@getDollor' ,
+            'as'   => 'user.dollor'
+        ]);
+        Route::get('/dollor/search', [
+            'uses'  => 'UserController@searchDollor' ,
+            'as'   => 'user.dollorSearch'
+        ]);
         Route::get('/orderDetial/{id}', [
             'uses'  => 'UserController@getOrderDetail' ,
             'as'   => 'user.orderDetail'
@@ -85,25 +92,25 @@ Route::group(['domain' => 'shoppingweb.user.com'], function () {
             'as'   => 'user.refund'
         ]);
         Route::get('/confirm/{id}', [
-                'uses'  => 'UserController@confirmOrder' ,
-                'as'   => 'user.confirm'
-            ]);             
+            'uses'  => 'UserController@confirmOrder' ,
+            'as'   => 'user.confirm'
+        ]);
         Route::get('/logout', [
             'uses' => 'UserController@getLogout',
             'as' => 'user.logout'
-            ]);
+        ]);
         Route::resource('cart', 'CartController');
         Route::delete('emptyCart', 'CartController@emptyCart');
         Route::patch('/cart/{id}', 'CartController@update')->name('cart.update');
         Route::post('/cart/dollor', 'CartController@dollor')->name('cart.dollor');
-        Route::post('/cart/checkout','CartController@checkout')->name('cart.checkout');
-        Route::post('/cart/buy','CartController@buy')->name('cart.buy');
+        Route::post('/cart/checkout', 'CartController@checkout')->name('cart.checkout');
+        Route::post('/cart/buy', 'CartController@buy')->name('cart.buy');
     });
 });
 
 
 
-//管端網址(購物網後台)  
+//管端網址(購物網後台)
 Route::group(['domain' => 'shoppingweb.admin.com'], function () {
     Route::get('/', [
         'uses' => 'AdminController@getIndex',
@@ -209,7 +216,6 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'uses' => 'LevelController@searchLevel',
                 'as'   => 'level.search'
             ]);
-            
         });
         Route::group(['prefix' => 'offer'], function () {
             Route::get('/', [
@@ -240,7 +246,6 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'uses' => 'OfferController@searchOffer',
                 'as'   => 'offer.search'
             ]);
-            
         });
         Route::group(['prefix' => 'order'], function () {
             Route::get('/', [
@@ -271,8 +276,7 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'uses' => 'OrderController@orderbyStatus',
                 'as'   => 'order.orderby'
             ]);
-            
-        }); 
+        });
         Route::group(['prefix' => 'user'], function () {
             Route::get('/', [
                 'uses' => 'AdminUserController@getIndex',
@@ -315,7 +319,7 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'uses' => 'AdminUserController@searchUser',
                 'as'   => 'adminUser.search'
             ]);
-        });  
+        });
         Route::group(['prefix' => 'contact'], function () {
             Route::get('/', [
                 'uses' => 'AdminContactController@getIndex',
@@ -343,14 +347,10 @@ Route::group(['domain' => 'shoppingweb.admin.com'], function () {
                 'uses' => 'DollorController@getIndex',
                 'as'   => 'dollor.index'
             ]);
-            Route::post('/search', [
+            Route::get('/search', [
                 'uses' => 'DollorController@searchDollor',
                 'as'   => 'dollor.search'
             ]);
-        });        
-
+        });
     });
 });
-
-
-

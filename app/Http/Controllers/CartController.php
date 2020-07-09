@@ -175,20 +175,8 @@ class CartController extends Controller
 
     public function buy(Request $request)
     {
-        //setp.1 更新會員虛擬幣
-        $dollor =Auth::user()->dollor;
-        $dollor->dollor = $request->dollor;
-        //紀錄是否花費虛擬幣，有使用才會紀錄
-        if($request->dollor_yn == 'Y'){
-            if($dollor->dollor- $request->recordReturnTotal > 0){
-                $buyusedollor = $request->recordReturnTotal;
-            }else{
-                $buyusedollor = $dollor->dollor;
-            }
-            setDollorLog(Auth::user()->id,'3',-$buyusedollor,$dollor->dollor,'');
-        }
-        $dollor->save();
-        //setp.2 建立訂單
+        
+        //setp.1 建立訂單
         $order = new Order;
         $order->record = $request->recordReturnTotal;//紀錄退貨金額使用
         $order->total = $request->newTotal;
@@ -196,7 +184,7 @@ class CartController extends Controller
         $order->receiver_address = $request->receiverAddress;
         $order->status = 1 ;//1.訂單確認中 2.送貨中 3.已簽收 4.退貨
         Auth::user()->order()->save($order);
-        //setp.3 建立訂單明細
+        //setp.2 建立訂單明細
         foreach (Cart::content() as $item) {
             $orderDetail = new OrderDetail;
             $orderDetail->order_id = $order->id;
@@ -209,6 +197,19 @@ class CartController extends Controller
             $product->amount = ($product->amount) - ($orderDetail->quantity);
             $product->save();
         }
+        //setp.3 更新會員虛擬幣
+        $dollor =Auth::user()->dollor;
+        $dollor->dollor = $request->dollor;
+        //紀錄是否花費虛擬幣，有使用才會紀錄
+        if($request->dollor_yn == 'Y'){
+            if($dollor->dollor- $request->recordReturnTotal > 0){
+                $buyusedollor = $request->recordReturnTotal;
+            }else{
+                $buyusedollor = $dollor->dollor;
+            }
+            setDollorLog(Auth::user()->id,'3',-$buyusedollor,$dollor->dollor,$order->id,'');
+        }
+        $dollor->save();
         Cart::destroy();
 
         return redirect()->route('user.order');

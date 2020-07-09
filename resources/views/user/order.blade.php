@@ -69,4 +69,7 @@
             
         </div>
     </div>
+    <div class="text-center">
+      {{ $orders->links()  }}
+  </div>
 @endsection

@@ -37,6 +37,7 @@
                         @if (Auth::check())
                             <li><a href="{{ route('user.profile')}}">會員資料</a></li>
                             <li><a href="{{ route('user.order')}}">我的訂單</a></li>
+                            <li><a href="{{ route('user.dollor')}}">虛擬幣紀錄</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ route('user.logout')}}">登出</a></li>
                         @else

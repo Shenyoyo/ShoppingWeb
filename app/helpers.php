@@ -168,13 +168,14 @@ function showDiscount($percent)
             break;
     }
 }
-function setDollorLog($user_id,$tx_type,$amount,$sub_total,$memo)
+function setDollorLog($user_id,$tx_type,$amount,$sub_total,$order,$memo)
 {
     $dollorLog = new DollorLog;
     $dollorLog->user_id = $user_id;
     $dollorLog->tx_type = $tx_type;
     $dollorLog->amount = $amount;
     $dollorLog->sub_total = $sub_total;
+    $dollorLog->order = $order;
     $dollorLog->memo = $memo ?? '';
     $dollorLog->save();
 }
