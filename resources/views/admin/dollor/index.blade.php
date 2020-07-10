@@ -38,22 +38,28 @@
             </thead>
             <tbody>
                 @if (isset($dollorlogs))
-                @foreach ($dollorlogs as $dollorlog)
-                <tr>
-                    <td>{{$dollorlog->id}}</td>
-                    <td>{{$dollorlog->user->name}}</td>
-                    <td>{{txStatus($dollorlog->tx_type)}}</td>
-                    @if ($dollorlog->amount < 0)
-                    <td style="color:red" >{{presentPrice($dollorlog->amount)}}</td>
+                    @if(count($dollorlogs) != 0)
+                        @foreach ($dollorlogs as $dollorlog)
+                        <tr>
+                            <td>{{$dollorlog->id}}</td>
+                            <td>{{$dollorlog->user->name}}</td>
+                            <td>{{txStatus($dollorlog->tx_type)}}</td>
+                            @if ($dollorlog->amount < 0)
+                            <td style="color:red" >{{presentPrice($dollorlog->amount)}}</td>
+                            @else
+                            <td >{{presentPrice($dollorlog->amount)}}</td>   
+                            @endif
+                            <td>{{presentPrice($dollorlog->sub_total)}}</td>
+                            <td>{{$dollorlog->created_at}}</td>
+                            <td>{{(empty($dollorlog->order)) ? '' : '單號:'.$dollorlog->order }}</td>
+                            <td>{{$dollorlog->memo}}</td>
+                        </tr>
+                        @endforeach
                     @else
-                    <td >{{presentPrice($dollorlog->amount)}}</td>   
-                    @endif
-                    <td>{{presentPrice($dollorlog->sub_total)}}</td>
-                    <td>{{$dollorlog->created_at}}</td>
-                    <td>{{(empty($dollorlog->order)) ? '' : '單號:'.$dollorlog->order }}</td>
-                    <td>{{$dollorlog->memo}}</td>
-                </tr>
-                @endforeach    
+                        <tr>
+                            <td  colspan="8">查無資料</td>
+                        </tr>
+                    @endif    
                 @endif
                 </tbody>
             </table>
@@ -61,11 +67,13 @@
 </div>
 <div class="text-center">
     @if (isset($dollorlogs))
-    {{ $dollorlogs->appends([
-        'startDate' => $startDate ,
-        'endDate' => $endDate,
-        'name' => $dollorlog->user->name,
-        ])->links()  }}
+        @if(count($dollorlogs) != 0)
+        {{ $dollorlogs->appends([
+            'startDate' => $startDate ,
+            'endDate' => $endDate,
+            'name' => request()->input('name'),
+            ])->links()  }}
+        @endif     
     @endif
 </div>
 

@@ -29,8 +29,13 @@ class OfferController extends Controller
             $levels = Level::all();
         }
         
+        if(count($levels) != 0){
+            return view('admin/offer.new', ['levels' => $levels]);
+        }else{
+            return redirect()->back()->withErrors('未有等級可以設定，請自會員等級管理新增等級')->withInput(); 
+        }
+         
         
-        return view('admin/offer.new', ['levels' => $levels]);
     }
     public function editOffer($id)
     {

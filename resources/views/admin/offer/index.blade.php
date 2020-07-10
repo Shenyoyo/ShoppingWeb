@@ -8,6 +8,13 @@
 <link rel="stylesheet" href="/css/products.css">
 @endsection
 @section('content')
+@if (count($errors) > 0)
+    <div class="alert alert-danger">
+        @foreach ($errors->all() as $errors)
+            <p>{{ $errors }}</p>    
+        @endforeach
+    </div>
+    @endif 
 <h1>優惠管理</h1>
 <div class="row">
     <div class="col-md-6">
