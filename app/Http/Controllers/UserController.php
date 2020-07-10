@@ -85,7 +85,7 @@ class UserController extends Controller
 
         if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'active' => 1])) {
             Cart::restore(Auth::user()->name);
-            return redirect()->back();
+            return redirect()->intended('/');
         }
         return redirect()->back()->withErrors(['帳號/密碼錯誤，請重新輸入！'])->withInput();
     }
