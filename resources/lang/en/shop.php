@@ -95,4 +95,10 @@ return [
     'memo' => 'Memo',
     'more' => 'More',
     'order' => 'Order',
+    'aleadyincart' => 'Item is already in your cart!',
+    'addtocart' => 'Item was added to your cart!',
+    'updatecart' => 'Quantity was updated successfully!',
+    'removecart' => 'Item has been removed!',
+    'emptycart' => 'Your cart has been cleared!',
+    'nostockcart' => 'Can not checkout ,beacause the stock was empty!',
 ];

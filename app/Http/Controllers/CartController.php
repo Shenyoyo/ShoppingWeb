@@ -108,11 +108,11 @@ class CartController extends Controller
         });
 
         if (!$duplicates->isEmpty()) {
-            return redirect('cart')->withSuccessMessage('商品已經在購物車了!');
+            return redirect('cart')->withSuccessMessage(__('shop.aleadyincart'));
         }
         Cart::add($request->id, $request->name, $request->quantity, $request->price)->associate(Product::class);
         Cart::store(Auth::user()->name);
-        return redirect('cart')->withSuccessMessage('成功新增到你的購物車了!');
+        return redirect('cart')->withSuccessMessage(__('shop.addtocart'));
     }
 
     public function update(Request $request, $id)
@@ -128,7 +128,7 @@ class CartController extends Controller
         }
 
         Cart::update($id, $request->quantity);
-        session()->flash('success_message', '數量更改成功');
+        session()->flash('success_message', __('shop.updatecart'));
         Cart::store(Auth::user()->name);
 
         return response()->json(['success' => true]);
@@ -138,14 +138,14 @@ class CartController extends Controller
     {
         Cart::remove($id);
         Cart::store(Auth::user()->name);
-        return redirect('cart')->withSuccessMessage('商品已經刪除');
+        return redirect('cart')->withSuccessMessage(__('shop.removecart'));
     }
 
     public function emptyCart()
     {
         Cart::destroy();
         Cart::store(Auth::user()->name);
-        return redirect('cart')->withSuccessMessage('購物車已清空');
+        return redirect('cart')->withSuccessMessage(__('shop.emptycart'));
     }
 
     
@@ -155,7 +155,7 @@ class CartController extends Controller
         //檢查有無庫存防呆
         foreach (Cart::content() as $item ) {
             if($item->model->amount == 0){
-               return redirect()->route('cart.index')->withErrors($item->model->name.'已無庫存，無法結帳。');
+               return redirect()->route('cart.index')->withErrors($item->model->name.__('shop.nostockcart'));
             }
         }
         $dollor_yn= $request->dollor_yn;

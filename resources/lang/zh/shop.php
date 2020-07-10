@@ -95,6 +95,12 @@ return [
     'memo' => '備註',
     'more' => '更多',
     'order' => '單號',
+    'aleadyincart' => '商品已經在購物車了!',
+    'addtocart' => '成功新增到你的購物車了!',
+    'updatecart' => '數量更改成功!',
+    'removecart' => '商品已經刪除!',
+    'emptycart' => '購物車已清空!',
+    'nostockcart' => '已無庫存，無法結帳。',
     
 
 ];
