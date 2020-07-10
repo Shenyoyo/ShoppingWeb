@@ -175,7 +175,8 @@ class CartController extends Controller
 
     public function buy(Request $request)
     {
-        
+        $offer = Auth::user()->level->offer;
+        $newSubtotal = Cart::subtotal();
         //setp.1 建立訂單
         $order = new Order;
         $order->record = $request->recordReturnTotal;//紀錄退貨金額使用
@@ -188,9 +189,13 @@ class CartController extends Controller
         foreach (Cart::content() as $item) {
             $orderDetail = new OrderDetail;
             $orderDetail->order_id = $order->id;
-            $orderDetail->product_id = $item->model->id;
+            $orderDetail->product_id = $item->model->id ;
             $orderDetail->quantity = $item->qty;
-            $orderDetail->price =$item->subtotal;
+            if($newSubtotal < ($offer->discount->above ?? '') ||($offer->discount_yn ?? '') != 'Y'){
+                $orderDetail->price =$item->subtotal;
+            }else{
+                $orderDetail->price =$item->subtotal * $offer->discount->percent;
+            }
             $orderDetail->save();
             //更新庫存，減去賣出去的商品
             $product = Product::find($orderDetail->product_id);

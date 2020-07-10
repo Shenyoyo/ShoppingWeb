@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use Auth;
 use App\Level;
+use App\Offer;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -48,6 +49,7 @@ class OrderController extends Controller
     }
     public function refundAgree($id)
     {
+        
         // step.1 更改商品狀態
         $order = Order::find($id);
         $order->status = '5';//已退款
@@ -55,16 +57,38 @@ class OrderController extends Controller
         // step.2 訂單退款(虛擬幣)
         $user = Auth::user()->find($order->user_id);
         $userDollor = $user->dollor->dollor;
-        $userDollor = $userDollor + ($order->record);
+        $refundDollor=0; //退貨金額加總
+        $orderDetails =$order->orderDetail->where('refund', 'Y');
+        foreach ($orderDetails as $orderDetail) {
+            $refundDollor = $refundDollor + $orderDetail->price;
+        }
+        $userDollor = $userDollor + $refundDollor;
         //計入退貨要回饋到虛擬幣
-        setDollorLog($user->id,'6',$order->record,$userDollor,$order->id,'');
+        setDollorLog($user->id, '6', $refundDollor, $userDollor, $order->id, '');
         // step.3 虛擬幣優惠饋扣除
-        $userDollor = $userDollor - ($order->pre_dollor); //虛擬幣回饋
+        //現金回饋
+        $percent = $user->level->offer->cashback->percent ?? '';
+        $record = $order->record;
+        $cashbackDollor=0; //扣除金額
+        if ($percent != '') {
+            foreach ($orderDetails as $orderDetail) {
+                $record = $record - $orderDetail->price;
+                $cashbackDollor = $cashbackDollor + ($orderDetail->price * $percent);
+            }
+        }
+        if ($record >= ($user->level->offer->cashback->above ?? 0)) {
+            $userDollor = $userDollor - $cashbackDollor; //虛擬幣回饋
+        } else {
+            $cashbackDollor =$order->pre_dollor;
+            $userDollor = $userDollor - $cashbackDollor; //虛擬幣回饋
+        }
         //紀錄虛擬幣優惠饋扣除
-        ($order->pre_dollor != 0) ? setDollorLog($user->id,'7',-($order->pre_dollor),$userDollor,$order->id,'') : '';
+        ($order->pre_dollor != 0) ? setDollorLog($user->id, '7', -$cashbackDollor, $userDollor, $order->id, '') : '';
+        //end現金回饋
+        //滿額送現金
         $userDollor = $userDollor - ($order->pre_rebate_dollor); //滿額現金
         //紀錄虛擬幣滿額現金扣除
-        ($order->pre_rebate_dollor != 0) ? setDollorLog($user->id,'8',-($order->pre_rebate_dollor),$userDollor,$order->id,'') : '';
+        ($order->pre_rebate_dollor != 0) ? setDollorLog($user->id, '8', -($order->pre_rebate_dollor), $userDollor, $order->id, '') : '';
         $user->dollor->dollor= $userDollor ;
         // setp.4 會員等級重新判斷
         $user->dollor->save();
@@ -104,8 +128,8 @@ class OrderController extends Controller
     public function orderbyStatus(Request $request)
     {
         $oderbyStatus = $request->input('oderbyStatus');
-        $orders = ($oderbyStatus == '0') ? Order::orderBy('id', 'desc')->paginate(10) : 
-        Order::where('status',$oderbyStatus)->orderBy('id', 'desc')->paginate(10);
+        $orders = ($oderbyStatus == '0') ? Order::orderBy('id', 'desc')->paginate(10) :
+        Order::where('status', $oderbyStatus)->orderBy('id', 'desc')->paginate(10);
         
         return view('admin/order.index', ['orders' => $orders ,'oderbyStatus' => $oderbyStatus]);
     }

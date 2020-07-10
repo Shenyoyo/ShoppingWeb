@@ -14,7 +14,7 @@
             <p>{{ $errors }}</p>    
         @endforeach
     </div>
-    @endif 
+@endif 
 <h1>優惠管理</h1>
 <div class="row">
     <div class="col-md-6">

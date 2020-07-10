@@ -216,6 +216,12 @@ class UserController extends Controller
     }
     public function refund(Request $request)
     {
+        $this->validate($request, [
+            'product' => 'required',
+            'refundMessage' => 'required'
+        ],[
+            'product.required' => '必須勾選退貨商品'
+        ]);
         // step.1 更改商品狀態
         $order = Order::find($request->orderId);
         $order->status = '4';//申請退款
@@ -224,6 +230,15 @@ class UserController extends Controller
         $refund = new Refund;
         $refund->order_id = $order->id;
         $refund->message = $request->refundMessage;
+        // step.3 紀錄選取的退貨商品
+        $check = $request->product;
+        $checkOrderDetails = $order->orderDetail->whereIn('product_id',$check);
+        foreach ($checkOrderDetails as $checkOrderDetail ) {
+             $checkOrderDetail->refund = 'Y';
+             $checkOrderDetail->save();
+        }
+
+
         $refund->save();
         return redirect()->back()->withSuccessMessage('退款已申請成功，請稍候審核');
     }

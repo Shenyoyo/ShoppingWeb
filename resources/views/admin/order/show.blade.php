@@ -51,7 +51,10 @@
       @foreach($order->orderDetail as $item)
       <tr>
         <td>
-          <div>{{ $item->product->name }}</div>
+          <div style="display: inline-block">{{ $item->product->name }}</div>
+          @if ($item->refund == 'Y')
+          <span style="margin-left: 30%;color:red" >退貨</span>
+          @endif
         </td>
         <td>${{ presentPrice($item->price) }}</td>
         <td>{{ $item->quantity }}</td>
