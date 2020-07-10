@@ -13,7 +13,7 @@
       {{ session()->get('success_message') }}
   </div>
 @endif
-<h1>虛擬幣紀錄</h1>
+<h1>{{__('shop.virtualrecord')}}</h1>
 <div style="margin-top:10px;">
     
     <form action="{{route('user.dollorSearch')}}" method="get" class="search-form">
@@ -26,12 +26,12 @@
     <div class="col-md-12 text-center" >
         <table class="table table-striped ">
             <thead style="background: #e9e9e9 ;" class="text-light">
-                <td>時間</td>
-                <td>交易類別</td>
-                <td>金額</td>
-                <td>現有額度</td>
-                <td>備註</td>
-                <td>更多</td>
+                <td>{{__('shop.time')}}</td>
+                <td>{{__('shop.txstatus')}}</td>
+                <td>{{__('shop.amount')}}</td>
+                <td>{{__('shop.nowamount')}}</td>
+                <td>{{__('shop.memo')}}</td>
+                <td>{{__('shop.more')}}</td>
             </thead>
             <tbody>
                 @if (isset($dollorlogs))
@@ -45,7 +45,7 @@
                     <td >{{presentPrice($dollorlog->amount)}}</td>   
                     @endif
                     <td>{{presentPrice($dollorlog->sub_total)}}</td>
-                    <td>{{(empty($dollorlog->order)) ? '' : '單號:'.$dollorlog->order }}</td>
+                    <td>{{(empty($dollorlog->order)) ? '' : __('shop.order').':'.$dollorlog->order }}</td>
                     <td>{{$dollorlog->memo}}</td>
                 </tr>
                 @endforeach    

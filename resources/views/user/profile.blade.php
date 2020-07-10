@@ -22,10 +22,10 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4>會員資料
+                <h4>{{__('shop.myprodile')}}
                     <div class="btn-group pull-right">
                         <a href="{{route('user.profileEdit')}}" class="btn btn-sm btn-default">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> 編輯</a>
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>{{__('shop.edit')}}</a>
                     </div>
                 </h4>
             </div>
@@ -45,21 +45,21 @@
                             <!-- /input-group -->
                         </div>
                         <div class="col-sm-6">
-                            <h4 style="color:#00b1b1;">晉 級 條 件 : </h4>
+                            <h4 style="color:#00b1b1;">{{__('shop.upgraderule')}}: </h4>
                             <h5 style="color:#b15000;">
                                 @if (!empty($nextLevel->upgrade))
                                 @if ($user->total_cost < $nextLevel->upgrade)
                                     在消費{{$nextLevel->upgrade - $user->total_cost}}元以上就可晉升{{$nextLevel->name}}
                                     @else
-                                    已達晉級條件再消費一次不限金額，晉級{{$nextLevel->name}} 。
+                                    {{__('shop.aboveconditions')}}{{$nextLevel->name}} 。
                                     @endif
                                     @else
-                                    現在已經是最高等級了。
+                                    {{__('shop.bestlevel')}}
                                     @endif
                             </h5>
                             <br>
                             <span>
-                                <h4>{{$user->level->name}}可享優惠：</h4>
+                                <h4>{{$user->level->name}}{{__('shop.dicount')}}：</h4>
 
                                 @if (($user->level->offer->discount_yn ?? '') == 'Y')
                                 <p>單筆消費滿{{$user->level->offer->discount->above}}元以上，
@@ -78,34 +78,34 @@
                         <div class="clearfix"></div>
                         <hr style="margin:5px 0 5px 0;">
                         <div class="text-center">
-                            <div class="col-sm-5 col-xs-6 tital ">用戶名稱:</div>
+                            <div class="col-sm-5 col-xs-6 tital ">{{__('shop.name')}}:</div>
                             <div class="col-sm-7 col-xs-6 ">{{$user->name}}</div>
                             <div class="clearfix"></div>
                             <div class="bot-border"></div>
 
-                            <div class="col-sm-5 col-xs-6 tital ">信箱:</div>
+                            <div class="col-sm-5 col-xs-6 tital ">{{__('shop.email')}}:</div>
                             <div class="col-sm-7"> {{$user->email}}</div>
                             <div class="clearfix"></div>
                             <div class="bot-border"></div>
 
-                            <div class="col-sm-5 col-xs-6 tital ">等級:</div>
+                            <div class="col-sm-5 col-xs-6 tital ">{{__('shop.level')}}:</div>
                             <div class="col-sm-7"> {{$user->level->name}}</div>
                             <div class="clearfix"></div>
                             <div class="bot-border"></div>
 
-                            <div class="col-sm-5 col-xs-6 tital ">手機:</div>
+                            <div class="col-sm-5 col-xs-6 tital ">{{__('shop.phone')}}:</div>
                             <div class="col-sm-7">{{$user->phone}}</div>
 
                             <div class="clearfix"></div>
                             <div class="bot-border"></div>
 
-                            <div class="col-sm-5 col-xs-6 tital ">通訊地址:</div>
+                            <div class="col-sm-5 col-xs-6 tital ">{{__('shop.address')}}:</div>
                             <div class="col-sm-7">{{$user->address}}</div>
 
                             <div class="clearfix"></div>
                             <div class="bot-border"></div>
 
-                            <div class="col-sm-5 col-xs-6 tital ">累積消費:</div>
+                            <div class="col-sm-5 col-xs-6 tital ">{{__('shop.totalcost')}}:</div>
                             <div class="col-sm-7">{{presentPrice($user->total_cost)}}</div>
 
                             <!-- /.box-body -->
@@ -123,7 +123,7 @@
         <div class="panel-heading">
             <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                    修改密碼
+                    {{__('shop.editpassword')}}
                 </a>
             </h4>
         </div>
@@ -133,14 +133,14 @@
                     {!! csrf_field() !!}
                     <fieldset>
                         <div class="form-group">
-                            <label class="col-md-5 control-label" for="password"">新密碼</label>
+                            <label class="col-md-5 control-label" for="password"">{{__('shop.newpassowrd')}}</label>
                             <div class="col-md-4">
                                 <input class="password" id="password" name="password" type="password"  class="form-control input-md"  required="" > <i class="show_pass glyphicon glyphicon-eye-open"></i>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-5 control-label" for="password-confirm"">確認新密碼</label>
+                            <label class="col-md-5 control-label" for="password-confirm"">{{__('shop.confirmnewpassword')}}</label>
                             <div class="col-md-4">
                                 <input class="password-confirm" id="password" name="password_confirmation" type="password"  class="form-control input-md"  required="" > <i class="show_pass glyphicon glyphicon-eye-open"></i>
                             </div>
@@ -149,7 +149,7 @@
                         <div class="form-group">
                             <label class="col-md-5 control-label" for="submit"></label>
                             <div class="col-md-4">
-                                <button id="submit" name="submit" class="btn btn-primary">確認</button>
+                                <button id="submit" name="submit" class="btn btn-primary">{{__('shop.confirm')}}</button>
                             </div>
                         </div>
                     </fieldset>
