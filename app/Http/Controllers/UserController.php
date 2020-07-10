@@ -82,12 +82,17 @@ class UserController extends Controller
             'captcha.required' => '驗證碼，不能為空',
             'captcha.captcha' => '請輸入正确的驗證碼',
         ]);
-
-        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'active' => 1])) {
+        $user = User::where('email',$request->input('email'))->first();
+        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'active' => '1'])) {
             Cart::restore(Auth::user()->name);
             return redirect()->intended('/');
+        } elseif(($user->active ?? '') == '2') {
+            return redirect()->back()->withErrors(['此帳號已被停權，請聯絡我們！'])->withInput();
+        } else {
+            return redirect()->back()->withErrors(['帳號/密碼錯誤，請重新輸入！'])->withInput();
         }
-        return redirect()->back()->withErrors(['帳號/密碼錯誤，請重新輸入！'])->withInput();
+        
+        
     }
 
     public function getProfile()
