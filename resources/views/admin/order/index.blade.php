@@ -18,8 +18,7 @@
         <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box" placeholder="訂單號碼" oninput = "value=value.replace(/[^\d]/g,'')">
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
-    <form class="pull-right" action="{{route('order.orderby')}}" method="POST" class="search-form">
-        {!! csrf_field() !!}
+    <form class="pull-right" action="{{route('order.orderby')}}" method="GET" class="search-form">
         <select class="form-control" name="oderbyStatus" id="oderbyStatus" onchange="this.form.submit()" >
             <option value="0">全部</option>
             @for ($i = 1; $i <= 5 ; $i++)
@@ -66,7 +65,12 @@
     </div>
 </div>
 <div class="text-center">
+    @if (isset($oderbyStatus))
+    {{ $orders->appends(['oderbyStatus' => $oderbyStatus ])->links() }}
+    @else
     {{ $orders->links() }}
+    @endif
+    
 </div>
 
 @endsection

@@ -3,6 +3,9 @@
 @section('title')
 問題回覆管理
 @endsection
+@section('styles')
+<link rel="stylesheet" href="/css/products.css">
+@endsection
 @section('content')
 @if (session()->has('success_message'))
 <div class="alert alert-success">
@@ -17,8 +20,7 @@
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
 
-    <form class="pull-right" action="{{route('adminContact.orderby')}}" method="POST" class="search-form">
-        {!! csrf_field() !!}
+    <form class="pull-right" action="{{route('adminContact.orderby')}}" method="GET" class="search-form">
         <select class="form-control" name="oderbyStatus" id="oderbyStatus" onchange="this.form.submit()" >
             <option value="0">全部</option>
             @for ($i = 1; $i <= 3 ; $i++)
@@ -62,7 +64,12 @@
 </div>
 </div>
 <div class="text-center">
+    @if (isset($oderbyStatus))
+    {{ $contacts->appends(['oderbyStatus' => $oderbyStatus ])->links() }}
+    @else
     {{ $contacts->links() }}
+    @endif
+    
 </div>
 
 @endsection

@@ -286,7 +286,7 @@ Route::group(['middleware' => ['setLocale']], function () {
                 'uses' => 'OrderController@searchOrder',
                 'as'   => 'order.search'
             ]);
-                Route::post('/orderbyStatus', [
+                Route::get('/orderbyStatus', [
                 'uses' => 'OrderController@orderbyStatus',
                 'as'   => 'order.orderby'
             ]);
@@ -347,7 +347,7 @@ Route::group(['middleware' => ['setLocale']], function () {
                 'uses' => 'AdminContactController@replyContact',
                 'as'   => 'adminContact.reply'
             ]);
-                Route::post('/orderbyStatus', [
+                Route::get('/orderbyStatus', [
                 'uses' => 'AdminContactController@orderbyStatus',
                 'as'   => 'adminContact.orderby'
             ]);

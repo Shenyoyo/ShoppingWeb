@@ -212,7 +212,7 @@ class UserController extends Controller
                 $user->save();
             }
         }
-        return redirect()->route('user.order');
+        return redirect()->back();
     }
     public function refund(Request $request)
     {
