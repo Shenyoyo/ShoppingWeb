@@ -65,9 +65,39 @@ class OrderController extends Controller
         $userDollor = $userDollor + $refundDollor;
         //計入退貨要回饋到虛擬幣
         setDollorLog($user->id, '6', $refundDollor, $userDollor, $order->id, '');
-        // step.3 虛擬幣優惠饋扣除
+        // setp.3 會員等級重新判斷
+        if($order->dollor_yn == 'Y'){
+            $usedollor = $order->record - $order->total ;
+            if($refundDollor-$usedollor >=0 ) {
+                $culLessDollor = $refundDollor-$usedollor;
+            } else {
+                $culLessDollor =0 ;
+            }
+            
+            $user->total_cost = $user->total_cost - $culLessDollor;
+        }else {
+            $user->total_cost = ($user->total_cost) - ($refundDollor); //減去累計總消費
+        }
+        
+        $Level = $user->level_level ?? 0;
+        $LevelUpgrade = Level::find($Level)->upgrade ?? 0;
+        if ($user->total_cost < $LevelUpgrade) {
+            if($user->level_level < 1) {
+                $user->level_level = 0;
+            } else {
+                $user->level_level = $user->level_level-1;
+            }
+            $user->save();
+        } else {
+            $user->save();
+        }
+        // step.4 虛擬幣優惠饋扣除
         //現金回饋
-        $percent = $user->level->offer->cashback->percent ?? '';
+        //獲取當時訂單用戶等級
+        $orderLevelName = $order->pre_levelname;
+        $level = Level::where('name',$orderLevelName)->first();
+        //END
+        $percent = $level->offer->cashback->percent ?? '';
         $record = $order->record;
         $cashbackDollor=0; //扣除金額
         if ($percent != '') {
@@ -76,35 +106,29 @@ class OrderController extends Controller
                 $cashbackDollor = $cashbackDollor + ($orderDetail->price * $percent);
             }
         }
-        if ($record >= ($user->level->offer->cashback->above ?? 0)) {
-            $userDollor = $userDollor - $cashbackDollor; //虛擬幣回饋
+        if ($record >= ($level->offer->cashback->above ?? 0)) {
+            $userDollor = $userDollor - $cashbackDollor; //虛擬幣回饋扣除
         } else {
             $cashbackDollor =$order->pre_dollor;
-            $userDollor = $userDollor - $cashbackDollor; //虛擬幣回饋
+            $userDollor = $userDollor - $cashbackDollor; //虛擬幣回饋扣除
         }
-        //紀錄虛擬幣優惠饋扣除
-        ($order->pre_dollor != 0) ? setDollorLog($user->id, '7', -$cashbackDollor, $userDollor, $order->id, '') : '';
+        //紀錄虛擬幣優惠饋扣除(沒扣錢不記錄)
+        ($cashbackDollor != 0) ? setDollorLog($user->id, '7', -$cashbackDollor, $userDollor, $order->id, '') : '';
         //end現金回饋
         //滿額送現金
-        $userDollor = $userDollor - ($order->pre_rebate_dollor); //滿額現金
-        //紀錄虛擬幣滿額現金扣除
-        ($order->pre_rebate_dollor != 0) ? setDollorLog($user->id, '8', -($order->pre_rebate_dollor), $userDollor, $order->id, '') : '';
-        $user->dollor->dollor= $userDollor ;
-        // setp.4 會員等級重新判斷
-        $user->dollor->save();
-        $user->total_cost = ($user->total_cost) - ($order->total); //減去累計總消費
-        $Level = $user->level_level ?? 0;
-        $LevelUpgrade = Level::find($Level)->upgrade ?? 0;
-        //有設定才會降等
-        if (!empty($LevelUpgrade)) {
-            if ($user->total_cost < $LevelUpgrade) {
-                $user->level_level = $user->level_level-1;
-                $user->save();
-            } else {
-                $user->save();
-            }
+        $rebateDollor = 0;
+        if ($record >= ($level->offer->rebate->above ?? 0)) {
+            $userDollor = $userDollor; //退貨商品後有達標準不扣錢
+        } else {
+            $rebateDollor =$order->pre_rebate_dollor;
+            $userDollor = $userDollor - $rebateDollor; //滿額送現金扣除
         }
+        //紀錄虛擬幣滿額現金扣除(沒扣錢不記錄)
+        ($rebateDollor != 0) ? setDollorLog($user->id, '8', -$rebateDollor, $userDollor, $order->id, '') : '';
+        $user->dollor->dollor= $userDollor ;
 
+        $user->dollor->save();
+        
         return redirect()->back()->withSuccessMessage('已成功退款');
     }
     public function refundDisagree(Request $request)
@@ -113,6 +137,12 @@ class OrderController extends Controller
         $order = Order::find($request->orderId);
         $order->status = '6';//拒絕退款
         $order->save();
+        //將要退貨的訂單改回不退貨
+        $orderDetails =$order->orderDetail->where('refund', 'Y');
+        foreach ($orderDetails as $orderDetail) {
+            $orderDetail->refund = 'N';
+            $orderDetai->save();
+        }
         // step.2 紀錄拒絕退貨理由
         echo $request->nomessage;
         $order->refund->nomessage = $request->nomessage;

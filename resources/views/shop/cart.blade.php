@@ -83,6 +83,7 @@
                         @endif
                     @endif
                    
+                    @if ($dollor->dollor != 0)
                     <tr>
                         <td class="table-image"></td>
                         <td></td>
@@ -101,7 +102,8 @@
                         <td></td>
                         <td></td>
                     </tr>
-
+                    @endif
+                    
                     <tr class="border-bottom">
                         <td class="table-image"></td>
                         <td style="padding: 40px;"></td>

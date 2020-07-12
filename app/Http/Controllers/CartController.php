@@ -184,6 +184,7 @@ class CartController extends Controller
         $order->receiver = $request->receiver;
         $order->receiver_address = $request->receiverAddress;
         $order->status = 1 ;//1.訂單確認中 2.送貨中 3.已簽收 4.退貨
+        $order->dollor_yn = $request->dollor_yn;
         Auth::user()->order()->save($order);
         //setp.2 建立訂單明細
         foreach (Cart::content() as $item) {

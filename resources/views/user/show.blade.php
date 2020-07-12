@@ -43,7 +43,7 @@
           <span style="margin-left: 30%;color:red" >退貨</span>
           @endif
         </td>
-        <td class=" align-middle">${{  presentPrice($item->price) }}</td>
+        <td class=" align-middle">${{  presentPrice($item->price/$item->quantity) }}</td>
         <td class=" align-middle">{{  $item->quantity }}</td>
         <td class="text-right align-middle">${{ presentPrice($item->price)  }}</td>
       </tr>
@@ -141,7 +141,7 @@
           </a>&emsp;
           <a target="_blank" href="{{ url('shop', [$item->product->id]) }}">{{ $item->product->name }}</a>
         </td>
-        <td class=" align-middle">${{  presentPrice($item->price) }}</td>
+        <td class=" align-middle">${{  presentPrice($item->price/$item->quantity) }}</td>
         <td class=" align-middle">{{  $item->quantity }}</td>
         <td class="text-right align-middle">${{ presentPrice($item->price)  }}</td>
       </tr>
