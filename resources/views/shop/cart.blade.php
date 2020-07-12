@@ -74,7 +74,21 @@
                             <td class="table-image"></td>
                             <td></td>
                             <td class="small-caps table-bg" style="text-align: right">
-                                {{Auth::user()->level->name}}消費滿{{$above}}以上享{{showDiscount($percent*100) }}折
+                                @if (Session::has('locale') && in_array(Session::get('locale'), ['en']))
+                                {{__('shop.abovediscount',[
+                                    'level' => Auth::user()->level->name,
+                                    'above'=>$above ,
+                                    'percent'=>(100-$percent*100)
+                                    ])
+                                }}
+                                @else
+                                {{__('shop.abovediscount',[
+                                    'level' => Auth::user()->level->name,
+                                    'above'=>$above ,
+                                    'percent'=>showDiscount($percent*100)
+                                    ])
+                                }}
+                                @endif
                             </td>
                             <td>-${{ presentPrice($discountMoney) }}</td>
                             <td></td>

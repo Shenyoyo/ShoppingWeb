@@ -48,30 +48,58 @@
                             <h4 style="color:#00b1b1;">{{__('shop.upgraderule')}}: </h4>
                             <h5 style="color:#b15000;">
                                 @if (!empty($nextLevel->upgrade))
-                                @if ($user->total_cost < $nextLevel->upgrade)
-                                    在消費{{$nextLevel->upgrade - $user->total_cost}}元以上就可晉升{{$nextLevel->name}}
+                                    @if ($user->total_cost < $nextLevel->upgrade)
+                                    {{__('shop.upgradelevel',[
+                                        'above'=>$nextLevel->upgrade - $user->total_cost ,
+                                        'nextlevel'=>$nextLevel->name
+                                        ])
+                                    }}
                                     @else
                                     {{__('shop.aboveconditions')}}{{$nextLevel->name}} 。
                                     @endif
-                                    @else
+                                @else
                                     {{__('shop.bestlevel')}}
-                                    @endif
+                                @endif
                             </h5>
                             <br>
                             <span>
                                 <h4>{{$user->level->name}}{{__('shop.dicount')}}：</h4>
 
                                 @if (($user->level->offer->discount_yn ?? '') == 'Y')
-                                <p>單筆消費滿{{$user->level->offer->discount->above}}元以上，
-                                    可獲得{{showDiscount($user->level->offer->discount->percent*100)}}折的優惠。</p>
+                                <p>
+                                   
+                                    @if (Session::has('locale') && in_array(Session::get('locale'), ['en']))
+                                    {{__('shop.discount',[
+                                        'above'=>$user->level->offer->discount->above ,
+                                        'percent'=>(100- ($user->level->offer->discount->percent*100))
+                                        ])
+                                    }}
+                                    @else
+                                    {{__('shop.discount',[
+                                        'above'=>$user->level->offer->discount->above ,
+                                        'percent'=>showDiscount($user->level->offer->discount->percent*100)
+                                        ])
+                                    }}    
+                                    @endif
+                                </p>
                                 @endif
                                 @if (($user->level->offer->cashback_yn ?? '') == 'Y')
-                                <p>單筆消費滿{{$user->level->offer->cashback->above}}元以上，
-                                    可獲得{{$user->level->offer->cashback->percent*100}}%的虛擬幣回饋。</p>
+                                <p>
+                                    {{__('shop.cashback',[
+                                        'above'=>$user->level->offer->cashback->above ,
+                                        'percent'=>showDiscount($user->level->offer->cashback->percent*100)
+                                        ])
+                                    }}
+                                </p>
                                 @endif
                                 @if (($user->level->offer->rebate_yn ?? '') == 'Y')
-                                <p>單筆消費滿{{$user->level->offer->rebate->above}}元以上，
-                                    可獲得{{$user->level->offer->rebate->rebate}}元的虛擬幣回饋。</p>
+                                <p>
+                                    {{__('shop.rebate',[
+                                        'above'=>$user->level->offer->rebate->above ,
+                                        'rebate'=>showDiscount($user->level->offer->rebate->rebate)
+                                        ])
+                                    }}
+                                </p>
                                 @endif
                             </span>
                         </div>

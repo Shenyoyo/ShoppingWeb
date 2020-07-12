@@ -11,25 +11,25 @@ function orderStatus($status)
 {
     switch ($status) {
         case '1':
-            return '處理中';
+            return __('shop.Processing');
             break;
         case '2':
-            return '寄送中';
+            return __('shop.Sending');
             break;
         case '3':
-            return '已簽收';
+            return __('shop.applyrefund');
             break;
         case '4':
-            return '申請退款';
+            return __('shop.Received');
             break;   
         case '5':
-            return '已退款';
+            return __('shop.Refunded');
             break; 
         case '6':
-            return '拒絕退款';
+            return __('shop.Refused to refund');
             break; 
         default:
-            return '訂單有問題，請聯絡管理員';
+            return __('shop.please contact the administrator');
             break;
     }
 }
@@ -37,16 +37,16 @@ function ContactStatus($status)
 {
     switch ($status) {
         case '1':
-            return '未處理';
+            return  __('shop.Unprocessed');
             break;
         case '2':
-            return '處理中';
+            return  __('shop.Processing');
             break;
         case '3':
-            return '已回覆';
+            return  __('shop.Replied');
             break;
         default:
-            return '不明狀態';
+            return __('shop.Unknown state');
             break;
     }
 }
@@ -54,31 +54,31 @@ function txStatus($status)
 {
     switch ($status) {
         case '1':
-            return '人工存款';
+            return __('shop.Manual deposit');
             break;
         case '2':
-            return '人工提款';
+            return __('shop.Manual withdrawal');
             break;
         case '3':
-            return '購物折抵';
+            return __('shop.Shopping discount');
             break;
         case '4':
-            return '虛擬幣回饋';
+            return __('shop.Virtual currency feedback');
             break;
         case '5':
-            return '滿額送現金';
+            return __('shop.Rebated');
             break;
         case '6':
-            return '退貨退還虛擬幣';
+            return __('shop.Return and return virtual currency');
             break;
         case '7':
-            return '退貨扣除虛擬幣回饋';
+            return __('shop.Refused cashback');
             break;
         case '8':
-            return '退貨扣除滿額送現金';
+            return __('shop.Refused rebate');
             break;
         default:
-            return '帳號創建預設';
+            return __('shop.Account default');
             break;
     }
 }

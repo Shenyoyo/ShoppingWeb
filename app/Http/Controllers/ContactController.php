@@ -16,7 +16,7 @@ class ContactController extends Controller
         $this->validate($request,[
             'email' => 'email',
         ], [
-            'email.email' => '不是正確的電子信箱',
+            'email.email' => __('shop.emailvalidation'),
         ]);
 
         $contact = new Contact();
@@ -28,7 +28,7 @@ class ContactController extends Controller
         $contact->status = '1';//未處理
         $contact->save();
 
-        return redirect()->back()->withSuccessMessage('已成功寄送您的訊息，請等待客服人員的回覆，並留意您的信箱');
+        return redirect()->back()->withSuccessMessage(__('shop.productrequired'));
     }
     
 }

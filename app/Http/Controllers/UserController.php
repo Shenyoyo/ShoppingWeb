@@ -28,12 +28,12 @@ class UserController extends Controller
             'email' => 'email|required|unique:users',
             'password' => 'required|min:6|confirmed|regex:/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/',
         ], [
-            'name.unique' => '使用者名稱已被使用',
-            'email.email' => '不是正確的電子信箱',
-            'email.unique' => '信箱已重複',
-            'password.min' => '密碼長度至少6碼',
-            'password.confirmed' => '確認密碼不相同',
-            'password.regex' => '密碼必須包含大小寫字母與整數' 
+            'name.unique' => __('shop.nameunique'),
+            'email.email' => __('shop.emailvalidation'),
+            'email.unique' => __('shop.emailunique'),
+            'password.min' => __('shop.passwordmin'),
+            'password.confirmed' => __('shop.passowrdcomfirmed'),
+            'password.regex' => __('shop.passwordregex')
         ]);
 
 
@@ -77,19 +77,19 @@ class UserController extends Controller
             'password' => 'required|min:6',
             'captcha'  => 'required|captcha'
         ], [
-            'email.email' => '不是正確的電子信箱',
-            'password.min' => '密碼長度至少6碼',
-            'captcha.required' => '驗證碼，不能為空',
-            'captcha.captcha' => '請輸入正确的驗證碼',
+            'email.email' => __('shop.emailvalidation'),
+            'password.min' => __('shop.passwordmin'),
+            'captcha.required' => __('shop.captcharequired'),
+            'captcha.captcha' => __('shop.captchavalidation'),
         ]);
         $user = User::where('email',$request->input('email'))->first();
         if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'active' => '1'])) {
             Cart::restore(Auth::user()->name);
             return redirect()->intended('/');
         } elseif(($user->active ?? '') == '2') {
-            return redirect()->back()->withErrors(['此帳號已被停權，請聯絡我們！'])->withInput();
+            return redirect()->back()->withErrors([__('shop.suspended')])->withInput();
         } else {
-            return redirect()->back()->withErrors(['帳號/密碼錯誤，請重新輸入！'])->withInput();
+            return redirect()->back()->withErrors([__('shop.accountpassworderror')])->withInput();
         }
         
         
@@ -123,14 +123,14 @@ class UserController extends Controller
         $this->validate($request, [
             'password' => 'required|min:6|confirmed|regex:/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/',
         ], [
-            'password.min' => '密碼長度至少6碼',
-            'password.confirmed' => '確認密碼不相同',
-            'password.regex' => '密碼必須包含大小寫字母與整數' 
+            'password.min' => __('shop.passwordmin'),
+            'password.confirmed' => __('shop.passowrdcomfirmed'),
+            'password.regex' => __('shop.passwordregex')
         ]);
         $user = Auth::user();
         $user->password = bcrypt(($request->input('password')));
         $user->save();
-        return redirect()->route('user.profile')->withSuccessMessage('修改密碼成功');
+        return redirect()->route('user.profile')->withSuccessMessage(__('shop.reset'));
     }
     public function getOrder()
     {
@@ -220,7 +220,7 @@ class UserController extends Controller
             'product' => 'required',
             'refundMessage' => 'required'
         ],[
-            'product.required' => '必須勾選退貨商品'
+            'product.required' => __('shop.productrequired')
         ]);
         // step.1 更改商品狀態
         $order = Order::find($request->orderId);
@@ -240,7 +240,7 @@ class UserController extends Controller
 
 
         $refund->save();
-        return redirect()->back()->withSuccessMessage('退款已申請成功，請稍候審核');
+        return redirect()->back()->withSuccessMessage( __('shop.refund'));
     }
 
     public function getLogout()
