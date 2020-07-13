@@ -144,7 +144,7 @@ class OrderController extends Controller
             $orderDetail->save();
         }
         // step.2 紀錄拒絕退貨理由
-        echo $request->nomessage;
+        //echo $request->nomessage;
         $order->refund->nomessage = $request->nomessage;
         $order->refund->save();
         return redirect()->back()->withSuccessMessage('已拒絕退款');

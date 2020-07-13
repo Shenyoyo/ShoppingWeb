@@ -124,8 +124,9 @@
               </a>
               <form style="display: inline-block" id='refund-disagree' action="{{route('order.refundDisagree')}}" method="post">
                 {!! csrf_field() !!}
-                <button class="btn btn-sm btn-danger " name="nomessage"  id="btn-refund-disagree" type="button" value="" onClick="subForm()";>不同意</button>
+                <button class="btn btn-sm btn-danger " id="btn-refund-disagree" type="button" value="" onClick="subForm()";>不同意</button>
                 <input type="hidden" name="orderId" value="{{ $order->id }}"> 
+                <input type="hidden" name="nomessage" id="nomessage" value=""> 
               </form>
             </td>
           </tr>
