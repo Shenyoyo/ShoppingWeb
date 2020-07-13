@@ -35,6 +35,9 @@
                                         <img class=" cart-image" src="{{asset('storage/'.$item->product->file->filename.'')}}">
                                       </a>&emsp;
                                     <a target="_blank" href="{{ url('shop', [$item->product->id]) }}">{{ $item->product->name }}</a>
+                                    @if($item->refund == 'Y')
+                                    <span style="margin-left: 30%;color:red" >{{__('shop.RefundStatus')}}</span>
+                                    @endif
                                   </td>
                                   <td class="sku-price text-center">${{ presentPrice($item->price/$item->quantity) }}</td>
                                   <td class="sku-amount text-center">{{ $item->quantity }}</td>
