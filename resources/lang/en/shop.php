@@ -144,4 +144,5 @@ return [
     'RefundStatus' => 'Refund',
     'CashbackDollor' => 'Cashback:percent%：:dollor',
     'RebateDollor' => 'Rebate：:dollor',
+    'data not found' => 'Data not found',
 ];

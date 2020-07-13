@@ -144,6 +144,7 @@ return [
     'RefundStatus' => '退貨',
     'CashbackDollor' => '虛擬幣回饋:percent%：:dollor',
     'RebateDollor' => '滿額送現金：:dollor',
+    'data not found' => '查無資料',
     
 
 ];

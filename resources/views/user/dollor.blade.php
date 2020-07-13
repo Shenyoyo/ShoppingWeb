@@ -35,20 +35,26 @@
             </thead>
             <tbody>
                 @if (isset($dollorlogs))
-                @foreach ($dollorlogs as $dollorlog)
-                <tr>
-                    <td>{{$dollorlog->created_at}}</td>
-                    <td>{{txStatus($dollorlog->tx_type)}}</td>
-                    @if ($dollorlog->amount < 0)
-                    <td style="color:red" >{{presentPrice($dollorlog->amount)}}</td>
-                    @else
-                    <td >{{presentPrice($dollorlog->amount)}}</td>   
-                    @endif
-                    <td>{{presentPrice($dollorlog->sub_total)}}</td>
-                    <td>{{(empty($dollorlog->order)) ? '' : __('shop.order').':'.$dollorlog->order }}</td>
-                    <td>{{$dollorlog->memo}}</td>
-                </tr>
-                @endforeach    
+                @if(count($dollorlogs) != 0)
+                    @foreach ($dollorlogs as $dollorlog)
+                    <tr>
+                        <td>{{$dollorlog->created_at}}</td>
+                        <td>{{txStatus($dollorlog->tx_type)}}</td>
+                        @if ($dollorlog->amount < 0)
+                        <td style="color:red" >{{presentPrice($dollorlog->amount)}}</td>
+                        @else
+                        <td >{{presentPrice($dollorlog->amount)}}</td>   
+                        @endif
+                        <td>{{presentPrice($dollorlog->sub_total)}}</td>
+                        <td>{{(empty($dollorlog->order)) ? '' : __('shop.order').':'.$dollorlog->order }}</td>
+                        <td>{{$dollorlog->memo}}</td>
+                    </tr>
+                    @endforeach 
+                @else
+                    <tr>
+                        <td  colspan="8">{{__('shop.data not found')}}</td>
+                    </tr>
+                @endif       
                 @endif
                 </tbody>
             </table>
