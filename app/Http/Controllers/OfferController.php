@@ -7,7 +7,7 @@ use App\Level;
 use App\Offer;
 use App\Discount;
 use App\Cashback;
-use App\rebate;
+use App\Rebate;
 
 class OfferController extends Controller
 {
