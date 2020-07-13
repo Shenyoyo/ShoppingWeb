@@ -40,7 +40,7 @@
           </a>&emsp;
           <a target="_blank" href="{{ url('shop', [$item->product->id]) }}">{{ $item->product->name }}</a>
           @if($item->refund == 'Y')
-          <span style="margin-left: 30%;color:red" >退貨</span>
+          <span style="margin-left: 30%;color:red" >{{__('shop.RefundStatus')}}</span>
           @endif
         </td>
         <td class=" align-middle">${{  presentPrice($item->price/$item->quantity) }}</td>
@@ -76,14 +76,21 @@
       @if(!empty($user->level->offer->cashback_yn))
       <div class="col-md-12" style="font-size: 18px">
         @if ($user->level->offer->cashback_yn == 'Y' && $order->total >=$user->level->offer->cashback->above )
-        虛擬幣回饋{{$user->level->offer->cashback->percent *100}}%：${{presentPrice(round($order->total * $user->level->offer->cashback->percent))}}
+        {{__('shop.CashbackDollor',[
+          'percent' =>$user->level->offer->cashback->percent *100 ,
+          'dollor' => presentPrice(round($order->total * $user->level->offer->cashback->percent))
+          ])
+        }}
         @endif
       </div>
       @endif
       @if(!empty($user->level->offer->rebate_yn))
       <div class="col-md-12" style="font-size: 18px">
         @if ($user->level->offer->rebate_yn == 'Y' && $order->total >=$user->level->offer->rebate->above)
-        滿額送現金：${{presentPrice($user->level->offer->rebate->rebate)}}
+        {{__('shop.RebateDollor',[
+          'dollor' => presentPrice($order->pre_rebate_dollor)
+          ])
+        }}
         @endif
       </div>
       @endif
@@ -92,13 +99,20 @@
       {{-- 歷史紀錄 --}}
       @if ($order->pre_cashback_yn == 'Y' && $order->total >= $order->pre_above )
       <div class="col-md-12" style="font-size: 18px">
-        虛擬幣回饋{{$order->pre_percent *100}}%：${{presentPrice(round($order->pre_dollor))}}
+        {{__('shop.CashbackDollor',[
+          'percent' =>$user->level->offer->cashback->percent *100 ,
+          'dollor' => presentPrice(round($order->total * $user->level->offer->cashback->percent))
+          ])
+        }}
       </div>
       @endif
 
       @if ($order->pre_rebate_yn == 'Y' && $order->total >= $order->pre_rebate_above)
       <div class="col-md-12" style="font-size: 18px">
-        滿額送現金：${{presentPrice($order->pre_rebate_dollor)}}
+        {{__('shop.RebateDollor',[
+          'dollor' => presentPrice($order->pre_rebate_dollor)
+          ])
+        }}
       </div>
       @endif
       @endif
@@ -174,14 +188,21 @@
       @if(!empty($user->level->offer->cashback_yn))
       <div class="col-md-12" style="font-size: 18px">
         @if ($user->level->offer->cashback_yn == 'Y' && $order->total >=$user->level->offer->cashback->above )
-        虛擬幣回饋{{$user->level->offer->cashback->percent *100}}%：${{presentPrice(round($order->total * $user->level->offer->cashback->percent))}}
+        {{__('shop.CashbackDollor',[
+          'percent' =>$user->level->offer->cashback->percent *100 ,
+          'dollor' => presentPrice(round($order->total * $user->level->offer->cashback->percent))
+          ])
+        }}
         @endif
       </div>
       @endif
       @if(!empty($user->level->offer->rebate_yn))
       <div class="col-md-12" style="font-size: 18px">
         @if ($user->level->offer->rebate_yn == 'Y' && $order->total >=$user->level->offer->rebate->above)
-        滿額送現金：${{presentPrice($user->level->offer->rebate->rebate)}}
+        {{__('shop.RebateDollor',[
+          'dollor' => presentPrice($order->pre_rebate_dollor)
+          ])
+        }}
         @endif
       </div>
       @endif
@@ -190,13 +211,20 @@
       {{-- 歷史紀錄 --}}
       @if ($order->pre_cashback_yn == 'Y' && $order->total >= $order->pre_above )
       <div class="col-md-12" style="font-size: 18px">
-        虛擬幣回饋{{$order->pre_percent *100}}%：${{presentPrice(round($order->pre_dollor))}}
+        {{__('shop.CashbackDollor',[
+          'percent' =>$user->level->offer->cashback->percent *100 ,
+          'dollor' => presentPrice(round($order->total * $user->level->offer->cashback->percent))
+          ])
+        }}
       </div>
       @endif
 
       @if ($order->pre_rebate_yn == 'Y' && $order->total >= $order->pre_rebate_above)
       <div class="col-md-12" style="font-size: 18px">
-        滿額送現金：${{presentPrice($order->pre_rebate_dollor)}}
+        {{__('shop.RebateDollor',[
+          'dollor' => presentPrice($order->pre_rebate_dollor)
+          ])
+        }}
       </div>
       @endif
       @endif

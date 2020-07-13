@@ -141,6 +141,9 @@ return [
     'Refused cashback' => '退貨扣除虛擬幣回饋',
     'Refused rebate' => '退貨扣除滿額送現金',
     'Account default' => '帳號創建預設',
+    'RefundStatus' => '退貨',
+    'CashbackDollor' => '虛擬幣回饋:percent%：:dollor',
+    'RebateDollor' => '滿額送現金：:dollor',
     
 
 ];

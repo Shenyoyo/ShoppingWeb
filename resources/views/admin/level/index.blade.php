@@ -66,7 +66,7 @@
                                 class="btn btn-primary btn-sm">修改</button></a>
                         @endif
                         {{-- 只能從最高等級開始刪，預設0級不能刪 --}}
-                        @if ($highestLevel->level == $level->level && $highestLevel->level != 0)
+                        @if ($highestLevel->level == $level->level && $highestLevel->level != 0 && count($level->user) < 1 )
                         <a href="{{route('level.destroy',['id' => $level->level ])}}"
                             onclick="javascript:return del()"><button class="btn btn-danger btn-sm">删除</button></a>
                         @endif

@@ -36,7 +36,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="description">等級描述</label>
                         <div class="col-md-3">
-                            <input id="description" name="description" type="text"  class="form-control input-md" required="">
+                            <input id="description" name="description" type="text"  class="form-control input-md" required="" value="{{old('description')}}">
                         </div>
                     </div>
                     <div class="form-group">

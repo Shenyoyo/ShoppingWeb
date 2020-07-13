@@ -17,10 +17,10 @@ function orderStatus($status)
             return __('shop.Sending');
             break;
         case '3':
-            return __('shop.applyrefund');
+            return __('shop.Received');
             break;
         case '4':
-            return __('shop.Received');
+            return __('shop.applyrefund');
             break;   
         case '5':
             return __('shop.Refunded');

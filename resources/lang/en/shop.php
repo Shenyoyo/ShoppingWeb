@@ -141,4 +141,7 @@ return [
     'Refused cashback' => 'Refused cashback',
     'Refused rebate' => 'Refused rebate',
     'Account default' => 'Account default',
+    'RefundStatus' => 'Refund',
+    'CashbackDollor' => 'Cashback:percent%：:dollor',
+    'RebateDollor' => 'Rebate：:dollor',
 ];
