@@ -27,7 +27,7 @@
             </div>
 
             <div class="col-md-8">
-                <h3>{{__('shop.price') }}：${{ $product->price }}</h3> 
+                <h3>{{__('shop.price') }}：${{  presentPrice($product->price) }}</h3> 
                 <h4>{{__('shop.stock') }}：{{ $product->amount }}</h4>
                 @if ($product->amount <= 0)
                 <h4 class="text-danger">{{__('shop.oopsnostock') }} </h4>   
@@ -68,7 +68,7 @@
                         <div class="caption text-center">
                             <a href="{{ route('shop.show', [$product->id]) }}"><img src="{{asset('storage/'.$product->file->filename.'')}}" alt="product" class="img-responsive"></a>
                             <a href="{{ route('shop.show', [$product->id]) }}"><h3>{{ $product->name }}</h3>
-                            <p>${{ $product->price }}</p>
+                            <p>${{  presentPrice($product->price) }}</p>
                             </a>
                         </div> <!-- end caption -->
                     </div> <!-- end thumbnail -->

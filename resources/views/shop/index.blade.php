@@ -60,7 +60,7 @@
                         <div class="caption text-center">
                             <a href="{{ route('shop.show', [$product->id]) }}"><img src="{{asset('storage/'.$product->file->filename.'')}}" alt="product" class="img-responsive"></a>
                             <a href="{{ route('shop.show', [$product->id]) }}"><h3>{{ $product->name }}</h3>
-                            <p>${{ $product->price }}</p>
+                            <p>${{ presentPrice($product->price) }}</p>
                             </a>
                         </div> <!-- end caption -->
                     </div> <!-- end thumbnail -->
