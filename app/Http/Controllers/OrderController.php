@@ -141,7 +141,7 @@ class OrderController extends Controller
         $orderDetails =$order->orderDetail->where('refund', 'Y');
         foreach ($orderDetails as $orderDetail) {
             $orderDetail->refund = 'N';
-            $orderDetai->save();
+            $orderDetail->save();
         }
         // step.2 紀錄拒絕退貨理由
         echo $request->nomessage;
