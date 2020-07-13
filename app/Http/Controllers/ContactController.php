@@ -28,7 +28,7 @@ class ContactController extends Controller
         $contact->status = '1';//未處理
         $contact->save();
 
-        return redirect()->back()->withSuccessMessage(__('shop.productrequired'));
+        return redirect()->back()->withSuccessMessage(__('shop.applycontact'));
     }
     
 }

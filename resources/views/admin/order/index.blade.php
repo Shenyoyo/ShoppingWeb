@@ -49,7 +49,7 @@
                     <td>{{$order->receiver}}</td>
                     <td>{{$order->receiver_address}}</td>
                     <td>{{$order->created_at}}</td>
-                    <td>{{orderStatus($order->status)}}</td>
+                    <td style="{{($order->status == '4') ? 'color:red' : '' }}">{{orderStatus($order->status)}}</td>
                     <td>
                        @if ($order->status == '1')
                        <a href="{{route('order.sand',['id' => $order->id ])}}"><button class="btn btn-success btn-sm">送貨</button></a> 

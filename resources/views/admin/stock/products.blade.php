@@ -38,7 +38,7 @@
                 <tr>
                     <td>{{$product->name}}</td>
                     <td>￥{{$product->price}}</td>
-                    <td>{{$product->amount}}</td>
+                    <td style="{{($product->amount == 0) ? 'color:red' : '' }}"">{{$product->amount}}</td>
                     <td>
                         @foreach ($product->category as $category)
                         {{$category->name}} 
