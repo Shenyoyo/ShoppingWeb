@@ -24,20 +24,29 @@
                 <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
             </form>
         </div>
+        @if ($id == '')
         <div class="col-md-3 pull-right">
-                <strong>Price: </strong>
-                <a href="{{ route('shop.orderby', ['sort'=> 'asc'])}}">{{__('shop.lowtohigh') }}</a> 
-                <a href="{{ route('shop.orderby', ['sort'=> 'desc']) }}">{{__('shop.hightolow') }}</a>
+            <strong>Price: </strong>
+            <a href="{{ route('shop.orderby', ['sort'=> 'asc'])}}">{{__('shop.lowtohigh') }}</a> 
+            <a href="{{ route('shop.orderby', ['sort'=> 'desc']) }}">{{__('shop.hightolow') }}</a>
         </div>
+        @else
+        <div class="col-md-3 pull-right">
+            <strong>Price: </strong>
+            <a href="{{ route('shop.category', ['id' => $id ,'orderby' => 'asc'])}}">{{__('shop.lowtohigh') }}</a> 
+            <a href="{{ route('shop.category', ['id' => $id ,'orderby' => 'desc']) }}">{{__('shop.hightolow') }}</a>
+        </div>    
+        @endif
+        
         
     </div>
     <hr>
     <ul class="nav nav-pills">
         @foreach ($categories as $category)
         @if ($id == $category->id)
-        <li class="active" ><a href="{{ route('shop.category', ['id' => $category->id]) }}">{{ $category->name }}</a></li>
+        <li class="active" ><a href="{{ route('shop.category', ['id' => $category->id ,'orderby' => 'asc']) }}">{{ $category->name }}</a></li>
         @else
-        <li class="#" ><a href="{{ route('shop.category', ['id' => $category->id]) }}">{{ $category->name }}</a></li>    
+        <li class="#" ><a href="{{ route('shop.category', ['id' => $category->id ,'orderby' => 'asc']) }}">{{ $category->name }}</a></li>    
         @endif
         @endforeach
         

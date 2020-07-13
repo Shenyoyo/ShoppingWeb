@@ -27,7 +27,6 @@ class MainController extends Controller
 
     public function search(Request $request)
     {
-        $sessions = $request->session()->all();
         $id='';
         $query = $request->input('query');
         $products = Product::productDisplay()->where('name', 'LIKE', '%'.$query.'%')->paginate(8);
@@ -40,8 +39,8 @@ class MainController extends Controller
         $products = Product::productDisplay()->orderBy('price', $sort)->paginate(8);
         return view('shop.index', ['products' => $products,'categories' => $categories,'id' =>$id]);
     }
-    public function categoryProduct($id){
-        $products = Category::find($id)->product()->paginate(8);
+    public function categoryProduct($id,$orderby){
+        $products = Category::find($id)->product()->orderBy('price',$orderby)->paginate(8);
         $categories = Category::CategoryDisplay()->get(); 
         return view('shop.index', ['products' => $products,'categories' => $categories,'id' =>$id]);
     }

@@ -30,7 +30,7 @@ Route::group(['middleware' => ['setLocale']], function () {
         'uses' => 'MainController@orderbyPorduct',
         'as'   => 'shop.orderby'
     ]);
-        Route::get('/category/{id}', [
+        Route::get('/category/{id}/{orderby?}', [
         'uses' => 'MainController@categoryProduct',
         'as'   => 'shop.category'
     ]);
