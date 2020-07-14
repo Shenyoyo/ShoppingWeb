@@ -19,7 +19,7 @@ class CreateDollorLogsTable extends Migration
             $table->integer('tx_type')->nullable();
             $table->integer('amount')->nullable();
             $table->integer('sub_total');
-            $table->string('order')->nullable();
+            $table->string('order_id')->nullable();
             $table->string('memo')->nullable();
             $table->timestamps();
         });

@@ -18,4 +18,7 @@ class Order extends Model
     {
         return $this->hasOne('App\Refund');
     }
+    public function dollorlog(){
+        return $this->hasMany('App\DollorLog');
+    }
 }

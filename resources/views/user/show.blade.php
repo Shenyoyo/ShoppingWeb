@@ -16,7 +16,7 @@
         @endforeach
     </div>
 @endif
-{{-- 未簽收 --}}
+{{-- 未簽收與退貨顯示 --}}
 @if($order->status != '3') 
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -40,7 +40,7 @@
           </a>&emsp;
           <a target="_blank" href="{{ url('shop', [$item->product->id]) }}">{{ $item->product->name }}</a>
           @if($item->refund == 'Y')
-          <span style="margin-left: 30%;color:red" >{{__('shop.RefundStatus')}}</span>
+          <span style="margin-left: 25%;color:red" >{{__('shop.RefundStatus').' '.__('shop.quantity')}}:{{$item->refundQuantity}}</span>
           @endif
         </td>
         <td class=" align-middle">${{  presentPrice($item->price/$item->quantity) }}</td>
@@ -156,7 +156,13 @@
           <a target="_blank" href="{{ url('shop', [$item->product->id]) }}">{{ $item->product->name }}</a>
         </td>
         <td class=" align-middle">${{  presentPrice($item->price/$item->quantity) }}</td>
-        <td class=" align-middle">{{  $item->quantity }}</td>
+        <td class=" align-middle">
+          <select name="{{$item->product->id}}" id="refundQuantity">
+            @for($i = 1;$i <= $item->quantity ;$i++ )
+            <option {{($i == $item->quantity)? 'selected' : ''}} value="{{$i}}">{{$i}}</option>
+            @endfor
+          </select>
+        </td>
         <td class="text-right align-middle">${{ presentPrice($item->price)  }}</td>
       </tr>
       @endforeach

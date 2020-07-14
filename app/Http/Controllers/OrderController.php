@@ -19,7 +19,10 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         $user = Auth::user()->find($order->user_id);
-        return view('admin/order.show', ['order' => $order,'user' => $user]);
+        $refundDollorLog = $order->dollorlog->where('tx_type',6)->first();
+        $refundDollor =$refundDollorLog->amount ?? '';
+
+        return view('admin/order.show', ['order' => $order,'user' => $user,'refundDollor' =>$refundDollor]);
     }
     public function sandProduct($id)
     {
@@ -60,7 +63,8 @@ class OrderController extends Controller
         $refundDollor=0; //退貨金額加總
         $orderDetails =$order->orderDetail->where('refund', 'Y');
         foreach ($orderDetails as $orderDetail) {
-            $refundDollor = $refundDollor + $orderDetail->price;
+            $orderDetailOnePrice= $orderDetail->price / $orderDetail->quantity;
+            $refundDollor = $refundDollor + ($orderDetailOnePrice * intval($orderDetail->refundQuantity));
         }
         $userDollor = $userDollor + $refundDollor;
         //計入退貨要回饋到虛擬幣
@@ -141,6 +145,7 @@ class OrderController extends Controller
         $orderDetails =$order->orderDetail->where('refund', 'Y');
         foreach ($orderDetails as $orderDetail) {
             $orderDetail->refund = 'N';
+            $orderDetail->refundQuantity = '';
             $orderDetail->save();
         }
         // step.2 紀錄拒絕退貨理由

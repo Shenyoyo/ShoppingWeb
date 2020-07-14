@@ -234,11 +234,12 @@ class UserController extends Controller
         $check = $request->product;
         $checkOrderDetails = $order->orderDetail->whereIn('product_id',$check);
         foreach ($checkOrderDetails as $checkOrderDetail ) {
-             $checkOrderDetail->refund = 'Y';
-             $checkOrderDetail->save();
+            $checkOrderDetailProductId= $checkOrderDetail->product_id;
+            $checkQuantity = $request->$checkOrderDetailProductId; //紀錄選取的退貨商品的數量
+            $checkOrderDetail->refund = 'Y';
+            $checkOrderDetail->refundQuantity =  $checkQuantity;
+            $checkOrderDetail->save();
         }
-
-
         $refund->save();
         return redirect()->back()->withSuccessMessage( __('shop.refund'));
     }

@@ -53,7 +53,7 @@
         <td>
           <div style="display: inline-block">{{ $item->product->name }}</div>
           @if ($item->refund == 'Y')
-          <span style="margin-left: 30%;color:red" >退貨</span>
+          <span style="margin-left: 30%;color:red" >退貨 數量:{{$item->refundQuantity}}</span>
           @endif
         </td>
         <td>${{ presentPrice($item->price) }}</td>
@@ -68,8 +68,9 @@
         <td>{{  orderStatus($order->status) }}</td>
       </tr>
 
-      <tr>
+      
       @if ($order->status == '1' )
+      <tr>
           @if (($user->level->offer->cashback_yn ?? '') == 'Y')
           <td>{{$user->level->name}}滿額{{$user->level->offer->cashback->above}}以上<br>
             虛擬幣回饋{{$user->level->offer->cashback->percent *100}}%
@@ -92,6 +93,7 @@
               <td style="padding-top: 18px;" colspan="3" >${{ $order->total * 0 }}</td>     
               @endif
           @endif
+      </tr>
       <tr>
         <td colspan="4">
           <a class="pull-right" href="{{route('order.sand',['id' => $order->id ])}}"><button class="btn btn-success">送貨</button></a> 
@@ -114,7 +116,7 @@
               <td style="padding-top: 18px;" colspan="3" >${{ presentPrice($order->pre_rebate_dollor)}}</td>   
           @endif
       </tr>
-          @if($order->status == '4')
+          @if($order->status == '4' )
           <tr>
             <td>退款理由：</td>
             <td colspan="2">{{ $order->refund->message }}</td>
@@ -130,9 +132,22 @@
               </form>
             </td>
           </tr>
-      @endif
+          @elseif($order->status =='5')
+          <tr>
+            <td>退款理由：</td>
+            <td>{{ $order->refund->message }}</td>
+            <td>退款總額：</td>
+            <td>{{ $refundDollor}}元</td>
+          </tr>
+          <tr>
+            
+
+          </tr>  
+          @elseif($order->status =='6')
+
+          @endif
       @endif  
-      </tr>
+      
 
       
       </tbody>

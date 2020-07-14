@@ -51,7 +51,7 @@
                             @endif
                             <td>{{presentPrice($dollorlog->sub_total)}}</td>
                             <td>{{$dollorlog->created_at}}</td>
-                            <td>{{(empty($dollorlog->order)) ? '' : '單號:'.$dollorlog->order }}</td>
+                            <td>{{(empty($dollorlog->order_id)) ? '' : '單號:'.$dollorlog->order_id }}</td>
                             <td>{{$dollorlog->memo}}</td>
                         </tr>
                         @endforeach
