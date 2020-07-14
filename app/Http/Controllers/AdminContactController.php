@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\ContactDetail;
 use Illuminate\Http\Request;
 
 class AdminContactController extends Controller
@@ -19,15 +20,36 @@ class AdminContactController extends Controller
             $contact->status = '2';
             $contact->save();
         }
-        return view('admin/contact.show',['contact' => $contact]);
+        $contactDetails = $contact->contactDetail()->paginate(8);
+        return view('admin/contact.show',['contact' => $contact, 'contactDetails' => $contactDetails]);
     }
     public function replyContact(Request $request)
     {
+        $this->validate($request,[
+            'message' => 'required' ,
+            'name' => 'required' ,
+        ]);
         $contact = Contact::find($request->id); 
-        $contact->response = $request->response;
-        $contact->status = '3';
+        $contactDetail = new ContactDetail();
+        $contactDetail ->name = $request->name;
+        $contactDetail ->message = $request->message;
+        $contactDetail ->role = '2';
+        $contact->contactDetail()->save($contactDetail);
+        return redirect()->back()->withSuccessMessage('已回覆。');
+    }
+    public function lockContact($id)
+    {
+        $contact = Contact::find($id); 
+        $contact->status = '3'; 
         $contact->save();
-        return redirect()->back()->withSuccessMessage('已紀錄處理方式。');
+        return redirect()->back()->withSuccessMessage('已結案，停止回覆功能。');
+    }
+    public function unlockContact($id)
+    {
+        $contact = Contact::find($id); 
+        $contact->status = '2'; 
+        $contact->save();
+        return redirect()->back()->withSuccessMessage('已解鎖，可使用回覆功能。');
     }
     public function searchContact(Request $request)
     {

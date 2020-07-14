@@ -32,8 +32,8 @@ return [
     'howcallyou' => '怎麼稱呼您?',
     'contactnumber' => '聯絡電話',
     'emailaddress' => '電子郵件信箱',
-    'subject' => '主 旨',
-    'message' => '訊 息',
+    'subject' => '主旨',
+    'message' => '訊息',
     'submit' => '送出',
     'requests' => '您的意見或疑問...',
     'price' => '價錢',
@@ -131,6 +131,7 @@ return [
     'please contact the administrator' => '訂單有問題，請聯絡管理員',
     'Unprocessed' => '未處理',
     'Replied' => '已回覆',
+    'Case Close' => '已結案' ,
     'Unknown state' => '不明狀態',
     'Manual deposit' => '人工存款',
     'Manual withdrawal' => '人工提款',
@@ -145,6 +146,11 @@ return [
     'CashbackDollor' => '虛擬幣回饋:percent%：:dollor',
     'RebateDollor' => '滿額送現金：:dollor',
     'data not found' => '查無資料',
+    'Back to list' =>'返回列表',
+    'Detail' => '明細',
+    'Reply' => '回覆',
+    'Question Reply' =>'問題回覆',
+    
     
 
 ];

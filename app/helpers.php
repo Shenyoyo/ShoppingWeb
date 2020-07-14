@@ -43,7 +43,7 @@ function ContactStatus($status)
             return  __('shop.Processing');
             break;
         case '3':
-            return  __('shop.Replied');
+            return  __('shop.Case Close');
             break;
         default:
             return __('shop.Unknown state');

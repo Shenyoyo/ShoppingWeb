@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\ContactDetail;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,11 @@ class ContactController extends Controller
         $contact->message = $request->message;
         $contact->status = '1';//未處理
         $contact->save();
+        $contactDetail = new ContactDetail();
+        $contactDetail->name = $request->name;
+        $contactDetail->message = $request->message;
+        $contactDetail->role = '1';
+        $contact->contactDetail()->save($contactDetail);
 
         return redirect()->back()->withSuccessMessage(__('shop.applycontact'));
     }

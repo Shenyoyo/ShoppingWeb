@@ -38,6 +38,7 @@
                             <li><a href="{{ route('user.profile')}}">{{__('shop.myprodile') }}</a></li>
                             <li><a href="{{ route('user.order')}}">{{__('shop.myorder') }}</a></li>
                             <li><a href="{{ route('user.dollor')}}">{{__('shop.virtualrecord') }}</a></li>
+                            <li><a href="{{ route('user.message')}}">{{__('shop.Question Reply')}}</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ route('user.logout')}}">{{__('shop.signout') }}</a></li>
                         @else

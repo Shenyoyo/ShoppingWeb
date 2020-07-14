@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Cashback;
+use App\Contact;
 use App\Level;
 use App\User;
 use App\Dollor;
 use App\DollorLog;
 use App\Order;
 use App\Refund;
+use App\ContactDetail;
 use Illuminate\Http\Request;
 use Auth;
 use Boolfalse\LaravelShoppingCart\Facades\Cart;
@@ -91,8 +93,6 @@ class UserController extends Controller
         } else {
             return redirect()->back()->withErrors([__('shop.accountpassworderror')])->withInput();
         }
-        
-        
     }
 
     public function getProfile()
@@ -144,7 +144,7 @@ class UserController extends Controller
     {
         $order = Order::find($id);
         $user = Auth::user()->find($order->user_id);
-        return view('user.show', ['order' => $order,'user' => $user]);
+        return view('user.orderShow', ['order' => $order,'user' => $user]);
     }
     public function getDollor()
     {
@@ -167,7 +167,32 @@ class UserController extends Controller
             'startDate' => $startDate ,
             'endDate' => $endDate
             ]);
+    }
+    public function getMessage()
+    {
+        $userName = Auth::user()->name;
+        $contacts = Contact::where('name',$userName)->orderBy('updated_at','desc')->paginate(15);
+        return view('user.message',['contacts' => $contacts] );   
     } 
+    public function getMessageShow($id)
+    {
+        $contact = Contact::find($id);
+        $contactDetails = $contact->contactDetail()->paginate(8);
+        return view('user.messageShow',['contact' =>$contact,'contactDetails' => $contactDetails]);   
+    } 
+    public function replyContact(Request $request)
+    {
+        $this->validate($request,[
+            'message' => 'required' ,
+        ]);
+        $contact = Contact::find($request->id); 
+        $contactDetail = new ContactDetail();
+        $contactDetail ->name = Auth::user()->name;
+        $contactDetail ->message = $request->message;
+        $contactDetail ->role = '1';
+        $contact->contactDetail()->save($contactDetail);
+        return redirect()->back()->withSuccessMessage('已成功回覆。');
+    }
 
     public function confirmOrder($id)
     {

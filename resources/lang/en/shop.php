@@ -131,6 +131,7 @@ return [
     'please contact the administrator' => 'please contact the administrator',
     'Unprocessed' => 'Unprocessed',
     'Replied' => 'Replied',
+    'Case Close' => 'Case Close' ,
     'Unknown state' => 'Unknown state',
     'Manual deposit' => 'Manual deposit',
     'Manual withdrawal' => 'Manual withdrawal',
@@ -145,4 +146,8 @@ return [
     'CashbackDollor' => 'Cashback:percent%：:dollor',
     'RebateDollor' => 'Rebate：:dollor',
     'data not found' => 'Data not found',
+    'Back to list' =>'Back to list',
+    'Detail' => 'Detail',
+    'Reply' => 'Reply',
+    'Question Reply' =>'Question Reply',
 ];

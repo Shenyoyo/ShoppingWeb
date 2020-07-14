@@ -19,8 +19,15 @@
 {{-- 未簽收與退貨顯示 --}}
 @if($order->status != '3') 
 <div class="panel panel-default">
+ 
   <div class="panel-heading">
-    <div class="panel-title">{{__('shop.orderDetail')}}</div>
+    <div class="panel-title">
+      {{__('shop.orderDetail')}}
+      <div class=" btn-group pull-right">
+        <a href="{{route('user.order')}}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> 返回列表</a>
+      </div>
+    </div>
+    
   </div>
   <table class="table mb-0">
     <thead>
@@ -134,7 +141,12 @@
 {!! csrf_field() !!}
 <div class="panel panel-default">
   <div class="panel-heading">
-    <div class="panel-title">{{__('shop.orderDetail')}}</div>
+    <div class="panel-title">
+      {{__('shop.orderDetail')}}
+      <div class=" btn-group pull-right">
+        <a href="{{route('user.order')}}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> {{__('shop.Back to list')}}</a>
+      </div>
+    </div>
   </div>
   <table class="table mb-0">
     <thead>
