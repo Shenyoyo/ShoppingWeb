@@ -294,7 +294,6 @@ function getPreOptimun($optimun_yn,$offertype,$order,$total)
         }else{
             return false;
         }
-        
     }else{
         return true;
     }

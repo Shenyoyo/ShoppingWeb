@@ -116,6 +116,8 @@ class OrderController extends Controller
             $user->save();
         }
         // step.4 虛擬幣優惠饋扣除
+        $preOptimunCashbackFlag = getPreOptimun($order->pre_optimun_yn ?? 'N','cashback',$order,$order->original_total);
+        $preOptimunRebateFlag = getPreOptimun($order->pre_optimun_yn ?? 'N','rebate',$order,$order->original_total);
         $preCashbackPercent = $order->pre_percent ?? '';
         $record = $order->record;
         $cashbackDollor=0; //扣除金額
@@ -125,26 +127,32 @@ class OrderController extends Controller
             $orderDetailPrice = $orderDetailOnePrice * intval($orderDetail->refundQuantity);
             $record = $record - $orderDetailPrice;
             //計算退貨要收回的虛擬幣
-            if ($preCashbackPercent != '' && $order->pre_cashback_yn == 'Y' ) {
+            if (($preCashbackPercent != '') && ($order->pre_cashback_yn == 'Y') && $preOptimunCashbackFlag) {
                 $cashbackDollor = $cashbackDollor + ($orderDetailPrice * $preCashbackPercent);
             }
         }
-        if ($record >= ($order->pre_above ?? 0)) {
+        
+        if ($record >= ($order->pre_above ?? 0) ) {
             $userDollor = $userDollor - $cashbackDollor; //計算虛擬幣回饋扣除
         } else {
-            $cashbackDollor =$order->pre_dollor;
+            if ($preOptimunCashbackFlag) {
+                $cashbackDollor =$order->pre_dollor;
+            }
             $userDollor = $userDollor - $cashbackDollor; //整筆虛擬幣回饋扣除
         }
+     
         //紀錄虛擬幣優惠饋扣除(沒扣錢不記錄)
         ($cashbackDollor != 0) ? setDollorLog($user->id, '7', -$cashbackDollor, $userDollor, $order->id, '') : '';
         //end現金回饋
         //滿額送現金
         $rebateDollor = 0;
-        if ($order->pre_rebate_yn == 'Y') {
+        if (($order->pre_rebate_yn == 'Y' )&& $preOptimunRebateFlag ) {
             if ($record >= ($order->pre_rebate_above ?? 0)) {
                 $userDollor = $userDollor; //退貨商品後有達標準不扣錢
             } else {
-                $rebateDollor =$order->pre_rebate_dollor;
+                if ($preOptimunRebateFlag) {
+                    $rebateDollor =$order->pre_rebate_dollor;
+                }
                 $userDollor = $userDollor - $rebateDollor; //滿額送現金扣除
             }
         }
