@@ -19,7 +19,7 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         $user = Auth::user()->find($order->user_id);
-        $refundDollorLog = $order->dollorlog->where('tx_type',6)->first();
+        $refundDollorLog = $order->dollorlog->where('tx_type', 6)->first();
         $refundDollor =$refundDollorLog->amount ?? '';
 
         return view('admin/order.show', ['order' => $order,'user' => $user,'refundDollor' =>$refundDollor]);
@@ -70,23 +70,22 @@ class OrderController extends Controller
         //計入退貨要回饋到虛擬幣
         setDollorLog($user->id, '6', $refundDollor, $userDollor, $order->id, '');
         // setp.3 會員等級重新判斷
-        if($order->dollor_yn == 'Y'){
+        if ($order->dollor_yn == 'Y') {
             $usedollor = $order->record - $order->total ;
-            if($refundDollor-$usedollor >=0 ) {
+            if ($refundDollor-$usedollor >=0) {
                 $culLessDollor = $refundDollor-$usedollor;
             } else {
                 $culLessDollor =0 ;
             }
-            
             $user->total_cost = $user->total_cost - $culLessDollor;
-        }else {
-            $user->total_cost = ($user->total_cost) - ($refundDollor); //減去累計總消費
+        } else {
+            $user->total_cost = $user->total_cost - $refundDollor; //減去累計總消費
         }
         
         $Level = $user->level_level ?? 0;
         $LevelUpgrade = Level::find($Level)->upgrade ?? 0;
         if ($user->total_cost < $LevelUpgrade) {
-            if($user->level_level < 1) {
+            if ($user->level_level < 1) {
                 $user->level_level = 0;
             } else {
                 $user->level_level = $user->level_level-1;
@@ -97,35 +96,70 @@ class OrderController extends Controller
         }
         // step.4 虛擬幣優惠饋扣除
         //現金回饋
-        //獲取當時訂單用戶等級
-        $orderLevelName = $order->pre_levelname;
-        $level = Level::where('name',$orderLevelName)->first();
-        //END
-        $percent = $level->offer->cashback->percent ?? '';
+        // //獲取當時訂單用戶等級
+        // $orderLevelName = $order->pre_levelname;
+        // $level = Level::where('name',$orderLevelName)->first();
+        // //END
+        // $percent = $level->offer->cashback->percent ?? '';
+        // $record = $order->record;
+        // $cashbackDollor=0; //扣除金額
+        // if ($percent != '') {
+        //     foreach ($orderDetails as $orderDetail) {
+        //         $record = $record - $orderDetail->price;
+        //         $cashbackDollor = $cashbackDollor + ($orderDetail->price * $percent);
+        //     }
+        // }
+        // if ($record >= ($level->offer->cashback->above ?? 0)) {
+        //     $userDollor = $userDollor - $cashbackDollor; //虛擬幣回饋扣除
+        // } else {
+        //     $cashbackDollor =$order->pre_dollor;
+        //     $userDollor = $userDollor - $cashbackDollor; //虛擬幣回饋扣除
+        // }
+        // //紀錄虛擬幣優惠饋扣除(沒扣錢不記錄)
+        // ($cashbackDollor != 0) ? setDollorLog($user->id, '7', -$cashbackDollor, $userDollor, $order->id, '') : '';
+        // //end現金回饋
+        // //滿額送現金
+        // $rebateDollor = 0;
+        // if ($record >= ($level->offer->rebate->above ?? 0)) {
+        //     $userDollor = $userDollor; //退貨商品後有達標準不扣錢
+        // } else {
+        //     $rebateDollor =$order->pre_rebate_dollor;
+        //     $userDollor = $userDollor - $rebateDollor; //滿額送現金扣除
+        // }
+        // //紀錄虛擬幣滿額現金扣除(沒扣錢不記錄)
+        // ($rebateDollor != 0) ? setDollorLog($user->id, '8', -$rebateDollor, $userDollor, $order->id, '') : '';
+        // $user->dollor->dollor= $userDollor ;
+        $preCashbackPercent = $order->pre_percent ?? '';
         $record = $order->record;
         $cashbackDollor=0; //扣除金額
-        if ($percent != '') {
-            foreach ($orderDetails as $orderDetail) {
-                $record = $record - $orderDetail->price;
-                $cashbackDollor = $cashbackDollor + ($orderDetail->price * $percent);
+        //檢查這筆訂單有沒有虛擬回饋
+        foreach ($orderDetails as $orderDetail) {
+            $orderDetailOnePrice = $orderDetail->price / $orderDetail->quantity;
+            $orderDetailPrice = $orderDetailOnePrice * intval($orderDetail->refundQuantity);
+            $record = $record - $orderDetailPrice;
+            //計算退貨要收回的虛擬幣
+            if ($preCashbackPercent != '' && $order->pre_cashback_yn == 'Y' ) {
+                $cashbackDollor = $cashbackDollor + ($orderDetailPrice * $preCashbackPercent);
             }
         }
-        if ($record >= ($level->offer->cashback->above ?? 0)) {
-            $userDollor = $userDollor - $cashbackDollor; //虛擬幣回饋扣除
+        if ($record >= ($order->pre_above ?? 0)) {
+            $userDollor = $userDollor - $cashbackDollor; //計算虛擬幣回饋扣除
         } else {
             $cashbackDollor =$order->pre_dollor;
-            $userDollor = $userDollor - $cashbackDollor; //虛擬幣回饋扣除
+            $userDollor = $userDollor - $cashbackDollor; //整筆虛擬幣回饋扣除
         }
         //紀錄虛擬幣優惠饋扣除(沒扣錢不記錄)
         ($cashbackDollor != 0) ? setDollorLog($user->id, '7', -$cashbackDollor, $userDollor, $order->id, '') : '';
         //end現金回饋
         //滿額送現金
         $rebateDollor = 0;
-        if ($record >= ($level->offer->rebate->above ?? 0)) {
-            $userDollor = $userDollor; //退貨商品後有達標準不扣錢
-        } else {
-            $rebateDollor =$order->pre_rebate_dollor;
-            $userDollor = $userDollor - $rebateDollor; //滿額送現金扣除
+        if ($order->pre_rebate_yn == 'Y') {
+            if ($record >= ($order->pre_rebate_above ?? 0)) {
+                $userDollor = $userDollor; //退貨商品後有達標準不扣錢
+            } else {
+                $rebateDollor =$order->pre_rebate_dollor;
+                $userDollor = $userDollor - $rebateDollor; //滿額送現金扣除
+            }
         }
         //紀錄虛擬幣滿額現金扣除(沒扣錢不記錄)
         ($rebateDollor != 0) ? setDollorLog($user->id, '8', -$rebateDollor, $userDollor, $order->id, '') : '';

@@ -170,8 +170,9 @@ class UserController extends Controller
     }
     public function getMessage()
     {
-        $userName = Auth::user()->name;
-        $contacts = Contact::where('name',$userName)->orderBy('updated_at','desc')->paginate(15);
+        $userId = Auth::user()->id;
+        $useEmail = Auth::user()->email;
+        $contacts = Contact::where('user_id',$userId)->orWhere('email',$useEmail)->orderBy('updated_at','desc')->paginate(15) ;
         return view('user.message',['contacts' => $contacts] );   
     } 
     public function getMessageShow($id)

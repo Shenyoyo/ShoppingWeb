@@ -25,8 +25,8 @@ class ContactController extends Controller
         $contact->email = $request->email;
         $contact->phone = $request->phone;
         $contact->subject = $request->subject;
-        $contact->message = $request->message;
         $contact->status = '1';//未處理
+        $contact->user_id = Auth::user()->id ?? '';
         $contact->save();
         $contactDetail = new ContactDetail();
         $contactDetail->name = $request->name;

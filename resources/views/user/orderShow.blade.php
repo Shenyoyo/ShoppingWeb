@@ -107,8 +107,8 @@
       @if ($order->pre_cashback_yn == 'Y' && $order->total >= $order->pre_above )
       <div class="col-md-12" style="font-size: 18px">
         {{__('shop.CashbackDollor',[
-          'percent' =>$user->level->offer->cashback->percent *100 ,
-          'dollor' => presentPrice(round($order->total * $user->level->offer->cashback->percent))
+          'percent' =>$order->pre_percent *100 ,
+          'dollor' => presentPrice(round($order->total * $order->pre_percent))
           ])
         }}
       </div>
@@ -230,8 +230,8 @@
       @if ($order->pre_cashback_yn == 'Y' && $order->total >= $order->pre_above )
       <div class="col-md-12" style="font-size: 18px">
         {{__('shop.CashbackDollor',[
-          'percent' =>$user->level->offer->cashback->percent *100 ,
-          'dollor' => presentPrice(round($order->total * $user->level->offer->cashback->percent))
+          'percent' =>$order->pre_percent *100 ,
+          'dollor' => presentPrice(round($order->total * $order->pre_percent))
           ])
         }}
       </div>
