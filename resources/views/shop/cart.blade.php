@@ -69,7 +69,7 @@
                         <td></td>
                     </tr>
                     @if (!empty(Auth::user()->level->offer->discount_yn))
-                        @if (Auth::user()->level->offer->discount_yn == 'Y')
+                        @if (Auth::user()->level->offer->discount_yn == 'Y' && $optimunDiscountFlag)
                         <tr>
                             <td class="table-image"></td>
                             <td></td>
@@ -139,6 +139,7 @@
                 <input type="hidden" name="dollor" value="{{ $dollor->dollor }}">
                 <input type="hidden" name="recordReturnTotal" value="{{ $recordReturnTotal }}">
                 <input type="hidden" name="newTotal" value="{{ $newTotal }}">
+                <input type="hidden" name="original_total" value="{{ $original_total }}">
                 <input type="submit" class="btn btn-success btn-lg" value="{{__('shop.checkout')}}">
             </form>
             </div>

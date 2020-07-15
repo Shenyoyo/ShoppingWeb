@@ -27,6 +27,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label" for="optimun_yn">擇優優惠</label>
+                        <div class="col-md-9" style="margin-top: 7px;">
+                            @if ($offer->optimun_yn == 'Y')
+                            <input id="optimun_yn" name="optimun_yn"" class="form-check-input" type="checkbox" value="Y" checked >
+                            @else
+                            <input id="optimun_yn" name="optimun_yn"" class="form-check-input" type="checkbox" value="Y" >
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label" for="discount_yn">打折優惠</label>
                         <div class="col-md-9" style="margin-top: 7px;">
                             @if ($offer->discount_yn == 'Y')

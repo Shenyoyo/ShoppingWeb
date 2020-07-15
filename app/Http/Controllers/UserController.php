@@ -144,7 +144,19 @@ class UserController extends Controller
     {
         $order = Order::find($id);
         $user = Auth::user()->find($order->user_id);
-        return view('user.orderShow', ['order' => $order,'user' => $user]);
+        $optimunCashbackFlag =getOptimun($user->level->offer->optimun_yn ?? 'N','cashback',$user->level->offer,$order->original_total);
+        $optimunRebateFlag =getOptimun($user->level->offer->optimun_yn ?? 'N','rebate',$user->level->offer,$order->original_total);
+        //歷史
+        $preOptimunCashbackFlag =getPreOptimun($order->pre_optimun_yn ?? 'N','cashback',$order,$order->original_total);
+        $preOptimunRebateFlag =getPreOptimun($order->pre_optimun_yn ?? 'N','rebate',$order,$order->original_total);
+        return view('user.orderShow', [
+            'order' => $order,
+            'user' => $user,
+            'optimunCashbackFlag' => $optimunCashbackFlag,
+            'optimunRebateFlag' => $optimunRebateFlag,
+            'preOptimunCashbackFlag' => $preOptimunCashbackFlag,
+            'preOptimunRebateFlag' => $preOptimunRebateFlag
+        ]);
     }
     public function getDollor()
     {
@@ -205,23 +217,31 @@ class UserController extends Controller
         $user = Auth::user();
         $cashback_yn = $user->level->offer->cashback_yn ?? 'N';
         $cashbackAbove = $user->level->offer->cashback->above ?? '0';
-        if ($cashback_yn == 'Y' && $order->total >= $cashbackAbove) {
-            $cashbackPercent = $user->level->offer->cashback->percent;
-            $cashbackDollor = round($order->total * $cashbackPercent);
-            $userDollor = $user->dollor;
-            $userDollor->dollor = $userDollor->dollor + $cashbackDollor ; //給予虛擬幣回饋
-             //紀錄回饋
-            setDollorLog(Auth::user()->id,'4',$cashbackDollor,$userDollor->dollor,$order->id,'');
-            $userDollor->save();
+        //擇優優惠判斷
+        $optimunCashbackFlag =getOptimun($user->level->offer->optimun_yn ?? 'N','cashback',$user->level->offer,$order->original_total);
+        if($optimunCashbackFlag){
+            if ($cashback_yn == 'Y' && $order->total >= $cashbackAbove) {
+                $cashbackPercent = $user->level->offer->cashback->percent;
+                $cashbackDollor = round($order->total * $cashbackPercent);
+                $userDollor = $user->dollor;
+                $userDollor->dollor = $userDollor->dollor + $cashbackDollor ; //給予虛擬幣回饋
+                 //紀錄回饋
+                setDollorLog(Auth::user()->id,'4',$cashbackDollor,$userDollor->dollor,$order->id,'');
+                $userDollor->save();
+            }
         }
-        $rebate_yn = $user->level->offer->rebate_yn ?? 'N';
-        $rebateAbove = $user->level->offer->rebate->above ?? '0';
-        if ($rebate_yn == 'Y' && $order->total >= $rebateAbove) {
-            $cashbackDollor = $user->level->offer->rebate->rebate;
-            $userDollor = $user->dollor;
-            $userDollor->dollor = $userDollor->dollor + $cashbackDollor ; //給予滿額送現金
-            setDollorLog(Auth::user()->id,'5',$cashbackDollor,$userDollor->dollor,$order->id,'');
-            $userDollor->save();
+        //擇優優惠判斷
+        $optimunRebateFlag =getOptimun($user->level->offer->optimun_yn ?? 'N','rebate',$user->level->offer,$order->original_total);
+        if ($optimunRebateFlag) {
+            $rebate_yn = $user->level->offer->rebate_yn ?? 'N';
+            $rebateAbove = $user->level->offer->rebate->above ?? '0';
+            if ($rebate_yn == 'Y' && $order->total >= $rebateAbove) {
+                $cashbackDollor = $user->level->offer->rebate->rebate;
+                $userDollor = $user->dollor;
+                $userDollor->dollor = $userDollor->dollor + $cashbackDollor ; //給予滿額送現金
+                setDollorLog(Auth::user()->id, '5', $cashbackDollor, $userDollor->dollor, $order->id, '');
+                $userDollor->save();
+            }
         }
         
         // step.3 累計用戶消費總額

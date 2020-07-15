@@ -179,3 +179,124 @@ function setDollorLog($user_id,$tx_type,$amount,$sub_total,$order,$memo)
     $dollorLog->memo = $memo ?? '';
     $dollorLog->save();
 }
+function getOptimun($optimun_yn,$offertype,$offer,$total)
+{
+    
+    $discount_yn = $offer->discount_yn ?? 'N';
+    $cashback_yn = $offer->cashback_yn ?? 'N';
+    $rebate_yn = $offer->rebate_yn ?? 'N';
+    $dollor = array(
+        'discount' => 0,
+        'cashback' => 0,
+        'rebate'   => 0
+    );
+    if($optimun_yn == 'Y'){
+        if($discount_yn == 'Y'){
+            if($total >= $offer->discount->above){
+                $dollor['discount'] = $total- ($total * $offer->discount->percent);
+            }else {
+                $dollor['discount'] = 0;
+            }
+        } else {
+            $dollor['discount'] = 0;
+        }
+
+        if($cashback_yn == 'Y'){
+            if($total >= $offer->cashback->above){
+                $dollor['cashback'] = $total * $offer->cashback->percent;
+            }else {
+                $dollor['cashback'] = 0;
+            }
+        } else {
+            $dollor['cashback'] = 0;
+        }
+
+        if($rebate_yn == 'Y'){
+            if($total >= $offer->rebate->above){
+                $dollor['rebate'] = $offer->rebate->rebate;
+            }else {
+                $dollor['rebate'] = 0;
+            }
+        } else {
+            $dollor['rebate'] = 0;
+        }
+        // echo $dollor['discount'].',';
+        // echo $dollor['cashback'].',' ;
+        // echo $dollor['rebate'].',' ;
+        $maxOffer = array_keys($dollor,max($dollor));
+        if(max($dollor) != 0 ){
+            if($maxOffer[0] == $offertype){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+        
+    }else{
+        return true;
+    }
+
+}
+
+function getPreOptimun($optimun_yn,$offertype,$order,$total)
+{
+    
+    $discount_yn = $order->pre_discount_yn ?? 'N';
+    $cashback_yn = $order->pre_cashback_yn ?? 'N';
+    $rebate_yn = $order->pre_rebate_yn ?? 'N';
+    $dollor = array(
+        'discount' => 0,
+        'cashback' => 0,
+        'rebate'   => 0
+    );
+    if($optimun_yn == 'Y'){
+        if($discount_yn == 'Y'){
+            if($total >= $order->pre_discount_above){
+                $dollor['discount'] = $total - ($total * $order->pre_discount_percent);
+            }else {
+                $dollor['discount'] = 0;
+            }
+        } else {
+            $dollor['discount'] = 0;
+        }
+
+        if($cashback_yn == 'Y'){
+            if($total >= $order->pre_above){
+                $dollor['cashback'] = $total * $order->pre_percent;
+            }else {
+                $dollor['cashback'] = 0;
+            }
+        } else {
+            $dollor['cashback'] = 0;
+        }
+
+        if($rebate_yn == 'Y'){
+            if($total >= $order->pre_rebate_above){
+                $dollor['rebate'] = $order->pre_rebate_dollor;
+            }else {
+                $dollor['rebate'] = 0;
+            }
+        } else {
+            $dollor['rebate'] = 0;
+        }
+        // echo $dollor['discount'].',';
+        // echo $dollor['cashback'].',' ;
+        // echo $dollor['rebate'].',' ;
+        $maxOffer = array_keys($dollor,max($dollor));
+        if(max($dollor) != 0 ){
+            if($maxOffer[0] == $offertype){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+        
+    }else{
+        return true;
+    }
+
+}

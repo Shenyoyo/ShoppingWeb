@@ -34,6 +34,7 @@
             <thead class="bg-info">
                 <td>編號</td>
                 <td>受惠會員</td>
+                <td>是否優惠擇優</td>
                 <td>是否給予打折優惠</td>
                 <td>是否給予虛擬幣回饋</td>
                 <td>是否給予滿額送現金</td>
@@ -44,6 +45,7 @@
                 <tr>
                     <td>{{$offer->id}}</td>
                     <td>{{$offer->level->name}}</td>
+                    <td>{{$offer->optimun_yn}}</td>
                     <td>{{$offer->discount_yn}}</td>
                     <td>{{$offer->cashback_yn}}</td>
                     <td>{{$offer->rebate_yn}}</td>

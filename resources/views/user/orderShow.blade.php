@@ -82,7 +82,7 @@
       @if ($order->status == '1')
       @if(!empty($user->level->offer->cashback_yn))
       <div class="col-md-12" style="font-size: 18px">
-        @if ($user->level->offer->cashback_yn == 'Y' && $order->total >=$user->level->offer->cashback->above )
+        @if ($user->level->offer->cashback_yn == 'Y' && $order->total >=$user->level->offer->cashback->above && $optimunCashbackFlag )
         {{__('shop.CashbackDollor',[
           'percent' =>$user->level->offer->cashback->percent *100 ,
           'dollor' => presentPrice(round($order->total * $user->level->offer->cashback->percent))
@@ -93,9 +93,9 @@
       @endif
       @if(!empty($user->level->offer->rebate_yn))
       <div class="col-md-12" style="font-size: 18px">
-        @if ($user->level->offer->rebate_yn == 'Y' && $order->total >=$user->level->offer->rebate->above)
+        @if ($user->level->offer->rebate_yn == 'Y' && $order->total >=$user->level->offer->rebate->above && $optimunRebateFlag)
         {{__('shop.RebateDollor',[
-          'dollor' => presentPrice($order->pre_rebate_dollor)
+          'dollor' => presentPrice($user->level->offer->rebate->rebate)
           ])
         }}
         @endif
@@ -104,7 +104,7 @@
 
       @else
       {{-- 歷史紀錄 --}}
-      @if ($order->pre_cashback_yn == 'Y' && $order->total >= $order->pre_above )
+      @if ($order->pre_cashback_yn == 'Y' && $order->total >= $order->pre_above && $preOptimunCashbackFlag )
       <div class="col-md-12" style="font-size: 18px">
         {{__('shop.CashbackDollor',[
           'percent' =>$order->pre_percent *100 ,
@@ -114,7 +114,7 @@
       </div>
       @endif
 
-      @if ($order->pre_rebate_yn == 'Y' && $order->total >= $order->pre_rebate_above)
+      @if ($order->pre_rebate_yn == 'Y' && $order->total >= $order->pre_rebate_above && $preOptimunRebateFlag )
       <div class="col-md-12" style="font-size: 18px">
         {{__('shop.RebateDollor',[
           'dollor' => presentPrice($order->pre_rebate_dollor)
@@ -135,7 +135,7 @@
 
   </div>
 </div>
-{{-- 已簽收 --}}
+{{-- 簽收狀態 --}}
 @else
 <form action="{{route('user.refund')}}" method="post">
 {!! csrf_field() !!}
@@ -200,34 +200,8 @@
     <div class="col-md-6 text-right">
 
       <div class="col-md-12" style="font-size: 24px">{{__('shop.orderTotal')}}：${{ presentPrice($order->total )}}</div>
-
-      {{-- 當下紀錄 --}}
-      @if ($order->status == '1')
-      @if(!empty($user->level->offer->cashback_yn))
-      <div class="col-md-12" style="font-size: 18px">
-        @if ($user->level->offer->cashback_yn == 'Y' && $order->total >=$user->level->offer->cashback->above )
-        {{__('shop.CashbackDollor',[
-          'percent' =>$user->level->offer->cashback->percent *100 ,
-          'dollor' => presentPrice(round($order->total * $user->level->offer->cashback->percent))
-          ])
-        }}
-        @endif
-      </div>
-      @endif
-      @if(!empty($user->level->offer->rebate_yn))
-      <div class="col-md-12" style="font-size: 18px">
-        @if ($user->level->offer->rebate_yn == 'Y' && $order->total >=$user->level->offer->rebate->above)
-        {{__('shop.RebateDollor',[
-          'dollor' => presentPrice($order->pre_rebate_dollor)
-          ])
-        }}
-        @endif
-      </div>
-      @endif
-
-      @else
       {{-- 歷史紀錄 --}}
-      @if ($order->pre_cashback_yn == 'Y' && $order->total >= $order->pre_above )
+      @if ($order->pre_cashback_yn == 'Y' && $order->total >= $order->pre_above && $preOptimunCashbackFlag )
       <div class="col-md-12" style="font-size: 18px">
         {{__('shop.CashbackDollor',[
           'percent' =>$order->pre_percent *100 ,
@@ -237,14 +211,13 @@
       </div>
       @endif
 
-      @if ($order->pre_rebate_yn == 'Y' && $order->total >= $order->pre_rebate_above)
+      @if ($order->pre_rebate_yn == 'Y' && $order->total >= $order->pre_rebate_above && $preOptimunRebateFlag)
       <div class="col-md-12" style="font-size: 18px">
         {{__('shop.RebateDollor',[
           'dollor' => presentPrice($order->pre_rebate_dollor)
           ])
         }}
       </div>
-      @endif
       @endif
 
     </div>

@@ -71,7 +71,7 @@
       
       @if ($order->status == '1' )
       <tr>
-          @if (($user->level->offer->cashback_yn ?? '') == 'Y')
+          @if (($user->level->offer->cashback_yn ?? '') == 'Y' && $optimunCashbackFlag)
           <td>{{$user->level->name}}滿額{{$user->level->offer->cashback->above}}以上<br>
             虛擬幣回饋{{$user->level->offer->cashback->percent *100}}%
           </td>
@@ -83,7 +83,7 @@
           @endif
       </tr>
       <tr>
-          @if (($user->level->offer->rebate_yn ?? '') == 'Y')
+          @if (($user->level->offer->rebate_yn ?? '') == 'Y' && $optimunRebateFlag)
           <td>{{$user->level->name}}滿額{{$user->level->offer->rebate->above}}以上<br>
             滿額送現金{{$user->level->offer->rebate->rebate}}元
           </td>
@@ -101,7 +101,7 @@
       </tr>
       @else
       <tr>
-          @if ($order->pre_cashback_yn == 'Y')
+          @if ($order->pre_cashback_yn == 'Y' && $preOptimunCashbackFlag)
           <td>{{$order->pre_levelname}}滿額{{$order->pre_above}}以上<br>
             虛擬幣回饋{{$order->pre_percent *100}}%
           </td>
@@ -109,7 +109,7 @@
           @endif
       </tr>
       <tr>
-          @if ($order->pre_rebate_yn == 'Y')
+          @if ($order->pre_rebate_yn == 'Y' && $preOptimunRebateFlag)
           <td>{{$order->pre_levelname}}滿額{{$order->pre_rebate_above}}以上<br>
             滿額送現金{{$order->pre_rebate_dollor}}元
           </td>

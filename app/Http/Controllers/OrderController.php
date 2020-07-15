@@ -21,14 +21,28 @@ class OrderController extends Controller
         $user = Auth::user()->find($order->user_id);
         $refundDollorLog = $order->dollorlog->where('tx_type', 6)->first();
         $refundDollor =$refundDollorLog->amount ?? '';
+        $optimunCashbackFlag =getOptimun($user->level->offer->optimun_yn ?? 'N','cashback',$user->level->offer,$order->original_total);
+        $optimunRebateFlag =getOptimun($user->level->offer->optimun_yn ?? 'N','rebate',$user->level->offer,$order->original_total);
+        //歷史
+        $preOptimunCashbackFlag =getPreOptimun($order->pre_optimun_yn ?? 'N','cashback',$order,$order->original_total);
+        $preOptimunRebateFlag =getPreOptimun($order->pre_optimun_yn ?? 'N','rebate',$order,$order->original_total);
 
-        return view('admin/order.show', ['order' => $order,'user' => $user,'refundDollor' =>$refundDollor]);
+        return view('admin/order.show', [
+            'order' => $order,
+            'user' => $user,
+            'refundDollor' =>$refundDollor,
+            'optimunCashbackFlag' => $optimunCashbackFlag,
+            'optimunRebateFlag' => $optimunRebateFlag,
+            'preOptimunCashbackFlag' => $preOptimunCashbackFlag,
+            'preOptimunRebateFlag' => $preOptimunRebateFlag
+        ]);
     }
     public function sandProduct($id)
     {
         $order = Order::find($id);
         $user = Auth::user()->find($order->user_id);
         $order->status = '2' ;
+        //紀錄虛擬幣回饋
         $order->pre_cashback_yn = $user->level->offer->cashback_yn ?? 'N';
         $order->pre_levelname = $user->level->name ?? '';
         $order->pre_above= $user->level->offer->cashback->above ?? 0;
@@ -38,6 +52,7 @@ class OrderController extends Controller
         } else {
             $order->pre_dollor=0;
         }
+        //紀錄滿額送現金
         $order->pre_rebate_yn = $user->level->offer->rebate_yn ?? 'N';
         $order->pre_rebate_above= $user->level->offer->rebate->above ?? 0;
         if ($order->pre_rebate_yn == 'Y' && $order->total >=$order->pre_rebate_above) {
@@ -45,6 +60,12 @@ class OrderController extends Controller
         } else {
             $order->pre_rebate_dollor=0;
         }
+        //紀錄打折
+        $order->pre_discount_yn = $user->level->offer->discount_yn ?? 'N';
+        $order->pre_discount_above = $user->level->offer->discount->above ?? 0;
+        $order->pre_discount_percent = $user->level->offer->discount->percent ?? 0;
+        
+        $order->pre_optimun_yn = $user->level->offer->optimun_yn ?? 'N';
         
         $order->save();
 
@@ -95,40 +116,6 @@ class OrderController extends Controller
             $user->save();
         }
         // step.4 虛擬幣優惠饋扣除
-        //現金回饋
-        // //獲取當時訂單用戶等級
-        // $orderLevelName = $order->pre_levelname;
-        // $level = Level::where('name',$orderLevelName)->first();
-        // //END
-        // $percent = $level->offer->cashback->percent ?? '';
-        // $record = $order->record;
-        // $cashbackDollor=0; //扣除金額
-        // if ($percent != '') {
-        //     foreach ($orderDetails as $orderDetail) {
-        //         $record = $record - $orderDetail->price;
-        //         $cashbackDollor = $cashbackDollor + ($orderDetail->price * $percent);
-        //     }
-        // }
-        // if ($record >= ($level->offer->cashback->above ?? 0)) {
-        //     $userDollor = $userDollor - $cashbackDollor; //虛擬幣回饋扣除
-        // } else {
-        //     $cashbackDollor =$order->pre_dollor;
-        //     $userDollor = $userDollor - $cashbackDollor; //虛擬幣回饋扣除
-        // }
-        // //紀錄虛擬幣優惠饋扣除(沒扣錢不記錄)
-        // ($cashbackDollor != 0) ? setDollorLog($user->id, '7', -$cashbackDollor, $userDollor, $order->id, '') : '';
-        // //end現金回饋
-        // //滿額送現金
-        // $rebateDollor = 0;
-        // if ($record >= ($level->offer->rebate->above ?? 0)) {
-        //     $userDollor = $userDollor; //退貨商品後有達標準不扣錢
-        // } else {
-        //     $rebateDollor =$order->pre_rebate_dollor;
-        //     $userDollor = $userDollor - $rebateDollor; //滿額送現金扣除
-        // }
-        // //紀錄虛擬幣滿額現金扣除(沒扣錢不記錄)
-        // ($rebateDollor != 0) ? setDollorLog($user->id, '8', -$rebateDollor, $userDollor, $order->id, '') : '';
-        // $user->dollor->dollor= $userDollor ;
         $preCashbackPercent = $order->pre_percent ?? '';
         $record = $order->record;
         $cashbackDollor=0; //扣除金額

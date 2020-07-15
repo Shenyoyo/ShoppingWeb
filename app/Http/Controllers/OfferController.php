@@ -45,6 +45,11 @@ class OfferController extends Controller
     public function updateOffer(Request $request)
     {
         $offer = Offer::find($request->input('id'));
+        if (!empty($request->input('optimun_yn'))) {
+            $offer->optimun_yn = $request->input('optimun_yn');
+        } else {
+            $offer->optimun_yn = 'N';
+        }
         if (!empty($request->input('discount_yn'))) {
             $offer->discount_yn = $request->input('discount_yn');
             $offer->discount->above = $request->input('discount_above');
@@ -77,6 +82,11 @@ class OfferController extends Controller
     {
         $offer = new Offer();
         $offer->level_level = $request->input('level');
+        if (!empty($request->input('optimun_yn'))) {
+            $offer->optimun_yn = $request->input('optimun_yn');
+        } else {
+            $offer->optimun_yn = 'N';
+        }
         if (!empty($request->input('discount_yn'))) {
             $offer->discount_yn = $request->input('discount_yn');
         } else {

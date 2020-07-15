@@ -39,6 +39,7 @@
                 <input type="hidden" name="newTotal"" value="{{ $newTotal }}"> 
                 <input type="hidden" name="dollor"" value="{{ $dollor }}">    
                 <input type="hidden" name="recordReturnTotal" value="{{ $recordReturnTotal }}">
+                <input type="hidden" name="original_total" value="{{ $original_total }}">
                 {{ csrf_field() }}
                 <a href="{{ url('cart')}}" class="btn btn-danger ">{{__('shop.cancel') }}</a> &nbsp;
                 <button type="submit" class="btn btn-success pull-right">{{__('shop.buy') }}</button>

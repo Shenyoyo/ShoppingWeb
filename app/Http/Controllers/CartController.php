@@ -16,25 +16,24 @@ class CartController extends Controller
     {
         $dollor_yn =  '';
         $offer = Auth::user()->level->offer;
-        if(!empty($offer)){
-            $discount_yn = $offer->discount_yn;
-            $above = $offer->discount->above;
-            $percent = $offer->discount->percent;
-        }else{
-            $discount_yn = 'N';
-            $above = 0;
-            $percent = 0;
-        }
-       
+        $discount_yn = $offer->discount_yn ?? 'N';
+        $above = $offer->discount->above ?? 0;
+        $percent = $offer->discount->percent ?? 0;
         $dollor = Auth::user()->dollor;
         $newSubtotal = Cart::subtotal();
-        if ($newSubtotal < 0) {
-            $newSubtotal = 0;
-        }
-        if ($newSubtotal < $above || $discount_yn !='Y') {
+        ($newSubtotal < 0) ? $newSubtotal = 0 : '' ;
+        $original_total = Cart::subtotal();
+
+        //擇優優惠判斷
+        $optimunDiscountFlag =getOptimun($offer->optimun_yn ?? 'N','discount',$offer,$newSubtotal);
+        if($optimunDiscountFlag){
+            if ($newSubtotal < $above || $discount_yn !='Y') {
+                $newTotal = $newSubtotal;
+            } else {
+                $newTotal = $newSubtotal * $percent;
+            }
+        }else{
             $newTotal = $newSubtotal;
-        } else {
-            $newTotal = $newSubtotal * $percent;
         }
         //計入若退貨需要返回的錢
         $recordReturnTotal = round($newTotal);
@@ -48,6 +47,8 @@ class CartController extends Controller
             'discountMoney' => $discountMoney,
             'newTotal' => round($newTotal),
             'recordReturnTotal' => $recordReturnTotal,
+            'optimunDiscountFlag' => $optimunDiscountFlag,
+            'original_total' => $original_total,
         ]);
     }
 
@@ -55,29 +56,34 @@ class CartController extends Controller
     {
         $dollor_yn =  $request->dollor_yn;
         $offer = Auth::user()->level->offer;
-        if(!empty($offer)){
-            $discount_yn = $offer->discount_yn;
-            $above = $offer->discount->above;
-            $percent = $offer->discount->percent;
-        }else{
-            $discount_yn = 'N';
-            $above = 0;
-            $percent = 0;
-        }
+        $discount_yn = $offer->discount_yn ?? 'N';
+        $above = $offer->discount->above ?? 0;
+        $percent = $offer->discount->percent ?? 0;
         $dollor = Auth::user()->dollor;
         $newSubtotal = Cart::subtotal();
-        if ($newSubtotal < 0) {
-            $newSubtotal = 0;
-        }
-        if ($newSubtotal < $above || $discount_yn !='Y') {
+        ($newSubtotal < 0) ? $newSubtotal = 0 : '' ;
+        $original_total = Cart::subtotal();
+
+        //擇優優惠判斷
+        $optimunDiscountFlag =getOptimun($offer->optimun_yn ?? 'N','discount',$offer,$newSubtotal);
+        if($optimunDiscountFlag){
+            if ($newSubtotal < $above || $discount_yn !='Y') {
+                $newTotal = $newSubtotal;
+            } else {
+                $newTotal = $newSubtotal * $percent;
+            }
+        }else{
             $newTotal = $newSubtotal;
-        } else {
-            $newTotal = $newSubtotal * $percent;
         }
-        $discountMoney = $newSubtotal -$newTotal;
+        if ($dollor_yn == 'Y') {
+            $original_total =  $original_total - $dollor->dollor;
+            if ($original_total < 0) {
+                $original_total = 0;
+            } 
+        }
         //計入若退貨需要返回的錢
         $recordReturnTotal = round($newTotal);
-
+        $discountMoney = $newSubtotal -$newTotal;
         if ($dollor_yn == 'Y') {
             $newTotal =  $newTotal-$dollor->dollor;
             if ($newTotal < 0) {
@@ -88,6 +94,8 @@ class CartController extends Controller
             }
         }
 
+        
+
         return view('shop/cart')->with([
             'dollor_yn' => $dollor_yn,
             'dollor' =>  $dollor,
@@ -97,6 +105,8 @@ class CartController extends Controller
             'discountMoney' => $discountMoney,
             'newTotal' => $newTotal,
             'recordReturnTotal' => $recordReturnTotal,
+            'optimunDiscountFlag' => $optimunDiscountFlag,
+            'original_total' => $original_total,
         ]);
     }
 
@@ -163,6 +173,7 @@ class CartController extends Controller
         $dollor = $request->dollor;
         //顯示與上方
         $recordReturnTotal = $request->recordReturnTotal;
+        $original_total = $request->original_total;
         Auth::user()->dollor->dollor = $dollor;
         // echo $request->recordReturnTotal;
         return view('shop.checkout')->with([
@@ -170,6 +181,7 @@ class CartController extends Controller
             'newTotal' => $newTotal,
             'dollor' => $dollor,
             'recordReturnTotal' => $recordReturnTotal,
+            'original_total' => $original_total,
         ]);
     }
 
@@ -185,6 +197,7 @@ class CartController extends Controller
         $order->receiver_address = $request->receiverAddress;
         $order->status = 1 ;//1.訂單確認中 2.送貨中 3.已簽收 4.退貨
         $order->dollor_yn = $request->dollor_yn;
+        $order->original_total = $request->original_total;
         Auth::user()->order()->save($order);
         //setp.2 建立訂單明細
         foreach (Cart::content() as $item) {
@@ -192,11 +205,17 @@ class CartController extends Controller
             $orderDetail->order_id = $order->id;
             $orderDetail->product_id = $item->model->id ;
             $orderDetail->quantity = $item->qty;
-            if($newSubtotal < ($offer->discount->above ?? '') ||($offer->discount_yn ?? '') != 'Y'){
-                $orderDetail->price =$item->subtotal;
+            $optimunDiscountFlag =getOptimun($offer->optimun_yn ?? 'N','discount',$offer,$newSubtotal);
+            if($optimunDiscountFlag){
+                if($newSubtotal < ($offer->discount->above ?? '') ||($offer->discount_yn ?? '') != 'Y'){
+                    $orderDetail->price =$item->subtotal;
+                }else{
+                    $orderDetail->price =$item->subtotal * $offer->discount->percent;
+                }
             }else{
-                $orderDetail->price =$item->subtotal * $offer->discount->percent;
+                $orderDetail->price =$item->subtotal;
             }
+            
             $orderDetail->save();
             //更新庫存，減去賣出去的商品
             $product = Product::find($orderDetail->product_id);

@@ -30,6 +30,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label" for="optimun_yn">擇優優惠</label>
+                        <div class="col-md-9" style="margin-top: 7px;">
+                            <input id="optimun_yn" name="optimun_yn"" class="form-check-input" type="checkbox" value="Y"  >
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label" for="discount_yn">打折優惠</label>
                         <div class="col-md-9" style="margin-top: 7px;">
                             <input id="discount_yn" name="discount_yn"" class="form-check-input" type="checkbox" value="Y" checked >
