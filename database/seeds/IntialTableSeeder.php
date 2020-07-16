@@ -172,6 +172,7 @@ class IntialTableSeeder extends Seeder
             [
                 'id' => 1,
                 'level_level' => 0,
+                'optimun_yn' => 'N',
                 'cashback_yn' => 'N',
                 'discount_yn' => 'N',
                 'rebate_yn'   => 'N',
