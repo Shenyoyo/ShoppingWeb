@@ -162,10 +162,19 @@ class CartController extends Controller
 
     public function checkout(Request $request)
     {
-        //檢查有無庫存防呆
+        
         foreach (Cart::content() as $item ) {
+            //檢查有無庫存防呆
             if($item->model->amount == 0){
                return redirect()->route('cart.index')->withErrors($item->model->name.__('shop.nostockcart'));
+            }
+            //檢查有開賣防呆
+            if($item->model->buy_yn != 'Y'){
+                return redirect()->route('cart.index')->withErrors($item->model->name.__('shop.nobuycart'));
+            }
+            //檢查有顯示防呆
+            if($item->model->display_yn != 'Y'){
+                return redirect()->route('cart.index')->withErrors($item->model->name.__('shop.nodispalycart'));
             }
         }
         $dollor_yn= $request->dollor_yn;

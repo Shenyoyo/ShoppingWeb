@@ -63,7 +63,15 @@
                             </h5>
                             <br>
                             <span>
-                                <h4>{{$user->level->name}}{{__('shop.dicount')}}：</h4>
+                                <h4>
+                                    {{$user->level->name}}{{__('shop.dicount')}}
+                                    @if (($user->level->offer->optimun_yn ?? '') == 'Y')
+                                    ({{__('shop.optimun')}})
+                                    @else
+                                    ({{__('shop.alloffer')}})    
+                                    @endif
+                                    
+                                </h4>
 
                                 @if (($user->level->offer->discount_yn ?? '') == 'Y')
                                 <p>

@@ -2,11 +2,11 @@
 
 @section('content')
 
-    <div class="container">
-        <h1>404 Error Page</h1>
-
-        <p>There was an error. Please go back and try again.</p>
-
-    </div> <!-- end container -->
+<div class="jumbotron">
+    <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
+    <h1 class="text-center">404 Not Found<p> </p><p><small class="text-center"> Oh noes everything broke</small></p></h1>
+    <p class="text-center">Try pressing the back button or clicking on this button.</p>
+    <p class="text-center"><a class="btn btn-primary" href="{{route('shop.index')}}"><i class="fa fa-home"></i> Take Me Home</a></p>
+</div>
 
 @endsection

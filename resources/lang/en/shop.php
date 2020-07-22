@@ -100,7 +100,9 @@ return [
     'updatecart' => 'Quantity was updated successfully!',
     'removecart' => 'Item has been removed!',
     'emptycart' => 'Your cart has been cleared!',
-    'nostockcart' => 'Can not checkout ,beacause the stock was empty!',
+    'nostockcart' => ' can not checkout ,beacause the stock was empty!',
+    'nodispalycart' => ' can not checkout ,beacause it was now off the shelves!',
+    'nobuycart' => ' can not checkout ,beacause it has not been sold yet!',
     'ResetPassword' => 'Reset Password',
     'SendPasswordResetLink' => 'Send Password Reset Link',
     'E-MailAddress' => 'E-Mail Address',
@@ -150,4 +152,6 @@ return [
     'Detail' => 'Detail',
     'Reply' => 'Reply',
     'Question Reply' =>'Question Reply',
+    'optimun' =>'Optimun',
+    'alloffer' =>'All',
 ];

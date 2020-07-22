@@ -100,7 +100,9 @@ return [
     'updatecart' => '數量更改成功!',
     'removecart' => '商品已經刪除!',
     'emptycart' => '購物車已清空!',
-    'nostockcart' => '已無庫存，無法結帳。',
+    'nostockcart' => ' 已無庫存，無法結帳。',
+    'nodispalycart' => ' 商品已下架，無法結帳!',
+    'nobuycart' => ' 商品尚未開賣，無法結帳!',
     'ResetPassword' => '重設密碼',
     'SendPasswordResetLink' => '取得信件',
     'E-MailAddress' => '郵 箱 帳 號',
@@ -150,6 +152,8 @@ return [
     'Detail' => '明細',
     'Reply' => '回覆',
     'Question Reply' =>'問題回覆',
+    'optimun' =>'擇優',
+    'alloffer' =>'全部',
     
     
 
