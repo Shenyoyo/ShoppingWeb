@@ -42,7 +42,7 @@
                     <input type="hidden" name="price" value="{{ $product->price }}">
                     <div style="font-size:18px" >{{__('shop.quantity') }}</div>
                     <select  name="quantity" onfocus="selectFocus(this)" >
-                    @for ($i = 1; $i <= $product->amount; $i++)
+                    @for ($i = 1; $i <= (($product->amount >= 100) ? 100 : $product->amount ); $i++)
                     <option onclick="selectClick(this)" value="{{$i}}">{{$i}}</option>    
                     @endfor    
                     </select>

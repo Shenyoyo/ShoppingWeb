@@ -43,7 +43,7 @@
                         <td><a href="{{ url('shop', [$item->model->id]) }}">{{ $item->name }}</a></td>
                         <td>
                             <select class="quantity" onfocus="selectFocus(this)" data-id="{{ $item->rowId }}" >
-                                @for ($i = 1; $i <= $item->model->amount ; $i++)
+                                @for ($i = 1; $i <= (($item->model->amount >= 100) ? 100 : $item->model->amount  ) ; $i++)
                                 <option onclick="selectClick(this)" {{ $item->qty == $i ? 'selected' : '' }}>{{ $i }}</option>
                                 @endfor
                             </select>
