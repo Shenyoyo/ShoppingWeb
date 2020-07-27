@@ -20,7 +20,13 @@ class AdminUserController extends Controller
     }
     public function updateUser(Request $request)
     {
-      
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'email|required',
+            'phone' => 'required|digits_between:10,12|numeric'
+        ], [
+            'email.email' => __('shop.emailvalidation'),
+        ]);
         $user = User::find($request->input('id'));
         $user->name =$request->input('name');
         $user->email =$request->input('email');
@@ -40,9 +46,10 @@ class AdminUserController extends Controller
     public function updatePassword(Request $request)
     {
         $this->validate($request, [
-            'password' => 'required|min:6',
+            'password' => 'required|min:6|regex:/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/',
         ], [
-            'password.min' => '密碼長度至少6碼',
+            'password.min' => __('shop.passwordmin'),
+            'password.regex' => __('shop.passwordregex')
         ]);
         $user = User::find($request->input('id'));
         $user->password = bcrypt(($request->input('password')));

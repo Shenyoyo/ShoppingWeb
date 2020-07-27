@@ -29,6 +29,7 @@ class UserController extends Controller
             'name' => 'required|max:255|unique:users',
             'email' => 'email|required|unique:users',
             'password' => 'required|min:6|confirmed|regex:/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/',
+            'phone' => 'required|digits_between:10,12|numeric'
         ], [
             'name.unique' => __('shop.nameunique'),
             'email.email' => __('shop.emailvalidation'),
@@ -110,6 +111,15 @@ class UserController extends Controller
     }
     public function updateProfile(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required|max:255|unique:users',
+            'email' => 'email|required|unique:users',
+            'phone' => 'required|digits_between:10,12|numeric'
+        ], [
+            'name.unique' => __('shop.nameunique'),
+            'email.email' => __('shop.emailvalidation'),
+            'email.unique' => __('shop.emailunique'),
+        ]);
         $user = Auth::user();
         $user->name =$request->input('name');
         $user->email =$request->input('email');

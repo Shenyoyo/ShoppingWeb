@@ -25,7 +25,7 @@
         </div>
         <div class="form-group">
             <label for="email">{{__('shop.phone')}}</label>
-            <input type="text" id="phone"" name="phone" class="form-control" placeholder="0912345678" value="{{ old('phone') }}">
+            <input type="text" id="phone"" name="phone" class="form-control" placeholder="0912345678" required oninput = "value=value.replace(/[^\d]/g,'')" value="{{ old('phone') }}">
         </div>
         <div class="form-group">
             <label for="email">{{__('shop.address')}}</label>
