@@ -148,7 +148,7 @@
                 <form action="{{ url('/emptyCart') }}" method="POST">
                     {!! csrf_field() !!}
                     <input type="hidden" name="_method" value="DELETE">
-                    <input type="submit" class="btn btn-danger btn-lg" value="{{__('shop.emptycart')}}">
+                    <input type="submit" class="btn btn-danger btn-lg" value="{{__('shop.emptycartbtn')}}">
                 </form>
             </div>
 

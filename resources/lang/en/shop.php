@@ -52,7 +52,7 @@ return [
     'checkout' => 'Proceed to Checkout',
     'noitems' => 'You have no items in your shopping cart',
     'remove' => 'Remove',
-    'emptycart' => 'Empty Cart',
+    'emptycartbtn' => 'Empty Cart',
     'goshopping' => 'Go Shopping～',
     'cashondelivery' => 'Checkout-Cash On Delivery',
     'piece' => 'piece',

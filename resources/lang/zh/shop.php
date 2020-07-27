@@ -52,7 +52,7 @@ return [
     'checkout' => '結 帳',
     'noitems' => 'Oops!看來購物車內沒有商品',
     'remove' => '刪除',
-    'emptycart' => '清空購物車',
+    'emptycartbtn' => '清空購物車',
     'goshopping' => '去商城逛逛吧～',
     'cashondelivery' => '結 帳-貨到付款',
     'piece' => '件商品',
