@@ -15,7 +15,7 @@ class CreateDollorsTable extends Migration
     {
         Schema::create('dollors', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('dollor');
+            $table->double('dollor');
             $table->integer('user_id');
             $table->timestamps();
         });

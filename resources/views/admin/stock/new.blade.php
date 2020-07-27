@@ -36,7 +36,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="textarea">描述</label>
                         <div class="col-md-7">
-                            <textarea class="form-control" id="textarea" name="description" value="{{old('description')}}"></textarea>
+                            <textarea class="form-control" id="textarea" name="description" required="" value="{{old('description')}}"></textarea>
                         </div>
                     </div>
                     <div class="form-group">

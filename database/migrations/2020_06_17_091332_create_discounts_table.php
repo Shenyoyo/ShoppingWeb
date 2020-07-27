@@ -17,7 +17,7 @@ class CreateDiscountsTable extends Migration
             $table->increments('id');
             $table->integer('offer_id');
             $table->integer('above')->nullable();
-            $table->float('percent')->nullable();
+            $table->double('percent')->nullable();
             $table->timestamps();
         });
     }

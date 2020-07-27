@@ -18,7 +18,7 @@ class CreateLevelsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->integer('level');
-            $table->float('upgrade');
+            $table->double('upgrade');
             $table->timestamps();
         });
     }

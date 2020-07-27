@@ -35,7 +35,7 @@ return [
     'date_format'    => ':attribute 不符合 :format 的格式。',
     'different'      => ':attribute 與 :other 必須不同。',
     'digits'         => ':attribute 必須是 :digits 位數字。',
-    'digits_between' => ':attribute 必須介於 :min 至 :max 位數字。',
+    'digits_between' => ':attribute 必須介於 :min 至 :max 位長度的數字。',
     'dimensions'     => ':attribute 圖片尺寸不正確。',
     'distinct'       => ':attribute 已經存在。',
     'email'          => ':attribute 必須是有效的 E-mail。',

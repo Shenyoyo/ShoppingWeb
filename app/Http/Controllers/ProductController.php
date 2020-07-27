@@ -48,8 +48,11 @@ class ProductController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required',
+            'amount' => 'required|numeric|digits_between:1,11',
             'file'  => 'mimes:jpeg,jpg,png',
-            'price' => 'required|integer',
+            'price' => 'required|integer|digits_between:1,11',
 
         ], [
             'file.mimes' => '上傳檔案格式必須是.jpg .png .jpeg',
@@ -102,8 +105,11 @@ class ProductController extends Controller
     public function add(Request $request)
     {
         $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required',
+            'amount' => 'required|numeric|digits_between:1,11',
             'file'  => 'required|mimes:jpeg,jpg,png',
-            'price' => 'required|integer',
+            'price' => 'required|integer|digits_between:1,11',
         ], [
             'file.required' => '請上傳圖片',
             'file.mimes' => '上傳檔案格式必須是.jpg .png .jpeg',

@@ -16,7 +16,7 @@ class AddPaidToOrdersTwo extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->string('pre_discount_yn')->nullable();
             $table->integer('pre_discount_above')->nullable();
-            $table->float('pre_discount_percent')->nullable();
+            $table->double('pre_discount_percent')->nullable();
         });
     }
 

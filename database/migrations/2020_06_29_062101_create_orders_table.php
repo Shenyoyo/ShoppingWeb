@@ -15,15 +15,15 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->float('record');
-            $table->float('total');
+            $table->double('record');
+            $table->double('total');
             $table->integer('user_id');
             $table->string('status');
             $table->string('pre_cashback_yn')->nullable();
             $table->string('pre_levelname')->nullable();
             $table->integer('pre_above')->nullable();
-            $table->float('pre_percent')->nullable();
-            $table->float('pre_dollor')->nullable();
+            $table->double('pre_percent')->nullable();
+            $table->double('pre_dollor')->nullable();
             $table->string('receiver');
             $table->string('receiver_address');
             $table->timestamps();

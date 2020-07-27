@@ -16,7 +16,7 @@ class AddPaidToUsers extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
-            $table->float('total_cost')->nullable();
+            $table->double('total_cost')->nullable();
             $table->integer('role_id');
             $table->integer('level_level');
         });
