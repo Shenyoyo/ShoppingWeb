@@ -9,7 +9,7 @@ class AdminUserController extends Controller
 {
     public function getIndex()
     {
-        $users = User::paginate(10);
+        $users = User::WithoutAdmin()->paginate(10);
         return view('admin/user.index', ['users' => $users]);
     }
     public function editUser($id)
@@ -63,7 +63,7 @@ class AdminUserController extends Controller
     {
         $query = $request->input('query');
 
-        $users = User::where('name', 'LIKE', '%'.$query.'%')->paginate(10);
+        $users = User::WithoutAdmin()->where('name', 'LIKE', '%'.$query.'%')->paginate(10);
 
         return view('admin/user.index', ['users' => $users]);
     }

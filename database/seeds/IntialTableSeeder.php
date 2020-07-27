@@ -26,7 +26,6 @@ class IntialTableSeeder extends Seeder
                 'address' => '台中市西屯區市政北二路238號',
                 'total_cost' => 0.00,
                 'role_id' => 2,
-                'level_level' => 0,
             ],
         ]);
         DB::table('products')->insert([

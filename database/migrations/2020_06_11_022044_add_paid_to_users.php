@@ -18,7 +18,7 @@ class AddPaidToUsers extends Migration
             $table->string('address')->nullable();
             $table->double('total_cost')->nullable();
             $table->integer('role_id');
-            $table->integer('level_level');
+            $table->integer('level_level')->nullable();
         });
     }
 

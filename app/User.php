@@ -51,5 +51,9 @@ class User extends Authenticatable
     public function dollorlog(){
         return $this->hasMany('App\DollorLog');
     }
+    public function scopeWithoutAdmin($query)
+    {
+        return $query->where('role_id', '!=', '2');
+    }
 
 }
