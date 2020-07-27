@@ -58,11 +58,11 @@
                             @foreach($categories as $category)
                                 @if (in_array($category->id,$category_id))
                                 <label class="checkbox-inline">
-                                    <input checked type="checkbox" name="{{$category->name}}" id="inlineCheckbox{{$category->id}}" value="{{$category->id}}">{{$category->name}}
+                                    <input checked type="checkbox" name="{{$category->id}}" id="inlineCheckbox{{$category->id}}" value="{{$category->id}}">{{$category->name}}
                                 </label> 
                                 @else
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="{{$category->name}}" id="inlineCheckbox{{$category->id}}" value="{{$category->id}}">{{$category->name}}
+                                    <input type="checkbox" name="{{$category->id}}" id="inlineCheckbox{{$category->id}}" value="{{$category->id}}">{{$category->name}}
                                 </label> 
                                 @endif
                             @endforeach

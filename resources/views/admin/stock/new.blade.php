@@ -57,7 +57,7 @@
                         <div class="col-md-7" ">
                         @foreach($categories as $category)
                         <label class="checkbox-inline">
-                            <input type="checkbox" name="{{$category->name}}" id="inlineCheckbox{{$category->id}}" value="{{$category->id}}">{{$category->name}}
+                            <input type="checkbox" name="{{$category->id}}" id="inlineCheckbox{{$category->id}}" value="{{$category->id}}">{{$category->name}}
                         </label>
                         @endforeach
                         </div>

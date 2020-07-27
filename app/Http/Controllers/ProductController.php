@@ -96,9 +96,8 @@ class ProductController extends Controller
         $categories = Category::all();
         $product->category()->detach();//清除相關後在新增
         foreach ($categories as $category) {
-            $product->category()->attach($request->input($category->name));
+            $product->category()->attach($request->input($category->id));
         }
-
         return redirect()->route('admin.products');
     }
 
@@ -146,7 +145,7 @@ class ProductController extends Controller
         $product->save();
         $categories = Category::all();
         foreach ($categories as $category) {
-            $product->category()->attach($request->input($category->name));
+            $product->category()->attach($request->input($category->id));
         }
         return redirect()->route('admin.products');
     }
@@ -155,7 +154,7 @@ class ProductController extends Controller
     {
         $query = $request->input('query');
 
-        $products = Product::where('name', 'LIKE', '%'.$query.'%')->paginate(10);
+        $products = Product::ProductEnable()->where('name', 'LIKE', '%'.$query.'%')->paginate(10);
 
         return view('admin/stock.products', ['products' => $products]);
     }
