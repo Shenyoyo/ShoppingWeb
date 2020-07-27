@@ -6,6 +6,18 @@
 <link rel="stylesheet" href="/css/profile.css">
 @endsection
 @section('content')
+@if (count($errors) > 0)
+<div class="alert alert-danger">
+    @foreach ($errors->all() as $errors)
+        <p>{{ $errors }}</p>    
+    @endforeach
+</div>
+@endif 
+@if (session()->has('success_message'))
+    <div class="alert alert-success">
+        {{ session()->get('success_message') }}
+    </div>
+@endif
 <div class="row">
     <div class="col-md-12">
         <form action="{{route('user.updateProfile')}}" method="post">

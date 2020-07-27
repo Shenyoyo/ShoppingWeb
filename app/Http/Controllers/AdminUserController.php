@@ -20,14 +20,17 @@ class AdminUserController extends Controller
     }
     public function updateUser(Request $request)
     {
+        $user = User::find($request->input('id'));
         $this->validate($request, [
-            'name' => 'required|max:255',
-            'email' => 'email|required',
+            'name' => 'required|max:255|unique:users,name,'.$user->id,
+            'email' => 'email|required|unique:users,email,'.$user->id,
             'phone' => 'required|digits_between:10,12|numeric'
         ], [
+            'name.unique' => __('shop.nameunique'),
             'email.email' => __('shop.emailvalidation'),
+            'email.unique' => __('shop.emailunique'),
         ]);
-        $user = User::find($request->input('id'));
+        
         $user->name =$request->input('name');
         $user->email =$request->input('email');
         $user->phone =$request->input('phone');
