@@ -10,12 +10,13 @@
         {{ session('status') }}
     </div>
     @endif
-
-    @if (session()->has('error_message'))
-            <div class="alert alert-danger">
-                {{ session()->get('error_message') }}
-            </div>
-    @endif
+    @if (count($errors) > 0)
+    <div class="alert alert-danger">
+        @foreach ($errors->all() as $errors)
+            <p>{{ $errors }}</p>    
+        @endforeach
+    </div>
+    @endif 
     <p><a href="{{ url('/shop') }}">{{__('shop.home')}}</a> / {{ $product->name }}</p>
         <h1>{{ $product->name }}</h1>
 
@@ -40,12 +41,16 @@
                     <input type="hidden" name="id" value="{{ $product->id }}">
                     <input type="hidden" name="name" value="{{ $product->name }}">
                     <input type="hidden" name="price" value="{{ $product->price }}">
-                    <div style="font-size:18px" >{{__('shop.quantity') }}</div>
-                    <select  name="quantity" onfocus="selectFocus(this)" >
-                    @for ($i = 1; $i <= (($product->amount >= 100) ? 100 : $product->amount ); $i++)
-                    <option onclick="selectClick(this)" value="{{$i}}">{{$i}}</option>    
-                    @endfor    
-                    </select>
+                    <div style="font-size:18px" >{{__('shop.quantity') }}:</div>
+                    <div style="position:relative;">
+                        <span style="margin-left:100px;width:18px;">
+                        <select id='quantity' style="width:100px;margin-left:-100px;height:26px" onfocus="selectFocus(this)"  onchange="this.parentNode.nextSibling.value=this.value">
+                            @for ($i = 1; $i <= (($product->amount >= 100) ? 100 : $product->amount ); $i++)
+                            <option onclick="selectClick(this)" value="{{$i}}">{{$i}}</option>    
+                            @endfor    
+                        </select>
+                        </span><input id='quantityinput'name="quantity" value="1" style="z-index:1;width:80px;position:absolute;left:0px;">
+                    </div>
                     <br>
                     <br>
                     

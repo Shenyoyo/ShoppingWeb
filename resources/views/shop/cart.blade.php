@@ -8,7 +8,6 @@
 @section('content')
     <p><a href="{{ url('shop') }}">{{__('shop.home')}}</a> / {{__('shop.ShoppingCart')}}</p>
     <h1>{{__('shop.ShoppingCart')}}</h1>
-    
     <hr>
     @if (session()->has('success_message'))
     <div class="alert alert-success">
@@ -16,6 +15,12 @@
     </div>
     @endif
 
+    @if (session()->has('error_message'))
+            <div class="alert alert-danger">
+                {{ session()->get('error_message') }}
+            </div>
+    @endif
+    
     @if (count($errors) > 0)
     <div class="alert alert-danger">
         @foreach ($errors->all() as $errors)
@@ -42,11 +47,18 @@
                         <td class="table-image"><a href="{{ url('shop', [$item->model->id]) }}"><img src="{{asset(getImageInCart($item->model->file_id))}}" alt="product" class="img-responsive cart-image"></a></td>
                         <td><a href="{{ url('shop', [$item->model->id]) }}">{{ $item->name }}</a></td>
                         <td>
-                            <select class="quantity" onfocus="selectFocus(this)" data-id="{{ $item->rowId }}" >
-                                @for ($i = 1; $i <= (($item->model->amount >= 100) ? 100 : $item->model->amount  ) ; $i++)
-                                <option onclick="selectClick(this)" {{ $item->qty == $i ? 'selected' : '' }}>{{ $i }}</option>
-                                @endfor
-                            </select>
+                            <div style="position:relative;">
+                                <span style="margin-left:100px;width:18px;">
+                                <select class="quantity" data-id="{{ $item->rowId }}" product-id="{{$item->model->id}}" id='quantity{{$item->model->id}}' style="width:80px;margin-left:-100px;height:26px" onfocus="selectFocus(this,{{$item->model->id}})"  onchange="this.parentNode.nextSibling.value=this.value">
+                                    @for ($i = 1; $i <= (($item->model->amount >= 100) ? 100 : $item->model->amount ); $i++)
+                                    <option onclick="selectClick(this,{{$item->model->id}})"  value="{{$i}}">{{$i}}</option>    
+                                    @endfor    
+                                </select>
+                                </span>
+                                <input class="quantity" data-id="{{ $item->rowId }}" id='quantityinput{{$item->model->id}}'
+                                name="quantity" value="{{$item->qty}}" style="z-index:1;width:60px;position:absolute;left:0px;"
+                                 oninput = "value=value.replace(/[^\d]/g,'')">
+                            </div>
                         </td>
                         <td>${{ presentPrice($item->subtotal) }}</td>
                         <td class=""></td>
@@ -165,7 +177,7 @@
 
 @section('scripts')
 <script src="{{ asset('js/app.js') }}"></script>
-<script  src="{{ asset('js/productshow.js') }}"></script>
+<script  src="{{ asset('js/cart.js') }}"></script>
     <script>
         (function(){
             const classname = document.querySelectorAll('.quantity')
@@ -173,10 +185,12 @@
             Array.from(classname).forEach(function(element) {
                 element.addEventListener('change', function() {
                     const id = element.getAttribute('data-id')
+                    const productId =element.getAttribute('product-id')
                     const productQuantity = element.getAttribute('data-productQuantity')
 
                     axios.patch(`/cart/${id}`, {
                         quantity: this.value,
+                        productId: productId
                     })
                     .then(function (response) {
                         //  console.log(response);

@@ -42,7 +42,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="price">價格</label>
                         <div class="col-md-7">
-                            <input id="price" name="price" type="text" placeholder="商品價格" class="form-control input-md" value="{{$product->price}}" oninput = "value=value.replace(/[^\d]/g,'')" required="">
+                            <input id="price" name="price" type="text" placeholder="商品價格" class="form-control input-md" value="{{$product->price}}" oninput = "value=value.replace(/[^\d]/g,'')" required="" maxlength="12">
                         </div>
                     </div>
         

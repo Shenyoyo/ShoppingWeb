@@ -36,13 +36,13 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="textarea">描述</label>
                         <div class="col-md-7">
-                            <textarea class="form-control" id="textarea" name="description" required="" value="{{old('description')}}"></textarea>
+                            <textarea class="form-control" id="textarea" name="description" required="" >{{old('description')}}</textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="price">價格</label>
                         <div class="col-md-7">
-                            <input id="price" name="price" type="text" placeholder="商品價格" class="form-control input-md" oninput = "value=value.replace(/[^\d]/g,'')" required="" value="{{old('price')}}">
+                            <input id="price" name="price" type="text" placeholder="商品價格" class="form-control input-md" oninput = "value=value.replace(/[^\d]/g,'')" required="" maxlength=“12” value="{{old('price')}}">
                         </div>
                     </div>
                  

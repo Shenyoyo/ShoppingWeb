@@ -154,4 +154,5 @@ return [
     'Question Reply' =>'Question Reply',
     'optimun' =>'Optimun',
     'alloffer' =>'All',
+    'overflow' =>'Exceed the stock quantity, please re-enter' 
 ];

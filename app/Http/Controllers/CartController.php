@@ -112,10 +112,16 @@ class CartController extends Controller
 
     public function store(Request $request)
     {
+        //檢查是否超出庫存
+        $product= Product::find($request->id);
+        if($product->amount < $request->quantity){
+            return redirect()->back()->withErrors(__('shop.overflow'));
+        }
         //檢查重複商品
         $duplicates = Cart::search(function ($cartItem, $rowId) use ($request) {
             return $cartItem->id === $request->id;
         });
+
 
         if (!$duplicates->isEmpty()) {
             return redirect('cart')->withSuccessMessage(__('shop.aleadyincart'));
@@ -127,14 +133,20 @@ class CartController extends Controller
 
     public function update(Request $request, $id)
     {
+        
         // Validation on max quantity
         $validator = Validator::make($request->all(), [
             'quantity' => 'required|numeric'
         ]);
-
         if ($validator->fails()) {
-            session()->flash('error_message', '錯誤數量請聯絡管理員');
+            session()->flash('error_message', '錯誤數量請重新輸入');
             return response()->json(['success' => false]);
+        }
+
+        //檢查是否超出庫存
+        $product= Product::find($request->productId);
+        if($product->amount < $request->quantity){
+            return redirect()->back()->withErrors(__('shop.overflow'));
         }
 
         Cart::update($id, $request->quantity);
