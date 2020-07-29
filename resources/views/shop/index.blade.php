@@ -42,12 +42,9 @@
     </div>
     <hr>
     <ul class="nav nav-pills">
+        <li class={{($id == '') ?'active' : ''}}><a href="{{ route('shop.index') }}">{{__('shop.All Product')}}</a></li>
         @foreach ($categories as $category)
-        @if ($id == $category->id)
-        <li class="active" ><a href="{{ route('shop.category', ['id' => $category->id ,'orderby' => 'asc']) }}">{{ $category->name }}</a></li>
-        @else
-        <li class="#" ><a href="{{ route('shop.category', ['id' => $category->id ,'orderby' => 'asc']) }}">{{ $category->name }}</a></li>    
-        @endif
+        <li class={{($id == $category->id) ?'active' : ''}} ><a href="{{ route('shop.category', ['id' => $category->id ,'orderby' => 'asc']) }}">{{ $category->name }}</a></li>
         @endforeach
         
     </ul>

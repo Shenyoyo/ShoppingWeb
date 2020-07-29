@@ -155,5 +155,6 @@ return [
     'optimun' =>'Optimun',
     'alloffer' =>'All',
     'overflow' =>'Exceed the stock quantity, please re-enter' ,
-    'nameregex' => 'Do not use ~!@#$%^&*()_+-?><,. '
+    'nameregex' => 'Do not use ~!@#$%^&*()_+-?><,. ',
+    'All Product' => 'All Product',
 ];
