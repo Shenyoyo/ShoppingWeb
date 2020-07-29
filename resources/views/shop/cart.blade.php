@@ -55,7 +55,7 @@
                                     @endfor    
                                 </select>
                                 </span>
-                                <input class="quantity" data-id="{{ $item->rowId }}" id='quantityinput{{$item->model->id}}'
+                                <input class="quantity" data-id="{{ $item->rowId }}" product-id="{{$item->model->id}}" id='quantityinput{{$item->model->id}}'
                                 name="quantity" value="{{$item->qty}}" style="z-index:1;width:60px;position:absolute;left:0px;"
                                  oninput = "value=value.replace(/[^\d]/g,'')">
                             </div>

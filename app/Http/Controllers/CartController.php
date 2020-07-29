@@ -142,11 +142,11 @@ class CartController extends Controller
             session()->flash('error_message', '錯誤數量請重新輸入');
             return response()->json(['success' => false]);
         }
-
         //檢查是否超出庫存
         $product= Product::find($request->productId);
         if($product->amount < $request->quantity){
-            return redirect()->back()->withErrors(__('shop.overflow'));
+            session()->flash('error_message', __('shop.overflow'));
+            return response()->json(['success' => false]);
         }
 
         Cart::update($id, $request->quantity);
