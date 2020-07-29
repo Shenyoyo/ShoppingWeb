@@ -154,7 +154,8 @@ return [
     'Question Reply' =>'問題回覆',
     'optimun' =>'擇優',
     'alloffer' =>'全部',
-    'overflow' =>'超出庫存數量，請重新輸入' 
+    'overflow' =>'超出庫存數量，請重新輸入' ,
+    'nameregex' => '名字不可輸入~!@#$%^&*()_+-?><,.特殊符號'
     
     
 

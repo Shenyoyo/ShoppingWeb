@@ -26,11 +26,12 @@ class UserController extends Controller
     public function postSignup(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:255|unique:users,name',
+            'name' => 'required|max:255|unique:users,name|regex:/^((?![~!@#$%^&*()_+-?><,.]).)*$/',
             'email' => 'email|required|unique:users,email',
             'password' => 'required|min:6|confirmed|regex:/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/',
             'phone' => 'required|digits_between:10,12|numeric'
         ], [
+            'name.regex' => __('shop.nameregex'),
             'name.unique' => __('shop.nameunique'),
             'email.email' => __('shop.emailvalidation'),
             'email.unique' => __('shop.emailunique'),
@@ -113,10 +114,11 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $this->validate($request, [
-            'name' => 'required|max:255|unique:users,name,'.$user->id,
+            'name' => 'required|max:255|regex:/^((?![~!@#$%^&*()_+-?><,.]).)*$/|unique:users,name,'.$user->id,
             'email' => 'email|required|unique:users,email,'.$user->id,
             'phone' => 'required|digits_between:10,12|numeric'
         ], [
+            'name.regex' => __('shop.nameregex'),
             'name.unique' => __('shop.nameunique'),
             'email.email' => __('shop.emailvalidation'),
             'email.unique' => __('shop.emailunique'),
