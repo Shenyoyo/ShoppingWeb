@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    虛擬幣紀錄
+{{__('shop.virtualrecord')}}
 @endsection
 
 @section('styles')
@@ -13,13 +13,13 @@
       {{ session()->get('success_message') }}
   </div>
 @endif
-<h1>虛擬幣紀錄</h1>
+<h1>{{__('shop.virtualrecord')}}</h1>
 <div style="margin-top:10px;">
     
     <form action="{{ route('dollor.search') }}" method="get" class="search-form">
         <input id="date" type="date" name="startDate" value="{{$startDate }}" required> ~
         <input id="date" type="date" name="endDate"   value="{{$endDate }}" required>
-        <input type="text" name="name" id="name" value="{{ request()->input('name') }}" class="search-box" placeholder="用戶名" >
+        <input type="text" name="name" id="name" value="{{ request()->input('name') }}" class="search-box" placeholder="{{__('shop.Account Name')}}" >
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
 </div>
@@ -27,14 +27,14 @@
     <div class="col-md-12 text-center" >
         <table class="table table-striped ">
             <thead class="bg-info">
-                <td>ID</td>
-                <td>用戶名</td>
-                <td>交易類別</td>
-                <td>金額</td>
-                <td>小計</td>
-                <td>交易日期</td>
-                <td>單號</td>
-                <td>備註</td>
+                <td>{{__('shop.ID')}}</td>
+                <td>{{__('shop.Account Name')}}</td>
+                <td>{{__('shop.txstatus')}}</td>
+                <td>{{__('shop.amount')}}</td>
+                <td>{{__('shop.subtotal')}}</td>
+                <td>{{__('shop.time')}}</td>
+                <td>{{__('shop.order')}}</td>
+                <td>{{__('shop.memo')}}</td>
             </thead>
             <tbody>
                 @if (isset($dollorlogs))
@@ -51,13 +51,13 @@
                             @endif
                             <td>{{presentPrice($dollorlog->sub_total)}}</td>
                             <td>{{$dollorlog->created_at}}</td>
-                            <td>{{(empty($dollorlog->order_id)) ? '' : '單號:'.$dollorlog->order_id }}</td>
+                            <td>{{(empty($dollorlog->order_id)) ? '' : __('shop.order').':'.$dollorlog->order_id }}</td>
                             <td>{{$dollorlog->memo}}</td>
                         </tr>
                         @endforeach
                     @else
                         <tr>
-                            <td  colspan="8">查無資料</td>
+                            <td  colspan="8">{{__('shop.data not found')}}</td>
                         </tr>
                     @endif    
                 @endif

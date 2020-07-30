@@ -86,10 +86,10 @@ function userActive($active)
 {
     switch ($active) {
         case '1':
-            return '否';
+            return __('shop.No');
             break;
         default:
-            return '是';
+            return __('shop.Yes');
             break;
     }
 }

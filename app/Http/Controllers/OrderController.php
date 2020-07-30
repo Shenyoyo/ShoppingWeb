@@ -176,7 +176,7 @@ class OrderController extends Controller
     public function searchOrder(Request $request)
     {
         $query = $request->input('query');
-        $orders = Order::where('id', 'LIKE', '%'.$query.'%')->paginate(10);
+        $orders = Order::where('id', 'LIKE', '%'.$query.'%')->orderBy('id', 'desc')->paginate(10);
         return view('admin/order.index', ['orders' => $orders]);
     }
     public function orderbyStatus(Request $request)

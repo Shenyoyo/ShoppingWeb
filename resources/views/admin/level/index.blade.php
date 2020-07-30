@@ -1,23 +1,23 @@
 @extends('layouts.admin')
 
 @section('title')
-會員等級管理
+{{__('shop.Level Management')}}
 @endsection
 
 @section('styles')
 <link rel="stylesheet" href="/css/level.css">
 @endsection
 @section('content')
-<h1>會員等級管理</h1>
+<h1>{{__('shop.Level Management')}}</h1>
 <div class="row">
     <div class="col-md-6">
-        <a href="{{route('level.new')}}"><button class="btn btn-success">新增等級</button></a>
+        <a href="{{route('level.new')}}"><button class="btn btn-success">{{__('shop.Add Level')}}</button></a>
     </div>
 </div>
 <div style="margin-top:10px;">
     <form action="{{route('level.search')}}" method="GET" class="search-form">
         <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box"
-            placeholder="等級名稱">
+            placeholder="{{__('shop.Level Name')}}">
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
 </div>
@@ -27,26 +27,26 @@
             <thead class="bg-info ">
                 <tr class="">
                     <th colspan="1" rowspan="2">
-                        <div class="text-center cell">編號<div>
+                        <div class="text-center cell">{{__('shop.ID')}}<div>
                     </th>
                     <th colspan="1" rowspan="2">
-                        <div class="text-center cell">等級名稱<div>
+                        <div class="text-center cell">{{__('shop.Level Name')}}<div>
                     </th>
                     <th colspan="1" rowspan="2">
-                        <div class="text-center cell">等級描述<div>
+                        <div class="text-center cell">{{__('shop.Level Description')}}<div>
                     </th>
                     <th colspan="1" rowspan="1" style="border-bottom-width: 0px;">
-                        <div class="text-center ">晉 級 條 件<div>
+                        <div class="text-center ">{{__('shop.Upgrate Condition')}}<div>
                     </th>
                     <th colspan="1" rowspan="2">
-                        <div class="text-center cell">會員人數<div>
+                        <div class="text-center cell">{{__('shop.Membership')}}<div>
                     </th>
                     <th colspan="1" rowspan="2">
-                        <div class="text-center cell">操作<div>
+                        <div class="text-center cell">{{__('shop.operate')}}<div>
                     </th>
                 </tr>
                 <th colspan="1" rowspan="1" style="border-top-width: 0px;">
-                    <div class="text-center ">累計消費<div>
+                    <div class="text-center ">{{__('shop.totalcost')}}<div>
                 </th>
                 <tr>
                 </tr>
@@ -63,12 +63,12 @@
                         {{-- 預設0級不能修改 --}}
                         @if ($level->level != 0)
                         <a href="{{route('level.edit',['id' => $level->level ])}}"><button
-                                class="btn btn-primary btn-sm">修改</button></a>
+                                class="btn btn-primary btn-sm">{{__('shop.Edit')}}</button></a>
                         @endif
                         {{-- 只能從最高等級開始刪，預設0級不能刪 --}}
                         @if ($highestLevel->level == $level->level && $highestLevel->level != 0 && count($level->user) < 1 )
                         <a href="{{route('level.destroy',['id' => $level->level ])}}"
-                            onclick="javascript:return del()"><button class="btn btn-danger btn-sm">删除</button></a>
+                            onclick="javascript:return del()"><button class="btn btn-danger btn-sm">{{__('shop.Delete')}}</button></a>
                         @endif
                     </td>
                 </tr>

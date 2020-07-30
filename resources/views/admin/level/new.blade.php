@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-     新增等級
+{{__('shop.Add Level')}}
 @endsection
 
 @section('content')
@@ -14,12 +14,12 @@
     @endif 
     <div class="panel panel-info">
         <div class="panel-heading">
-            <div class="panel-title">新增等級</div>
+            <div class="panel-title">{{__('shop.Add Level')}}</div>
         </div>
         <div class="panel-body" >
             <div class="box-tools">
                 <div class="btn-group pull-right" style="margin-bottom: 10px">
-                  <a href="{{route('level.index')}}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> 返回列表</a>
+                  <a href="{{route('level.index')}}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> {{__('shop.Back to list')}}</a>
                 </div>
             </div>
             <form method="POST" action="{{route('level.add')}}" class="form-horizontal" enctype="multipart/form-data" role="form">
@@ -28,20 +28,20 @@
                     <!-- Text input-->
                     <input type="hidden" name="level" value="{{$level->level + 1}}">
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="name">等級名稱</label>
+                        <label class="col-md-3 control-label" for="name">{{__('shop.Level Name')}}</label>
                         <div class="col-md-1">
                             <input id="name" name="name" type="text"  class="form-control input-md" required="" value="VIP{{$level->level + 1}}" readonly>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="description">等級描述</label>
+                        <label class="col-md-3 control-label" for="description">{{__('shop.Level Description')}}</label>
                         <div class="col-md-3">
                             <input id="description" name="description" type="text"  class="form-control input-md" required="" value="{{old('description')}}">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="upgrade">晉級條件</label>
-                        <label class="col-md-1 control-label" for="upgrade">累積消費</label>
+                        <label class="col-md-3 control-label" for="upgrade">{{__('shop.Upgrate Condition')}}</label>
+                        <label class="col-md-1 control-label" for="upgrade">{{__('shop.totalcost')}}</label>
                         <div class="col-md-2">
                             <input id="upgrade" name="upgrade" type="text"  class="form-control input-md" required="" oninput = "value=value.replace(/[^\d]/g,'')"  autocomplete="off">
                         </div>
@@ -49,7 +49,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="submit"></label>
                         <div class="col-md-9">
-                            <button id="submit" name="submit" class="btn btn-primary">提交</button>
+                            <button id="submit" name="submit" class="btn btn-primary">{{__('shop.submit')}}</button>
                         </div>
                     </div>
                 </fieldset>

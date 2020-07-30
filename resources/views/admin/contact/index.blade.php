@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-問題回覆管理
+{{__('shop.Reply Management')}}
 @endsection
 @section('styles')
 <link rel="stylesheet" href="/css/products.css">
@@ -12,7 +12,7 @@
     {{ session()->get('success_message') }}
 </div>
 @endif
-<h1>問題回覆管理</h1>
+<h1>{{__('shop.Reply Management')}}</h1>
 <div   style="margin-top:20px;">
     <form  style="display: inline-block"  action="{{route('adminContact.search')}}"" method="GET" class="search-form">
         <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box"
@@ -22,7 +22,7 @@
 
     <form class="pull-right" action="{{route('adminContact.orderby')}}" method="GET" class="search-form">
         <select class="form-control" name="oderbyStatus" id="oderbyStatus" onchange="this.form.submit()" >
-            <option value="0">全部</option>
+            <option value="0">{{__('shop.alloffer')}}</option>
             @for ($i = 1; $i <= 3 ; $i++)
                 <option {{($oderbyStatus ?? '') == $i ? 'selected' : ''}} value="{{$i}}">{{contactStatus($i)}}</option>
             @endfor
@@ -34,14 +34,14 @@
     <div class=" col-md-12 text-center">
     <table class="table table-striped ">
         <thead class="bg-info">
-            <td>ID</td>
-            <td>用戶名</td>
-            <td>信箱</td>
-            <td>手機</td>
-            <td>主旨</td>
-            <td>狀態</td>
-            <td>日期</td>
-            <td>操作</td>
+            <td>{{__('shop.ID')}}</td>
+            <td>{{__('shop.Account Name')}}</td>
+            <td>{{__('shop.email')}}</td>
+            <td>{{__('shop.phone')}}</td>
+            <td>{{__('shop.subject')}}</td>
+            <td>{{__('shop.status')}}</td>
+            <td>{{__('shop.time')}}</td>
+            <td>{{__('shop.operate')}}</td>
         </thead>
         <tbody>
             @foreach ($contacts as $contact)
@@ -54,7 +54,7 @@
                 <td>{{ContactStatus($contact->status)}}</td>
                 <td>{{ $contact->updated_at->format('Y/m/d H:i:s') }}</td>
                 <td>
-                    <a href="{{route('adminContact.show',['id' => $contact->id ])}}"><button class="btn btn-primary btn-sm">明細</button></a>
+                    <a href="{{route('adminContact.show',['id' => $contact->id ])}}"><button class="btn btn-primary btn-sm">{{__('shop.Detail')}}</button></a>
                 </td>
             </tr>
             @endforeach

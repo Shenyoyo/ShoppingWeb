@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-優惠管理
+{{__('shop.Offer Management')}}
 @endsection
 
 @section('styles')
@@ -15,16 +15,16 @@
         @endforeach
     </div>
 @endif 
-<h1>優惠管理</h1>
+<h1>{{__('shop.Offer Management')}}</h1>
 <div class="row">
     <div class="col-md-6">
-        <a href="{{route('offer.new')}}""><button class=" btn btn-success">新增優惠設定</button></a>
+        <a href="{{route('offer.new')}}""><button class=" btn btn-success">{{__('shop.Add Offer')}}</button></a>
     </div>
 </div>
 <div style="margin-top:10px;">
     <form action="{{route('offer.search')}}" method="GET" class="search-form">
         <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box"
-            placeholder="編號">
+            placeholder="{{__('shop.ID')}}">
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
 </div>
@@ -32,13 +32,13 @@
     <div class="col-md-12 text-center">
         <table class="table table-striped ">
             <thead class="bg-info">
-                <td>編號</td>
-                <td>受惠會員</td>
-                <td>是否優惠擇優</td>
-                <td>是否給予打折優惠</td>
-                <td>是否給予虛擬幣回饋</td>
-                <td>是否給予滿額送現金</td>
-                <td>操作</td>
+                <td>{{__('shop.ID')}}</td>
+                <td>{{__('shop.Beneficiary Member')}}</td>
+                <td>{{__('shop.Optimun_yn')}}</td>
+                <td>{{__('shop.Discount_yn')}}</td>
+                <td>{{__('shop.Cashback_yn')}}</td>
+                <td>{{__('shop.Rebate_yn')}}</td>
+                <td>{{__('shop.operate')}}</td>
             </thead>
             <tbody>
                 @foreach ($offers as $offer)
@@ -51,11 +51,11 @@
                     <td>{{$offer->rebate_yn}}</td>
                     <td>
                         <a href="{{route('offer.edit',['id' => $offer->id ])}}"><button
-                                class="btn btn-primary btn-sm">修改</button></a>
+                                class="btn btn-primary btn-sm">{{__('shop.Edit')}}</button></a>
                         {{-- VIP0優惠只能修改不能刪除 --}}
                         @if ($offer->level->name != 'VIP0')
                         <a href="{{route('offer.destroy',['id' => $offer->id ])}}"
-                            onclick="javascript:return del()"><button class="btn btn-danger btn-sm">删除</button></a>
+                            onclick="javascript:return del()"><button class="btn btn-danger btn-sm">{{__('shop.Delete')}}</button></a>
                         @endif
                     </td>
                 </tr>

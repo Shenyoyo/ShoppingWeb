@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-用戶修改
+{{__('shop.Edit Account')}}
 @endsection
 
 @section('content')
@@ -14,23 +14,23 @@
 @endif 
     <div class="panel panel-info">
         <div class="panel-heading">
-            <div class="panel-title">用戶修改</div>
+            <div class="panel-title">{{__('shop.Edit Account')}}</div>
         </div>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link active" href="{{route('adminUser.edit',['id' => $user->id ])}}">基本資料修改</a>
+              <a class="nav-link active" href="{{route('adminUser.edit',['id' => $user->id ])}}">{{__('shop.Revise personal info')}}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{route('adminUser.deposit',['id' => $user->id ])}}">人工存入</a>
+              <a class="nav-link" href="{{route('adminUser.deposit',['id' => $user->id ])}}">{{__('shop.Manual deposit')}}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{route('adminUser.withdraw',['id' => $user->id ])}}">人工提取</a>
+              <a class="nav-link" href="{{route('adminUser.withdraw',['id' => $user->id ])}}">{{__('shop.Manual withdrawal')}}</a>
             </li>
           </ul>
         <div class="panel-body" >
             <div class="box-tools">
                 <div class="btn-group pull-right" style="margin-bottom: 10px">
-                  <a href="{{route('adminUser.index')}}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> 返回列表</a>
+                  <a href="{{route('adminUser.index')}}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> {{__('shop.Back to list')}}</a>
                 </div>
             </div>
             <form method="POST" action="{{route('adminUser.update')}}" class="form-horizontal" enctype="multipart/form-data" role="form">
@@ -39,41 +39,41 @@
                     <!-- Text input-->
                     <input type="hidden" name="id" value="{{$user->id}}">
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="name">用戶名</label>
+                        <label class="col-md-4 control-label" for="name">{{__('shop.Account Name')}}</label>
                         <div class="col-md-2">
                         <input id="name" name="name" type="text"  class="form-control input-md" value="{{$user->name}}" required="">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="email">信箱</label>
+                        <label class="col-md-4 control-label" for="email">{{__('shop.email')}}</label>
                         <div class="col-md-4">
                         <input id="email" name="email" type="text"  class="form-control input-md" value="{{$user->email}}" required="">
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="phone">手機</label>
+                        <label class="col-md-4 control-label" for="phone">{{__('shop.phone')}}</label>
                         <div class="col-md-4">
                             <input id="phone" name="phone" type="text"  class="form-control input-md" value="{{$user->phone}}" oninput = "value=value.replace(/[^\d]/g,'')" >
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="address">通訊地址</label>
+                        <label class="col-md-4 control-label" for="address">{{__('shop.address')}}</label>
                         <div class="col-md-4">
                             <input id="address" name="address" type="text"  class="form-control input-md" value="{{$user->address}}" required="">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="total_cost">累積消費</label>
+                        <label class="col-md-4 control-label" for="total_cost">{{__('shop.totalcost')}}</label>
                         <div class="col-md-2">
                             <input id="total_cost" name="total_cost" type="text"  class="form-control input-md" value="{{$user->total_cost}}" oninput = "value=value.replace(/[^\d]/g,'')" required="">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="level">等級</label>
+                        <label class="col-md-4 control-label" for="level">{{__('shop.level')}}</label>
                         <div class="col-md-4" style="margin-top: 7px;">
                             <select name="level" id="level">
                                 @foreach ($levels as $level)
@@ -84,7 +84,7 @@
                     </div>
            
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="active">是否停權</label>
+                        <label class="col-md-4 control-label" for="active">{{__('shop.Suspension')}}</label>
                         <div class="col-md-4" style="margin-top: 7px;">
                             <input {{($user->active != '1') ? 'checked' : ''}} id="active" name="active" class="form-check-input" type="checkbox" value="2"  >
                         </div>
@@ -93,7 +93,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="submit"></label>
                         <div class="col-md-4">
-                            <button id="submit" name="submit" class="btn btn-primary">送出</button>
+                            <button id="submit" name="submit" class="btn btn-primary">{{__('shop.submit')}}</button>
                         </div>
                     </div>
 

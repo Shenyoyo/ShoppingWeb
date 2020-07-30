@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-用戶修改
+{{__('shop.ResetPassword')}}
 @endsection
 
 @section('content')
@@ -14,12 +14,12 @@
 @endif 
     <div class="panel panel-info">
         <div class="panel-heading">
-            <div class="panel-title">重設密碼</div>
+            <div class="panel-title">{{__('shop.ResetPassword')}}</div>
         </div>
         <div class="panel-body" >
             <div class="box-tools">
                 <div class="btn-group pull-right" style="margin-bottom: 10px">
-                  <a href="{{route('adminUser.index')}}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> 返回列表</a>
+                  <a href="{{route('adminUser.index')}}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> {{__('shop.Back to list')}}</a>
                 </div>
             </div>
             <form method="POST" action="{{route('adminUser.updatePassword')}}" class="form-horizontal" enctype="multipart/form-data" role="form">
@@ -28,20 +28,20 @@
                     <!-- Text input-->
                     <input type="hidden" name="id" value="{{$user->id}}">
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="name">用戶名</label>
+                        <label class="col-md-4 control-label" for="name">{{__('shop.Account Name')}}</label>
                         <div class="col-md-2">
                         <input id="name" name="name" type="text"  class="form-control input-md" value="{{$user->name}}" readonly>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="email">信箱</label>
+                        <label class="col-md-4 control-label" for="email">{{__('shop.email')}}</label>
                         <div class="col-md-4">
                         <input id="email" name="email" type="text"  class="form-control input-md" value="{{$user->email}}" readonly>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="password"">新密碼</label>
+                        <label class="col-md-4 control-label" for="password"">{{__('shop.newpassowrd')}}</label>
                         <div class="col-md-4">
                             
                             <input class="password" id="password" name="password" type="password"  class="form-control input-md"  required="" > <i class="show_pass glyphicon glyphicon-eye-open"></i>
@@ -51,7 +51,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="submit"></label>
                         <div class="col-md-4">
-                            <button id="submit" name="submit" class="btn btn-primary">送出</button>
+                            <button id="submit" name="submit" class="btn btn-primary">{{__('shop.submit')}}</button>
                         </div>
                     </div>
 

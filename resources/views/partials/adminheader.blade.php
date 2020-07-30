@@ -8,20 +8,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-        <a class="navbar-brand" href="{{route('admin.products')}}">首頁</a>
+        <a class="navbar-brand" href="{{route('admin.products')}}">{{__('shop.home')}}</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="{{route('admin.products')}}"></i> 庫存管理</a></li>
-                <li><a href="{{route('category.index')}}"></i> 分類管理</a></li>
-                <li><a href="{{route('level.index')}}"></i> 會員等級管理 </a></li>
-                <li><a href="{{route('offer.index')}}"></i> 優惠管理</a></li>
-                <li><a href="{{route('order.index')}}"></i> 訂單管理</a></li>
-                <li><a href="{{route('adminUser.index')}}"></i> 帳號管理</a></li>
-                <li><a href="{{route('adminContact.index')}}"></i> 問題回覆管理</a></li>
-                <li><a href="{{route('dollor.index')}}"></i> 虛擬幣紀錄</a></li>
+                <li><a href="{{route('admin.products')}}"></i>{{__('shop.Stock Management')}}</a></li>
+                <li><a href="{{route('category.index')}}"></i> {{__('shop.Category Management')}}</a></li>
+                <li><a href="{{route('level.index')}}"></i> {{__('shop.Level Management')}} </a></li>
+                <li><a href="{{route('offer.index')}}"></i> {{__('shop.Offer Management')}}</a></li>
+                <li><a href="{{route('order.index')}}"></i> {{__('shop.Order Management')}}</a></li>
+                <li><a href="{{route('adminUser.index')}}"></i> {{__('shop.Account Management')}}</a></li>
+                <li><a href="{{route('adminContact.index')}}"></i> {{__('shop.Reply Management')}}</a></li>
+                <li><a href="{{route('dollor.index')}}"></i> {{__('shop.virtualrecord')}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -34,12 +34,12 @@
                 </li>
                 <li class="dropdown ">
                     <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-user" aria-hidden="true"></i> 管理者 <span class="caret"></span>
+                        <i class="fa fa-user" aria-hidden="true"></i> {{__('shop.Administrator')}} <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                            <li><a href="#">管理者資料</a></li>
+                            <li><a href="#">{{__('shop.Administrator info')}}</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="{{route('admin.logout')}}">登出</a></li>
+                            <li><a href="{{route('admin.logout')}}">{{__('shop.signout')}}</a></li>
                     </ul>
                 </li>
             </ul>

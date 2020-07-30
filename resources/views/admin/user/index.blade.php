@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    帳號管理
+{{__('shop.Account Management')}}
 @endsection
 
 @section('styles')
@@ -13,11 +13,11 @@
       {{ session()->get('success_message') }}
   </div>
 @endif
-<h1>帳號管理</h1>
+<h1>{{__('shop.Account Management')}}</h1>
 <div style="margin-top:10px;">
     <form action="{{route('adminUser.search')}}" method="GET" class="search-form">
         <input type="text" name="query" id="query" value="{{ request()->input('query') }}" class="search-box"
-            placeholder="用戶名">
+            placeholder="{{__('shop.Account Name')}}">
         <button type="submit" class="fa fa-search search-icon btn btn-primary btn-sm"></button>
     </form>
 </div>
@@ -25,16 +25,16 @@
     <div class="col-md-12 text-center" >
         <table class="table table-striped ">
             <thead class="bg-info">
-                <td>ID</td>
-                <td>用戶名</td>
-                <td>信箱</td>
-                <td>手機</td>
-                <td>通訊地址</td>
-                <td>虛擬幣</td>
-                <td>累積消費</td>
-                <td>等級</td>
-                <td>停權</td>
-                <td>操作</td>
+                <td>{{__('shop.ID')}}</td>
+                <td>{{__('shop.Account Name')}}</td>
+                <td>{{__('shop.email')}}</td>
+                <td>{{__('shop.phone')}}</td>
+                <td>{{__('shop.address')}}</td>
+                <td>{{__('shop.VirtualDollor')}}</td>
+                <td>{{__('shop.totalcost')}}</td>
+                <td>{{__('shop.level')}}</td>
+                <td>{{__('shop.Suspension')}}</td>
+                <td>{{__('shop.operate')}}</td>
             </thead>
             <tbody>
                 @foreach ($users as $user)
@@ -49,8 +49,8 @@
                     <td>{{$user->level->name}}</td>
                     <td>{{userActive($user->active)}}</td>
                     <td>
-                       <a href="{{route('adminUser.edit',['id' => $user->id ])}}"><button class="btn btn-primary btn-sm">修改</button></a>
-                       <a href="{{route('adminUser.resetPassword',['id' => $user->id ])}}"><button class="btn btn-success btn-sm">重設密碼</button></a>
+                       <a href="{{route('adminUser.edit',['id' => $user->id ])}}"><button class="btn btn-primary btn-sm">{{__('shop.Edit')}}</button></a>
+                       <a href="{{route('adminUser.resetPassword',['id' => $user->id ])}}"><button class="btn btn-success btn-sm">{{__('shop.ResetPassword')}}</button></a>
                     </td>
                     </tr>
                     @endforeach
