@@ -57,7 +57,7 @@
                     <td>{{$level->id}}</td>
                     <td>{{$level->name}}</td>
                     <td>{{$level->description}}</td>
-                    <td>{{$level->upgrade}}</td>
+                    <td>{{presentPrice($level->upgrade)}}</td>
                     <td>{{count($level->user)}}</td>
                     <td>
                         {{-- 預設0級不能修改 --}}

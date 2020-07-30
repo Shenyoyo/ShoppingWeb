@@ -91,17 +91,7 @@ class OrderController extends Controller
         //計入退貨要回饋到虛擬幣
         setDollorLog($user->id, '6', $refundDollor, $userDollor, $order->id, '');
         // setp.3 會員等級重新判斷
-        if ($order->dollor_yn == 'Y') {
-            $usedollor = $order->record - $order->total ;
-            if ($refundDollor-$usedollor >=0) {
-                $culLessDollor = $refundDollor-$usedollor;
-            } else {
-                $culLessDollor =0 ;
-            }
-            $user->total_cost = $user->total_cost - $culLessDollor;
-        } else {
-            $user->total_cost = $user->total_cost - $refundDollor; //減去累計總消費
-        }
+        $user->total_cost = $user->total_cost - $refundDollor; //減去累計總消費
         
         $Level = $user->level_level ?? 0;
         $LevelUpgrade = Level::find($Level)->upgrade ?? 0;

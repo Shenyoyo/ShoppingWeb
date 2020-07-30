@@ -147,6 +147,7 @@ Route::group(['middleware' => ['setLocale']], function () {
         'uses' => 'AdminController@postLogin',
         'as'   => 'admin.login'
         ]);
+        Route::get('/changeLocale/{locale}', 'LanguageController@changeLocale');
         Route::group(['middleware' => ['adminVerify']], function () {
             Route::get('/logout', [
             'uses' => 'AdminController@getLogout',

@@ -258,7 +258,7 @@ class UserController extends Controller
         }
         
         // step.3 累計用戶消費總額
-        $user->total_cost = $user->total_cost + $order->total;
+        $user->total_cost = $user->total_cost + $order->record;
         $user->save();
         // setp.4 會員晉升
         $nextLevel = $user->level_level+1;
