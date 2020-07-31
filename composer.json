@@ -12,6 +12,7 @@
         "boolfalse/clearcaches": "^1.1",
         "boolfalse/laravel-shopping-cart": "dev-master",
         "doctrine/dbal": "^2.10",
+        "encore/laravel-admin": "^1.8",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
