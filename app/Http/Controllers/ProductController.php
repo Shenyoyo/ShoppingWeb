@@ -53,10 +53,6 @@ class ProductController extends Controller
             'amount' => 'required|numeric|digits_between:1,11',
             'file'  => 'mimes:jpeg,jpg,png',
             'price' => 'required|integer|digits_between:1,11',
-
-        ], [
-            'file.mimes' => '上傳檔案格式必須是.jpg .png .jpeg',
-            'price.integer' => '價格只能輸入數字',
         ]);
         if(!empty ($request->file('file'))){
             $file =  $request->file('file');
@@ -109,10 +105,6 @@ class ProductController extends Controller
             'amount' => 'required|numeric|digits_between:1,11',
             'file'  => 'required|mimes:jpeg,jpg,png',
             'price' => 'required|integer|digits_between:1,11',
-        ], [
-            'file.required' => '請上傳圖片',
-            'file.mimes' => '上傳檔案格式必須是.jpg .png .jpeg',
-            'price.integer' => '價格只能輸入數字'
         ]);
         $file =  $request->file('file');
         $extension = $file->getClientOriginalExtension(); //取得副檔名

@@ -32,7 +32,7 @@ class OfferController extends Controller
         if(count($levels) != 0){
             return view('admin/offer.new', ['levels' => $levels]);
         }else{
-            return redirect()->back()->withErrors('未有等級可以設定，請自會員等級管理新增等級')->withInput(); 
+            return redirect()->back()->withErrors(__('shop.No level can be set'))->withInput(); 
         }
          
         

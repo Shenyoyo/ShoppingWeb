@@ -69,7 +69,7 @@ class OrderController extends Controller
         
         $order->save();
 
-        return redirect()->back()->withSuccessMessage('已成功送貨');
+        return redirect()->back()->withSuccessMessage(__('shop.Successful delivery'));
     }
     public function refundAgree($id)
     {
@@ -152,7 +152,7 @@ class OrderController extends Controller
 
         $user->dollor->save();
         
-        return redirect()->back()->withSuccessMessage('已成功退款');
+        return redirect()->back()->withSuccessMessage(__('shop.Successful refund'));
     }
     public function refundDisagree(Request $request)
     {
@@ -171,7 +171,7 @@ class OrderController extends Controller
         //echo $request->nomessage;
         $order->refund->nomessage = $request->nomessage;
         $order->refund->save();
-        return redirect()->back()->withSuccessMessage('已拒絕退款');
+        return redirect()->back()->withSuccessMessage(__('shop.Refused to refund'));
     }
     public function searchOrder(Request $request)
     {

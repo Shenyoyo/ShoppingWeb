@@ -217,7 +217,7 @@ class UserController extends Controller
         $contactDetail ->message = $request->message;
         $contactDetail ->role = '1';
         $contact->contactDetail()->save($contactDetail);
-        return redirect()->back()->withSuccessMessage('已成功回覆。');
+        return redirect()->back()->withSuccessMessage(__('shop.Successful reply'));
     }
 
     public function confirmOrder($id)

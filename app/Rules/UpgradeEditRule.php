@@ -62,13 +62,21 @@ class UpgradeEditRule implements Rule
         $beforeLevel = Level::where('level', $this->level-1)->first();
         $afterLevel  = Level::where('level', $this->level+1)->first();
         if (empty($beforeLevel)){
-            $message = '累積金額請 低於'.$afterLevel->name.'的$'.$afterLevel->upgrade;
+            // $message = '累積金額請 低於'.$afterLevel->name.'的$'.$afterLevel->upgrade;
+            $message = __('shop.higher than',['level' => $afterLevel->name,'upgrade' => $afterLevel->upgrade]);
 
         }elseif(empty($afterLevel)) {
-            $message = '累積金額請 高於'.$beforeLevel ->name.'的$'.$beforeLevel ->upgrade;
+            $message = __('shop.higher than',['level' => $beforeLevel ->name,'upgrade' => $beforeLevel ->upgrade]);
 
         }else {
-            $message = '累積金額請 介於'.$beforeLevel ->name.'的$'.$beforeLevel ->upgrade.'與'.$afterLevel ->name.'的$'.$afterLevel ->upgrade;
+            // $message = '累積金額請 介於'.$beforeLevel ->name.'的$'.$beforeLevel ->upgrade.'與'.$afterLevel ->name.'的$'.$afterLevel ->upgrade;
+            $message = __('shop.between',[
+                'levelpre' => $beforeLevel ->name,
+                'upgradepre' => $beforeLevel ->upgrade,
+                'levelnext' => $afterLevel ->name,
+                'upgradenext' => $afterLevel ->upgrade,
+
+                ]);
         }
         
         return $message;

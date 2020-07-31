@@ -35,21 +35,21 @@ class AdminContactController extends Controller
         $contactDetail ->message = $request->message;
         $contactDetail ->role = '2';
         $contact->contactDetail()->save($contactDetail);
-        return redirect()->back()->withSuccessMessage('已回覆。');
+        return redirect()->back()->withSuccessMessage(__('shop.Successful reply'));
     }
     public function lockContact($id)
     {
         $contact = Contact::find($id); 
         $contact->status = '3'; 
         $contact->save();
-        return redirect()->back()->withSuccessMessage('已結案，停止回覆功能。');
+        return redirect()->back()->withSuccessMessage(__('shop.Case closed, stop reply function'));
     }
     public function unlockContact($id)
     {
         $contact = Contact::find($id); 
         $contact->status = '2'; 
         $contact->save();
-        return redirect()->back()->withSuccessMessage('已解鎖，可使用回覆功能。');
+        return redirect()->back()->withSuccessMessage(__('shop.Has been unlocked, you can use the reply function'));
     }
     public function searchContact(Request $request)
     {

@@ -174,6 +174,10 @@ return [
         'time'                  => '時間',
         'title'                 => '標題',
         'username'              => '使用者名稱',
+        'file'                  => '圖片',
+        'price'                  => '價錢',
+        'year'                  => '年',
+        'year'                  => '年',
         'year'                  => '年',
     ],
 ];

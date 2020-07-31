@@ -234,6 +234,15 @@ return [
     'Unlock' => '解鎖',
     'Administrator' => '管理者',
     'Administrator info' => '管理者資訊',
+    'No level can be set' => '未有等級可以設定，請自會員等級管理新增等級',
+    'Successful delivery' => '已成功送貨',
+    'Successful refund' => '已成功退貨',
+    'Successful reply' => '已成功回覆',
+    'Case closed, stop reply function' =>'已結案，停止回覆功能',
+    'Has been unlocked, you can use the reply function.' =>'已解鎖，可使用回覆功能',
+    'Promotion conditions' =>'累積金額請 高於:level的$:upgrade',
+    'higher than' =>'晉級條件要超過:level的累積金額:upgrade以上',
+    'between' =>'累積金額請 介於:levelpre的$:upgradepre與:levelnext的$:upgradenext',
     
     
 ];

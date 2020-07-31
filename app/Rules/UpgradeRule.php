@@ -37,6 +37,6 @@ class UpgradeRule implements Rule
     public function message()
     {
         $oldLevel = Level::orderBy('level', 'desc')->first();
-        return '晉級條件要超過'.$oldLevel->name."的累積金額".$oldLevel->upgrade.'以上';
+        return __('shop.Promotion conditions',['level' =>$oldLevel->name ,'upgrade' => $oldLevel->upgrade]);
     }
 }
