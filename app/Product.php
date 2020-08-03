@@ -3,12 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-
-    use SoftDeletes;
     
+    use SoftDeletes;
+
     public function file()
     {
         return $this->belongsTo('App\File');
