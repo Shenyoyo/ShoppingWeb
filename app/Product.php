@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+
+    use SoftDeletes;
+    
     public function file()
     {
         return $this->belongsTo('App\File');

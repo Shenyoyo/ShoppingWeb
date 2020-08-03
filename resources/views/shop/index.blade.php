@@ -60,7 +60,8 @@
         <div class="thumbnail">
             <div class="caption text-center">
                 <a href="{{ route('shop.show', [$product->id]) }}"><img
-                        src="{{asset('storage/'.$product->file->filename.'')}}" alt="product"
+                        {{-- src="{{asset('storage/'.$product->file->filename.'')}}" alt="product" --}}
+                        src="{{asset('uploads/'.$product->image.'')}}" alt="product"
                         class="img-responsive"></a>
                 <a href="{{ route('shop.show', [$product->id]) }}">
                     <h3>{{ $product->name }}</h3>

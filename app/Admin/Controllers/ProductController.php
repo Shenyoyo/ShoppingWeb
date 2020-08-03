@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Product;
+use App\File;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -28,15 +29,13 @@ class ProductController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('name', __('shop.Product Name'));
-        $grid->column('description', __('Description'));
         $grid->column('price', __('shop.price'));
         $grid->column('amount', __('shop.Stock Quantity'));
-        $grid->column('buy_yn', __('shop.Category'));
+        $grid->column('buy_yn', __('shop.Product Buy'));
         $grid->column('display_yn', __('shop.Product Dispaly'));
-        $grid->column('file_id', __('File id'));
+        $grid->column('image',__('Image'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
-        
 
         return $grid;
     }
@@ -58,7 +57,7 @@ class ProductController extends AdminController
         $show->field('amount', __('Amount'));
         $show->field('buy_yn', __('Buy yn'));
         $show->field('display_yn', __('Display yn'));
-        $show->field('file_id', __('File id'));
+        $show->field('image',__('Image'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
        
@@ -75,15 +74,14 @@ class ProductController extends AdminController
     {
         $form = new Form(new Product());
 
-        $form->text('name', __('Name'));
-        $form->text('description', __('Description'));
-        $form->decimal('price', __('Price'));
-        $form->number('amount', __('Amount'));
-        $form->text('buy_yn', __('Buy yn'));
-        $form->text('display_yn', __('Display yn'));
-        $form->text('file_id', __('File id'));
-        
-
+        $form->text('name', __('Name'))->rules('required');
+        $form->text('description', __('Description'))->rules('required');
+        $form->text('price', __('Price'))->rules('required|integer|digits_between:1,11');
+        $form->number('amount', __('Amount'))->rules('required');
+        $form->radio('buy_yn',__('Buy yn') )->options(['Y' => '是' , 'N' => '否'])->default('Y');
+        $form->radio('display_yn', __('Display yn'))->options(['Y' => '是' , 'N' => '否'])->default('Y');;
+        $form->image('image', __('image'));
+ 
         return $form;
     }
 }
