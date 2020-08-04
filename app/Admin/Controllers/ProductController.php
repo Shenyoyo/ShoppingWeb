@@ -27,15 +27,19 @@ class ProductController extends AdminController
     {
         $grid = new Grid(new Product());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('shop.ID'));
         $grid->column('name', __('shop.Product Name'));
-        $grid->column('price', __('shop.price'));
+        $grid->column('price', __('shop.price'))->display(function ($price) {
+            return presentPrice($price);
+        });;
         $grid->column('amount', __('shop.Stock Quantity'));
-        $grid->column('buy_yn', __('shop.Product Buy'));
-        $grid->column('display_yn', __('shop.Product Dispaly'));
+        $grid->column('buy_yn', __('shop.Product Buy'))->bool(['Y' => true, 'N' => false]);;
+        $grid->column('display_yn', __('shop.Product Dispaly'))->bool(['Y' => true, 'N' => false]);;
         $grid->column('image',__('Image'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
+
+     
 
         return $grid;
     }
