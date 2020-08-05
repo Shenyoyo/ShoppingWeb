@@ -22,7 +22,7 @@ class AdminUserController extends Controller
     {
         $user = User::find($request->input('id'));
         $this->validate($request, [
-            'name' => 'required|max:255|regex:/^((?![~!@#$%^&*()_+-?><,.]).)*$/|unique:users,name,'.$user->id,
+            'name' => 'required|max:255|regex:/^[\x7f-\xffA-Za-z0-9 ()（）\s]+$/|unique:users,name,'.$user->id,
             'email' => 'email|required|unique:users,email,'.$user->id,
             'phone' => 'required|digits_between:10,12|numeric'
         ], [

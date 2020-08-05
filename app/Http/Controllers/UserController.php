@@ -26,7 +26,7 @@ class UserController extends Controller
     public function postSignup(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:255|unique:users,name|regex:/^((?![~!@#$%^&*()_+-?><,.]).)*$/',
+            'name' => 'required|max:255|unique:users,name|regex:/^[\x7f-\xffA-Za-z0-9 ()（）\s]+$/',
             'email' => 'email|required|unique:users,email',
             'password' => 'required|min:6|confirmed|regex:/^.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/',
             'phone' => 'required|digits_between:10,12|numeric'
@@ -114,7 +114,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $this->validate($request, [
-            'name' => 'required|max:255|regex:/^((?![~!@#$%^&*()_+-?><,.]).)*$/|unique:users,name,'.$user->id,
+            'name' => 'required|max:255|regex:/^[\x7f-\xffA-Za-z0-9 ()（）\s]+$/|unique:users,name,'.$user->id,
             'email' => 'email|required|unique:users,email,'.$user->id,
             'phone' => 'required|digits_between:10,12|numeric'
         ], [

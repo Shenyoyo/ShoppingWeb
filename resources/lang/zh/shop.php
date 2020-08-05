@@ -155,7 +155,7 @@ return [
     'optimun' =>'擇優',
     'alloffer' =>'全部',
     'overflow' =>'超出庫存數量，請重新輸入' ,
-    'nameregex' => '名字不可輸入~!@#$%^&*()_+-?><,.特殊符號',
+    'nameregex' => '姓名不可輸入特殊符號',
     'All Product' => '全部商品',
     'Stock Management' => '庫存管理',
     'Add Product' => '新增商品',
