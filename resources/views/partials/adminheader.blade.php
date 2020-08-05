@@ -14,14 +14,14 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="{{route('admin.products')}}"></i>{{__('shop.Stock Management')}}</a></li>
-                <li><a href="{{route('category.index')}}"></i> {{__('shop.Category Management')}}</a></li>
-                <li><a href="{{route('level.index')}}"></i> {{__('shop.Level Management')}} </a></li>
-                <li><a href="{{route('offer.index')}}"></i> {{__('shop.Offer Management')}}</a></li>
-                <li><a href="{{route('order.index')}}"></i> {{__('shop.Order Management')}}</a></li>
-                <li><a href="{{route('adminUser.index')}}"></i> {{__('shop.Account Management')}}</a></li>
-                <li><a href="{{route('adminContact.index')}}"></i> {{__('shop.Reply Management')}}</a></li>
-                <li><a href="{{route('dollor.index')}}"></i> {{__('shop.virtualrecord')}}</a></li>
+                <li class="nav-item"><a href="{{route('admin.products')}}"></i>{{__('shop.Stock Management')}}</a></li>
+                <li class="nav-item"><a href="{{route('category.index')}}"></i> {{__('shop.Category Management')}}</a></li>
+                <li class="nav-item"><a href="{{route('level.index')}}"></i> {{__('shop.Level Management')}} </a></li>
+                <li class="nav-item"><a href="{{route('offer.index')}}"></i> {{__('shop.Offer Management')}}</a></li>
+                <li class="nav-item"><a href="{{route('order.index')}}"></i> {{__('shop.Order Management')}}</a></li>
+                <li class="nav-item"><a href="{{route('adminUser.index')}}"></i> {{__('shop.Account Management')}}</a></li>
+                <li class="nav-item"><a href="{{route('adminContact.index')}}"></i> {{__('shop.Reply Management')}}</a></li>
+                <li class="nav-item"><a href="{{route('dollor.index')}}"></i> {{__('shop.virtualrecord')}}</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

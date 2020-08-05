@@ -41,7 +41,11 @@
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="upgrade">{{__('shop.Upgrate Condition')}}</label>
+                        @if (Session::has('locale') && in_array(Session::get('locale'), ['en']))
+                        <label class="col-md-2 control-label" for="upgrade">{{__('shop.totalcost')}}</label>
+                        @else
                         <label class="col-md-1 control-label" for="upgrade">{{__('shop.totalcost')}}</label>
+                        @endif
                         <div class="col-md-2">
                             <input id="upgrade" name="upgrade" type="text"  class="form-control input-md" required="" oninput = "value=value.replace(/[^\d]/g,'')"  autocomplete="off">
                         </div>
