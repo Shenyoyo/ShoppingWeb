@@ -8,7 +8,8 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-
+use App\Admin\Actions\Post\Restore;
+use App\Admin\Actions\Post\BatchRestore;
 class ProductController extends AdminController
 {
     /**
@@ -35,11 +36,32 @@ class ProductController extends AdminController
         $grid->column('amount', __('shop.Stock Quantity'));
         $grid->column('buy_yn', __('shop.Product Buy'))->bool(['Y' => true, 'N' => false]);;
         $grid->column('display_yn', __('shop.Product Dispaly'))->bool(['Y' => true, 'N' => false]);;
-        $grid->column('image',__('Image'));
+        $grid->column('image', __('Image'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
 
-     
+      
+         // 篩選器
+        $grid->filter(function ($filter) {
+            //軟刪除查詢調用模型的`onlyTrashed`方法，查詢出被軟刪除的數據。
+            $filter->scope('trashed', '回收站')->onlyTrashed();
+            //查詢商品名稱
+            $filter->like('name', __('shop.Product Name'));
+        });
+        //單一恢復
+        $grid->actions(function ($actions) {
+            if (\request('_scope_') == 'trashed') {
+                $actions->add(new Restore());
+            }
+        });
+        //批次恢復
+        $grid->batchActions(function ($batch) {
+            if (\request('_scope_') == 'trashed') {
+                $batch->add(new BatchRestore());
+            }
+        });
+
+
 
         return $grid;
     }
@@ -54,17 +76,17 @@ class ProductController extends AdminController
     {
         $show = new Show(Product::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('name', __('Name'));
-        $show->field('description', __('Description'));
-        $show->field('price', __('Price'));
-        $show->field('amount', __('Amount'));
-        $show->field('buy_yn', __('Buy yn'));
-        $show->field('display_yn', __('Display yn'));
-        $show->field('image',__('Image'));
+        $show->field('id', __('shop.ID'));
+        $show->field('name', __('shop.Product Name'));
+        $show->field('description', __('shop.Description'));
+        $show->field('price', __('shop.price'));
+        $show->field('amount', __('shop.Stock Quantity'));
+        $show->field('buy_yn', __('shop.Product Buy'));
+        $show->field('display_yn', __('shop.Product Dispaly'));
+        $show->field('image', __('Image'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
-       
+
 
         return $show;
     }
@@ -78,14 +100,14 @@ class ProductController extends AdminController
     {
         $form = new Form(new Product());
 
-        $form->text('name', __('Name'))->rules('required');
-        $form->text('description', __('Description'))->rules('required');
-        $form->text('price', __('Price'))->rules('required|integer|digits_between:1,11');
-        $form->number('amount', __('Amount'))->rules('required');
-        $form->radio('buy_yn',__('Buy yn') )->options(['Y' => '是' , 'N' => '否'])->default('Y');
-        $form->radio('display_yn', __('Display yn'))->options(['Y' => '是' , 'N' => '否'])->default('Y');;
-        $form->image('image', __('image'));
- 
+        $form->text('name', __('shop.Product Name'))->rules('required|max:255');
+        $form->text('description', __('shop.Description'))->rules('required|max:255');
+        $form->text('price', __('shop.price'))->rules('required|integer|numeric|digits_between:1,11');
+        $form->number('amount', __('shop.Stock Quantity'))->rules('required|integer|numeric|min:0');
+        $form->radio('buy_yn', __('shop.Product Buy'))->options(['Y' => '是', 'N' => '否'])->default('Y');
+        $form->radio('display_yn', __('shop.Product Dispaly'))->options(['Y' => '是', 'N' => '否'])->default('Y');;
+        $form->image('image', __('image'))->rules('required|image');;
+
         return $form;
     }
 }
