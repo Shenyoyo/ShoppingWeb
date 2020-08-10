@@ -243,6 +243,9 @@ return [
     'Promotion conditions' =>'累積金額請 高於:level的$:upgrade',
     'higher than' =>'晉級條件要超過:level的累積金額:upgrade以上',
     'between' =>'累積金額請 介於:levelpre的$:upgradepre與:levelnext的$:upgradenext',
+    'Created at' =>'創建日期',
+    'Updated at' =>'異動日期',
+
     
     
 ];

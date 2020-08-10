@@ -10,6 +10,8 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use App\Admin\Actions\Post\Restore;
 use App\Admin\Actions\Post\BatchRestore;
+use App\Category;
+
 class ProductController extends AdminController
 {
     /**
@@ -30,15 +32,22 @@ class ProductController extends AdminController
 
         $grid->column('id', __('shop.ID'));
         $grid->column('name', __('shop.Product Name'));
+        $grid->column('category')->display(function ($category) {
+
+            $category = array_map(function ($category) {
+                return "<span class='label label-success'>{$category['name']}</span>";
+            }, $category);
+        
+            return join('&nbsp;', $category);
+        });
         $grid->column('price', __('shop.price'))->display(function ($price) {
             return presentPrice($price);
-        });;
+        });
         $grid->column('amount', __('shop.Stock Quantity'));
-        $grid->column('buy_yn', __('shop.Product Buy'))->bool(['Y' => true, 'N' => false]);;
-        $grid->column('display_yn', __('shop.Product Dispaly'))->bool(['Y' => true, 'N' => false]);;
-        $grid->column('image', __('Image'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('buy_yn', __('shop.Product Buy'))->bool(['Y' => true, 'N' => false]);
+        $grid->column('display_yn', __('shop.Product Dispaly'))->bool(['Y' => true, 'N' => false]);
+        $grid->column('created_at', __('shop.Created at'));
+        $grid->column('updated_at', __('shop.Updated at'));
 
       
          // 篩選器
@@ -83,7 +92,7 @@ class ProductController extends AdminController
         $show->field('amount', __('shop.Stock Quantity'));
         $show->field('buy_yn', __('shop.Product Buy'));
         $show->field('display_yn', __('shop.Product Dispaly'));
-        $show->field('image', __('Image'));
+        $show->field('image', __('Image'))->image();
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
@@ -101,6 +110,7 @@ class ProductController extends AdminController
         $form = new Form(new Product());
 
         $form->text('name', __('shop.Product Name'))->rules('required|max:255');
+        $form->checkboxCard('category',__('shop.Category'))->options(Category::all()->pluck('name', 'id'));
         $form->text('description', __('shop.Description'))->rules('required|max:255');
         $form->text('price', __('shop.price'))->rules('required|integer|numeric|digits_between:1,11');
         $form->number('amount', __('shop.Stock Quantity'))->rules('required|integer|numeric|min:0');

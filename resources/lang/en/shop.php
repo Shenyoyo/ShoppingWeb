@@ -244,4 +244,6 @@ return [
     'Promotion conditions' =>'The promotion conditions must exceed the accumulated amount of :level at least :upgrade',
     'higher than' =>'Please cumulative amount of $ :upgrade is higher than :level',
     'between' =>'Please cumulative amount between $ :upgradepre and $ :upgradenext of :levelnext the :levelpre',
+    'Created at' =>'Created at',
+    'Updated at' =>'Updated at',
 ];
