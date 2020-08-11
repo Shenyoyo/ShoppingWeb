@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use App\Rules\UpgradeRule;
 
 class LevelController extends AdminController
 {
@@ -37,6 +38,14 @@ class LevelController extends AdminController
             $count = count($users);
             
             return "<span class='label label-warning'>{$count}</span>";
+        });
+        $grid->actions(function ($actions) {
+            //過濾若有會員在等級中不能刪除
+            if (count($actions->row->user) > 0 ){
+                $actions->disableDelete();
+            }
+        
+           
         });
        
 
@@ -71,10 +80,24 @@ class LevelController extends AdminController
      */
     protected function form()
     {
+        $level = Level::orderBy('level', 'desc')->first();
         $form = new Form(new Level());
-        $form->text('name', __('Name'));
+       
+        $form->text('name', __('Name'))
+            ->value('VIP'.($level->level+1))
+            ->readonly()
+            ->rules('required|max:255');
         $form->text('description', __('Description'));
-        $form->decimal('upgrade', __('Upgrade'));
+        $form->text('upgrade', __('Upgrade'))
+        ->rules(function ($form) {
+            // dd($form->model()->level);
+            return 'required|integer|numeric|max:255';
+        });    
+
+        $form->tools(function (Form\Tools $tools) {
+            // 關閉刪除按鈕
+            $tools->disableDelete();
+        });
 
         return $form;
     }
