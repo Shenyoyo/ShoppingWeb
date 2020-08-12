@@ -5,6 +5,7 @@ namespace App\Rules;
 use Illuminate\Contracts\Validation\Rule;
 use App\Level;
 
+
 class UpgradeEditRule implements Rule
 {
     /**

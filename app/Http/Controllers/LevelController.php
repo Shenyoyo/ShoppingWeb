@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LevelRequest;
 use Illuminate\Http\Request;
 use App\Level;
 use App\Rules\UpgradeRule;
@@ -38,11 +39,11 @@ class LevelController extends Controller
         return redirect()->route('level.index');
     }
 
-    public function addLevel(Request $request)
+    public function addLevel(LevelRequest $request)
     {
-        $this->validate($request, [
-            'upgrade' => ['required',new UpgradeRule],
-        ]);
+        // $this->validate($request, [
+        //     'upgrade' => ['required',new UpgradeRule],
+        // ]);
     
         $levels = new Level();
         $levels->name = $request->input('name');

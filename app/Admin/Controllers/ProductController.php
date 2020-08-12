@@ -30,8 +30,8 @@ class ProductController extends AdminController
     {
         $grid = new Grid(new Product());
 
-        $grid->column('id', __('shop.ID'));
-        $grid->column('name', __('shop.Product Name'));
+        $grid->column('id', __('shop.ID'))->sortable();
+        $grid->column('name', __('shop.Product Name'))->sortable();
         $grid->column('category')->display(function ($category) {
 
             $category = array_map(function ($category) {
@@ -40,14 +40,14 @@ class ProductController extends AdminController
         
             return join('&nbsp;', $category);
         });
-        $grid->column('price', __('shop.price'))->display(function ($price) {
+        $grid->column('price', __('shop.price'))->sortable()->display(function ($price) {
             return presentPrice($price);
         });
         $grid->column('amount', __('shop.Stock Quantity'));
         $grid->column('buy_yn', __('shop.Product Buy'))->bool(['Y' => true, 'N' => false]);
         $grid->column('display_yn', __('shop.Product Dispaly'))->bool(['Y' => true, 'N' => false]);
-        $grid->column('created_at', __('shop.Created at'));
-        $grid->column('updated_at', __('shop.Updated at'));
+        $grid->column('created_at', __('shop.Created at'))->sortable();
+        $grid->column('updated_at', __('shop.Updated at'))->sortable();
 
       
          // 篩選器
